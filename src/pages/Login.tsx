@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { authenticateUser } from '../actions/login';
+import { Redirect } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,12 +12,14 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { LinearProgress } from '@material-ui/core';
-import Copyright from '../components/Copyright';
 import { isLoggedIn } from '../utils/session';
-import { Redirect } from 'react-router-dom';
+import MessageDialog from '../components/MessageDialog';
+import { authenticateUser, authenticateUserHideError } from '../actions/login';
+import Copyright from '../components/Copyright';
 
 interface ILoginState {
   isSubmitted: boolean;
+  showAuthenticationError: boolean;
 }
 
 interface IProps {
@@ -60,6 +62,14 @@ const Login: React.FunctionComponent = () => {
 
   return (
     <Grid container className={classes.root}>
+      <MessageDialog
+        isOpen={loginStoreState.showAuthenticationError}
+        message="Ocurrió un error iniciando sesión"
+        onClose={() => dispatch(authenticateUserHideError())}
+        primaryOptionOnClick={() => dispatch(authenticateUserHideError())}
+        primaryOptionText="OK"
+        title="Error"
+      />
       <CssBaseline />
       <Grid item xs={false} sm={4} md={7} />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>

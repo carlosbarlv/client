@@ -2,11 +2,13 @@ import {
   LOGIN_AUTHENTICATE,
   LOGIN_AUTHENTICATE_FAILURE,
   LOGIN_AUTHENTICATE_SUCCESS,
+  LOGIN_AUTHENTICATE_HIDE_ERROR,
 } from '../constants/actions';
 
 const initialState = {
   isLoggedIn: false,
   isSubmitted: false,
+  showAuthenticationError: false,
 };
 
 const login = (state = initialState, action: any) => {
@@ -27,6 +29,12 @@ const login = (state = initialState, action: any) => {
         ...state,
         isLoggedIn: false,
         isSubmitted: false,
+        showAuthenticationError: true,
+      };
+    case LOGIN_AUTHENTICATE_HIDE_ERROR:
+      return {
+        ...state,
+        showAuthenticationError: false,
       };
     default:
       return state;
