@@ -1,18 +1,21 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Login from './pages/Login';
-import Homepage from './pages/Homepage';
+import ProtectedRoutesWrapper from './components/ProtectedRoutesWrapper';
+import { PATH_MAIN, PATH_LOGIN } from './constants/routes';
 
 const Routes = () => {
   return (
     <Router>
       <Switch>
-        <Route exact path="/">
-          <Login />
-        </Route>
-        <Route exact path="/homepage">
-          <Homepage />
-        </Route>
+        <Route exact path={PATH_LOGIN} component={Login} />
+        <ProtectedRoutesWrapper>
+          <Route
+            exact
+            path={PATH_MAIN}
+            component={() => <h1>MAIN PAGE PLACEHOLDER</h1>}
+          />
+        </ProtectedRoutesWrapper>
       </Switch>
     </Router>
   );

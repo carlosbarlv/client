@@ -12,10 +12,11 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { LinearProgress } from '@material-ui/core';
-import { isLoggedIn } from '../utils/session';
 import MessageDialog from '../components/MessageDialog';
-import { authenticateUser, authenticateUserHideError } from '../actions/login';
 import Copyright from '../components/Copyright';
+import { authenticateUser, authenticateUserHideError } from '../actions/login';
+import { isLoggedIn } from '../utils/session';
+import { PATH_MAIN } from '../constants/routes';
 
 interface ILoginState {
   isSubmitted: boolean;
@@ -41,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '100%',
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -57,7 +58,7 @@ const Login: React.FunctionComponent = () => {
     dispatch = useDispatch();
 
   if (isLoggedIn()) {
-    return <Redirect to="/homepage" />;
+    return <Redirect to={PATH_MAIN} />;
   }
 
   return (
