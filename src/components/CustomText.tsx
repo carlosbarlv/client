@@ -1,7 +1,7 @@
 import React from 'react';
 import { Typography } from 'antd';
 
-const { Title } = Typography;
+const { Text } = Typography;
 
 interface Props {
   code?: boolean;
@@ -15,37 +15,29 @@ interface Props {
         onStart: () => void;
         onChange: (value: string) => void;
       };
-  ellipsis?:
-    | boolean
-    | {
-        rows?: number;
-        expandable?: boolean;
-        suffix?: string;
-        onExpand?: React.MouseEventHandler<HTMLElement>;
-        onEllipsis?: (ellipsis: boolean) => void;
-      };
-  level?: 1 | 2 | 3 | 4;
+  ellipsis?: boolean;
   mark?: boolean;
-  onChange?: (value: string) => void;
-  type?: 'secondary' | 'warning' | 'danger';
   underline?: boolean;
+  onChange?: (value: string) => void;
+  strong?: boolean;
+  type?: 'secondary' | 'warning' | 'danger';
 }
 
-const CustomTitle: React.FunctionComponent<Props> = (
+const CustomText: React.FunctionComponent<Props> = (
   props
-): React.ReactElement => <Title {...props}>{props.children}</Title>;
+): React.ReactElement => <Text {...props}>{props.children}</Text>;
 
-CustomTitle.defaultProps = {
+CustomText.defaultProps = {
   code: false,
   copyable: false,
   delete: false,
   disabled: false,
   editable: false,
   ellipsis: false,
-  level: 1,
   mark: false,
-  onChange: () => {},
   underline: false,
+  onChange: () => {},
+  strong: false,
 };
 
-export default CustomTitle;
+export default CustomText;

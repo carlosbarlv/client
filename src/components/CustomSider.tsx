@@ -11,7 +11,6 @@ interface Props {
   collapsed?: boolean;
   collapsedWidth?: number;
   collapsible?: boolean;
-  defaultCollapse?: boolean;
   reverseArrow?: boolean;
   style?: React.CSSProperties;
   theme?: 'light' | 'dark';
@@ -29,7 +28,6 @@ const CustomSider: React.FunctionComponent<Props> = (
 CustomSider.defaultProps = {
   collapsedWidth: 80,
   collapsible: false,
-  defaultCollapse: false,
   reverseArrow: false,
   theme: 'dark',
   width: 200,

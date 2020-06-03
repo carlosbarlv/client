@@ -3,6 +3,7 @@ import { put, takeLatest, call } from 'redux-saga/effects';
 import { getMenuOptionsSuccess, getMenuOptionsFailure } from '../actions/user';
 import { WEB_SERVICE_API_PERSONAL_MENU } from '../constants/routes';
 import { USER_GET_MENU_OPTIONS } from '../constants/actions';
+import { formatMenuOptions } from '../utils/general';
 
 function* getUserMenuOptions({ username, businessId }: any) {
   try {
@@ -14,7 +15,7 @@ function* getUserMenuOptions({ username, businessId }: any) {
     if (response.data.items && !response.data.items.length) {
       yield put(getMenuOptionsFailure());
     } else {
-      const userMenuOptions = response.data.items.map((item: any) => item.ID);
+      const userMenuOptions = formatMenuOptions(response.data.items);
 
       yield put(getMenuOptionsSuccess(userMenuOptions));
     }

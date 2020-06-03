@@ -12,7 +12,7 @@ export const getMenuOptions = (username: string, businessId: string) => {
   };
 };
 
-export const getMenuOptionsSuccess = (menuOptions: string[]) => {
+export const getMenuOptionsSuccess = (menuOptions: object[]) => {
   return {
     type: USER_GET_MENU_OPTIONS_SUCESS,
     menuOptions,
