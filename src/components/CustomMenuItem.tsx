@@ -8,6 +8,7 @@ interface Props {
   key?: string;
   title?: string | ReactNode;
   icon?: ReactNode;
+  onClick?: (ev: any) => void;
 }
 
 const CustomMenuItem: React.FunctionComponent<Props> = (
