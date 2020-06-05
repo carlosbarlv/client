@@ -1,19 +1,17 @@
 import React from 'react';
-import CustomTabs from '../components/CustomTabs';
-import CustomTabPane from '../components/CustomTabPane';
-import RelationPerson from './RelationPerson';
+import { CustomTabs, CustomTabPane } from '../components';
 
-type TTabs = {
+type TabConfig = {
   title: string;
   type: string;
   node: React.ReactNode;
 };
 
-const tabs = [
+const tabOptions: Array<TabConfig> = [
   {
     title: 'Relación de Personas',
     type: 'root-personaFisica-personaJuridica',
-    node: <RelationPerson />,
+    node: <div>RelacionPersona</div>,
   },
   {
     title: 'Persona Física',
@@ -59,15 +57,13 @@ const tabs = [
 
 const RegisterPerson: React.FunctionComponent = () => {
   return (
-    <div>
-      <CustomTabs type={'card'}>
-        {tabs.map((value: TTabs, index: number) => (
-          <CustomTabPane tab={value.title} key={`${index}`}>
-            {value.node}
-          </CustomTabPane>
-        ))}
-      </CustomTabs>
-    </div>
+    <CustomTabs type={'card'}>
+      {tabOptions.map((value: TabConfig, index: number) => (
+        <CustomTabPane tab={value.title} key={`${index}`}>
+          {value.node}
+        </CustomTabPane>
+      ))}
+    </CustomTabs>
   );
 };
 

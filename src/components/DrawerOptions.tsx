@@ -14,7 +14,7 @@ const getMenuItems = (userOptions: object[] = []) => {
       <CustomMenuItem
         key={route.id}
         onClick={() => {
-          history.push(route.MODULO || '/');
+          if (route.MODULO) history.push(route.MODULO);
         }}
       >
         {route.name}

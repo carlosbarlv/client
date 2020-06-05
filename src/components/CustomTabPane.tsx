@@ -1,16 +1,12 @@
 import React from 'react';
 import { Tabs } from 'antd';
+import { TabPaneProps } from 'antd/lib/tabs';
 
 const { TabPane } = Tabs;
 
-interface IProps {
-  forceRender?: boolean;
-  key?: string;
-  tab?: string | React.ReactNode;
-  closeIcon?: React.ReactNode;
-}
+type CustomTabPaneProps = TabPaneProps & {};
 
-const CustomTabPane: React.FunctionComponent<IProps> = (
+const CustomTabPane: React.FunctionComponent<CustomTabPaneProps> = (
   props
 ): React.ReactElement => <TabPane {...props}>{props.children}</TabPane>;
 

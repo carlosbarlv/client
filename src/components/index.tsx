@@ -20,6 +20,8 @@ import CustomSubMenu from './CustomSubMenu';
 import CustomText from './CustomText';
 import CustomTitle from './CustomTitle';
 import DrawerOptions from './DrawerOptions';
+import CustomTabs from './CustomTabs';
+import CustomTabPane from './CustomTabPane';
 
 export {
   Copyright,
@@ -44,4 +46,6 @@ export {
   CustomText,
   CustomTitle,
   DrawerOptions,
+  CustomTabs,
+  CustomTabPane,
 };
