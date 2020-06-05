@@ -6,12 +6,8 @@ const { TabPane } = Tabs;
 
 type CustomTabPaneProps = TabPaneProps & {};
 
-const CustomTabPane: React.FunctionComponent<CustomTabPaneProps> = (
-  props
-): React.ReactElement => <TabPane {...props}>{props.children}</TabPane>;
-
-CustomTabPane.defaultProps = {
+const CustomTabPane: React.FunctionComponent<CustomTabPaneProps> = ({
   forceRender: false,
-};
+}): React.ReactElement => <TabPane {...props}>{props.children}</TabPane>;
 
 export default CustomTabPane;
