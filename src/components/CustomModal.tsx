@@ -1,37 +1,10 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { Modal } from 'antd';
+import { ModalProps } from 'antd/lib/modal';
 
-interface Props {
-  bodyStyle?: object;
-  content?: string | ReactNode;
-  cancelButtonProps?: object;
-  cancelText?: string | ReactNode;
-  centered?: boolean;
-  closable?: boolean;
-  closeIcon?: ReactNode;
-  confirmLoading?: boolean;
-  destroyOnClose?: boolean;
-  footer?: string | ReactNode;
-  forceRender?: boolean;
-  getContainer?: string | HTMLElement | false | null;
-  mask?: boolean;
-  maskClosable?: boolean;
-  maskStyle?: object;
-  okButtonProps?: object;
-  okText?: string | ReactNode;
-  okType?: 'primary' | 'link' | 'default' | 'ghost' | 'dashed' | 'danger';
-  style?: object;
-  title?: string | ReactNode;
-  visible?: boolean;
-  width?: string | number;
-  wrapClassName?: string;
-  zIndex?: number;
-  afterClose?: () => {};
-  onCancel?: (e: React.MouseEvent<Element>) => {};
-  onOk?: (e: React.MouseEvent<Element>) => {};
-}
+type CustomModalProps = ModalProps;
 
-const CustomModal: React.FunctionComponent<Props> = (
+const CustomModal: React.FunctionComponent<CustomModalProps> = (
   props
 ): React.ReactElement => <Modal {...props}>{props.children}</Modal>;
 

@@ -1,14 +1,14 @@
 import React from 'react';
 import { Input } from 'antd';
-import { Props as InputProps } from './CustomInput';
+import { CustomInputProps } from './CustomInput';
 
 const { Password } = Input;
 
-interface Props extends InputProps {
+type CustomPasswordInputProps = CustomInputProps & {
   visibilityToggle?: boolean;
-}
+};
 
-const CustomPasswordInput: React.FunctionComponent<Props> = (
+const CustomPasswordInput: React.FunctionComponent<CustomPasswordInputProps> = (
   props
 ): React.ReactElement => <Password {...props}>{props.children}</Password>;
 

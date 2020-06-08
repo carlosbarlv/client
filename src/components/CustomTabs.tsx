@@ -2,7 +2,7 @@ import React from 'react';
 import { Tabs } from 'antd';
 import { TabsProps } from 'antd/lib/tabs';
 
-type CustomTabsProps = TabsProps & {};
+type CustomTabsProps = TabsProps;
 
 const CustomTabs: React.FunctionComponent<CustomTabsProps> = (
   props

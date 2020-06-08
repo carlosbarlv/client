@@ -1,10 +1,10 @@
 import React from 'react';
 import { Layout } from 'antd';
-import { Props } from './CustomLayout';
+import { CustomLayoutProps } from './CustomLayout';
 
 const { Content } = Layout;
 
-const CustomContent: React.FunctionComponent<Props> = (
+const CustomContent: React.FunctionComponent<CustomLayoutProps> = (
   props
 ): React.ReactElement => <Content {...props}>{props.children}</Content>;
 

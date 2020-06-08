@@ -3,7 +3,7 @@ import { Typography } from 'antd';
 
 const { Text } = Typography;
 
-interface Props {
+interface CustomTextProps {
   code?: boolean;
   copyable?: boolean | { text: string; onCopy: () => void };
   delete?: boolean;
@@ -23,7 +23,7 @@ interface Props {
   type?: 'secondary' | 'warning' | 'danger';
 }
 
-const CustomText: React.FunctionComponent<Props> = (
+const CustomText: React.FunctionComponent<CustomTextProps> = (
   props
 ): React.ReactElement => <Text {...props}>{props.children}</Text>;
 

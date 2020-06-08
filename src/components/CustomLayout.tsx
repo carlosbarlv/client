@@ -1,13 +1,13 @@
 import React from 'react';
 import { Layout } from 'antd';
+import { LayoutProps } from 'antd/lib/layout';
 
-export interface Props {
+export type CustomLayoutProps = LayoutProps & {
   className?: string;
-  hasSider?: boolean;
   style?: React.CSSProperties;
-}
+};
 
-const CustomLayout: React.FunctionComponent<Props> = (
+const CustomLayout: React.FunctionComponent<CustomLayoutProps> = (
   props
 ): React.ReactElement => <Layout {...props}>{props.children}</Layout>;
 

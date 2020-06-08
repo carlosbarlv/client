@@ -7,7 +7,7 @@ type TabConfig = {
   node: React.ReactNode;
 };
 
-const tabOptions: Array<TabConfig> = [
+const tabOptions: ReadonlyArray<TabConfig> = [
   {
     title: 'Relación de Personas',
     type: 'root-personaFisica-personaJuridica',

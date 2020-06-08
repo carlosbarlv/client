@@ -9,14 +9,14 @@ import {
 } from '@material-ui/core';
 
 interface MessageDialogProps {
-  readonly title: string;
-  readonly message: string;
-  readonly isOpen: boolean;
-  readonly secondaryOptionText?: string;
-  readonly secondaryOptionOnClick?: any;
-  readonly primaryOptionText?: string;
-  readonly primaryOptionOnClick?: any;
-  readonly onClose?: any;
+  isOpen: boolean;
+  message: string;
+  onClose?: () => void;
+  primaryOptionOnClick?: () => void;
+  primaryOptionText?: string;
+  secondaryOptionOnClick?: () => void;
+  secondaryOptionText?: string;
+  title: string;
 }
 
 const MessageDialog = ({
