@@ -1,27 +1,12 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { Layout } from 'antd';
+import { SiderProps } from 'antd/lib/layout';
 
 const { Sider } = Layout;
 
-type CollapseType = 'clickTrigger' | 'responsive';
+type CustomSiderProps = SiderProps;
 
-interface Props {
-  breakpoints?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
-  className?: string;
-  collapsed?: boolean;
-  collapsedWidth?: number;
-  collapsible?: boolean;
-  reverseArrow?: boolean;
-  style?: React.CSSProperties;
-  theme?: 'light' | 'dark';
-  trigger?: string | ReactNode;
-  width?: number | string;
-  onCollapse?: (collapsed: boolean, type: CollapseType) => void;
-  onBreakpoint?: (broken: boolean) => void;
-  zeroWidthTriggerStyle?: object;
-}
-
-const CustomSider: React.FunctionComponent<Props> = (
+const CustomSider: React.FunctionComponent<CustomSiderProps> = (
   props
 ): React.ReactElement => <Sider {...props}>{props.children}</Sider>;
 

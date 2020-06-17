@@ -3,14 +3,15 @@ import { Menu } from 'antd';
 
 const { Item } = Menu;
 
-interface Props {
+interface CustomMenuItemProps {
   disabled?: boolean;
   key?: string;
   title?: string | ReactNode;
   icon?: ReactNode;
+  onClick?: (ev: any) => void;
 }
 
-const CustomMenuItem: React.FunctionComponent<Props> = (
+const CustomMenuItem: React.FunctionComponent<CustomMenuItemProps> = (
   props
 ): React.ReactElement => <Item {...props}>{props.children}</Item>;
 

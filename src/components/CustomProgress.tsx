@@ -1,24 +1,10 @@
 import React from 'react';
 import { Progress } from 'antd';
+import { ProgressProps } from 'antd/lib/progress';
 
-interface Props {
-  type?: 'line' | 'circle' | 'dashboard';
-  format?: (percent?: number, successPercent?: number) => React.ReactNode;
-  percent?: number;
-  showInfo?: boolean;
-  status?: 'success' | 'exception' | 'normal' | 'active';
-  strokeLinecap?: 'round' | 'square';
-  strokeColor?: string | {};
-  successPercent?: number;
-  trailColor?: string;
-  strokeWidth?: number;
-  steps?: number;
-  width?: number;
-  gapDegree?: number;
-  gapPosition?: 'top' | 'bottom' | 'left' | 'right';
-}
+type CustomProgressProps = ProgressProps;
 
-const CustomProgress: React.FunctionComponent<Props> = (
+const CustomProgress: React.FunctionComponent<CustomProgressProps> = (
   props
 ): React.ReactElement => <Progress {...props}>{props.children}</Progress>;
 

@@ -1,16 +1,10 @@
 import React from 'react';
 import { Divider } from 'antd';
+import { DividerProps } from 'antd/lib/divider';
 
-interface Props {
-  className?: string;
-  dashed?: boolean;
-  orientation?: 'left' | 'right' | 'center';
-  style?: React.CSSProperties;
-  type?: 'horizontal' | 'vertical';
-  plain?: boolean;
-}
+type CustomDividerProps = DividerProps;
 
-const CustomDivider: React.FunctionComponent<Props> = (
+const CustomDivider: React.FunctionComponent<DividerProps> = (
   props
 ): React.ReactElement => <Divider {...props}>{props.children}</Divider>;
 

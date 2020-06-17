@@ -1,30 +1,10 @@
 import React from 'react';
 import { Menu } from 'antd';
-import { ClickParam, SelectParam } from 'antd/lib/menu';
+import { MenuProps } from 'antd/lib/menu';
 
-interface Props {
-  defaultOpenKeys?: Array<string>;
-  defaultSelectedKeys?: Array<string>;
-  forceSubMenuRender?: boolean;
-  inlineCollapsed?: boolean;
-  inlineIndent?: number;
-  mode?: 'vertical' | 'horizontal' | 'inline';
-  multiple?: boolean;
-  openKeys?: Array<string>;
-  selectable?: boolean;
-  selectedKeys?: Array<string>;
-  style?: React.CSSProperties;
-  subMenuCloseDelay?: number;
-  subMenuOpenDelay?: number;
-  theme?: 'dark' | 'light';
-  onClick?: (param: ClickParam) => void;
-  onDeselect?: (param: SelectParam) => void;
-  onOpenChange?: (openKeys: string[]) => void;
-  onSelect?: (param: SelectParam) => void;
-  overflowedIndicator?: React.ReactNode;
-}
+type CustomMenuProps = MenuProps;
 
-const CustomMenu: React.FunctionComponent<Props> = (
+const CustomMenu: React.FunctionComponent<CustomMenuProps> = (
   props
 ): React.ReactElement => <Menu {...props}>{props.children}</Menu>;
 

@@ -1,17 +1,10 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { Avatar } from 'antd';
+import { AvatarProps } from 'antd/lib/avatar';
 
-interface Props {
-  icon?: ReactNode;
-  shape?: 'circle' | 'square';
-  size?: number | 'large' | 'small' | 'default';
-  src?: string;
-  srcSet?: string;
-  alt?: string;
-  onError?: () => boolean;
-}
+type CustomAvatarProps = AvatarProps;
 
-const CustomAvatar: React.FunctionComponent<Props> = (
+const CustomAvatar: React.FunctionComponent<CustomAvatarProps> = (
   props
 ): React.ReactElement => <Avatar {...props}>{props.children}</Avatar>;
 

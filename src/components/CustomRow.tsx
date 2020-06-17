@@ -1,13 +1,10 @@
 import React from 'react';
 import { Row } from 'antd';
+import { RowProps } from 'antd/lib/row';
 
-interface Props {
-  align?: 'top' | 'middle' | 'bottom';
-  gutter?: number | object;
-  justify?: 'start' | 'end' | 'center' | 'space-around' | 'space-between';
-}
+type CustomRowProps = RowProps;
 
-const CustomRow: React.FunctionComponent<Props> = (
+const CustomRow: React.FunctionComponent<CustomRowProps> = (
   props
 ): React.ReactElement => <Row {...props}>{props.children}</Row>;
 

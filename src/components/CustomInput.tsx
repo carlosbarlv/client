@@ -1,25 +1,10 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { Input } from 'antd';
+import { InputProps } from 'antd/lib/input';
 
-export interface Props {
-  addonAfter?: string | ReactNode;
-  addonBefore?: string | ReactNode;
-  defaultValue?: string;
-  disabled?: boolean;
-  id?: string;
-  maxLength?: number;
-  prefix?: string | ReactNode;
-  size?: 'large' | 'middle' | 'small';
-  suffix?: string | ReactNode;
-  type?: string;
-  value?: string;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onPressEnter?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
-  allowClear?: boolean;
-  placeholder?: string;
-}
+export type CustomInputProps = InputProps;
 
-const CustomInput: React.FunctionComponent<Props> = (
+const CustomInput: React.FunctionComponent<CustomInputProps> = (
   props
 ): React.ReactElement => <Input {...props}>{props.children}</Input>;
 

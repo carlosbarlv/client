@@ -1,22 +1,10 @@
 import React from 'react';
 import { Col } from 'antd';
+import { ColProps } from 'antd/lib/col';
 
-interface Props {
-  flex?: number | string;
-  lg?: number | object;
-  md?: number | object;
-  offset?: number;
-  order?: number;
-  pull?: number;
-  push?: number;
-  sm?: number | object;
-  span?: number;
-  xl?: number | object;
-  xs?: number | object;
-  xxl?: number | object;
-}
+type CustomColProps = ColProps;
 
-const CustomCol: React.FunctionComponent<Props> = (
+const CustomCol: React.FunctionComponent<CustomColProps> = (
   props
 ): React.ReactElement => <Col {...props}>{props.children}</Col>;
 

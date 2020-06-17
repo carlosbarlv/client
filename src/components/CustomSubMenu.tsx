@@ -8,7 +8,7 @@ interface TitleEventEntity {
   domEvent: Event;
 }
 
-interface Props {
+interface CustomSubMenuProps {
   popupClassName?: string;
   disabled?: boolean;
   key?: string;
@@ -17,7 +17,7 @@ interface Props {
   onTitleClick?: (e: TitleEventEntity) => void;
 }
 
-const CustomSubMenu: React.FunctionComponent<Props> = (
+const CustomSubMenu: React.FunctionComponent<CustomSubMenuProps> = (
   props
 ): React.ReactElement => <SubMenu {...props}>{props.children}</SubMenu>;
 

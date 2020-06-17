@@ -1,23 +1,10 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { Button } from 'antd';
+import { ButtonProps } from 'antd/lib/button';
 
-interface Props {
-  block?: boolean;
-  danger?: boolean;
-  disabled?: boolean;
-  ghost?: boolean;
-  href?: string;
-  htmlType?: 'submit' | 'reset' | 'button';
-  icon?: ReactNode;
-  loading?: boolean | { delay: number };
-  shape?: 'circle' | 'round';
-  size?: 'large' | 'middle' | 'small';
-  target?: string;
-  type?: 'primary' | 'ghost' | 'dashed' | 'link' | 'default';
-  onClick?: (e: React.MouseEvent<HTMLElement>) => void;
-}
+type CustomButtonProps = ButtonProps;
 
-const CustomButton: React.FunctionComponent<Props> = (
+const CustomButton: React.FunctionComponent<CustomButtonProps> = (
   props
 ): React.ReactElement => <Button {...props}>{props.children}</Button>;
 

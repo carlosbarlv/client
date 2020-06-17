@@ -3,7 +3,7 @@ import { Typography } from 'antd';
 
 const { Title } = Typography;
 
-interface Props {
+interface CustomTitleProps {
   code?: boolean;
   copyable?: boolean | { text: string; onCopy: () => void };
   delete?: boolean;
@@ -31,7 +31,7 @@ interface Props {
   underline?: boolean;
 }
 
-const CustomTitle: React.FunctionComponent<Props> = (
+const CustomTitle: React.FunctionComponent<CustomTitleProps> = (
   props
 ): React.ReactElement => <Title {...props}>{props.children}</Title>;
 

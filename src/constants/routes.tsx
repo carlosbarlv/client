@@ -6,3 +6,4 @@ export const WEB_SERVICE_API_PERSONAL_MENU = `${WEB_SERVICE_API}/menu_personal`;
 // Internal routes
 export const PATH_LOGIN = '/login';
 export const PATH_MAIN = '/';
+export const PATH_REGISTER_PERSON = '/registrar_cliente';
