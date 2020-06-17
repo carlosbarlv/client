@@ -4,19 +4,30 @@ import { MenuProps } from 'antd/lib/menu';
 
 type CustomMenuProps = MenuProps;
 
-const CustomMenu: React.FunctionComponent<CustomMenuProps> = (
-  props
-): React.ReactElement => <Menu {...props}>{props.children}</Menu>;
-
-CustomMenu.defaultProps = {
-  forceSubMenuRender: false,
-  inlineIndent: 24,
-  mode: 'vertical',
-  multiple: false,
-  selectable: true,
-  subMenuCloseDelay: 0.1,
-  subMenuOpenDelay: 0,
-  theme: 'light',
-};
+const CustomMenu: React.FunctionComponent<CustomMenuProps> = ({
+  forceSubMenuRender = false,
+  inlineIndent = 24,
+  mode = 'vertical',
+  multiple = false,
+  selectable = true,
+  subMenuCloseDelay = 0.1,
+  subMenuOpenDelay = 0,
+  theme = 'light',
+  ...props
+}): React.ReactElement => (
+  <Menu
+    forceSubMenuRender={forceSubMenuRender}
+    inlineIndent={inlineIndent}
+    mode={mode}
+    multiple={multiple}
+    selectable={selectable}
+    subMenuCloseDelay={subMenuCloseDelay}
+    subMenuOpenDelay={subMenuOpenDelay}
+    theme={theme}
+    {...props}
+  >
+    {props.children}
+  </Menu>
+);
 
 export default CustomMenu;

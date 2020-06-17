@@ -6,20 +6,32 @@ const { Item } = Form;
 
 type CustomFormItemProps = FormItemProps;
 
-const CustomFormItem: React.FunctionComponent<CustomFormItemProps> = (
-  props
-): React.ReactElement => <Item {...props}>{props.children}</Item>;
-
-CustomFormItem.defaultProps = {
-  colon: true,
-  hasFeedback: false,
-  labelAlign: 'right' as CustomFormItemProps['labelAlign'],
-  noStyle: false,
-  required: false,
-  trigger: 'onChange',
-  validateFirst: false,
-  validateTrigger: 'onChange',
-  valuePropName: 'value',
-};
+const CustomFormItem: React.FunctionComponent<CustomFormItemProps> = ({
+  colon = true,
+  hasFeedback = false,
+  labelAlign = 'right' as CustomFormItemProps['labelAlign'],
+  noStyle = false,
+  required = false,
+  trigger = 'onChange',
+  validateFirst = false,
+  validateTrigger = 'onChange',
+  valuePropName = 'value',
+  ...props
+}): React.ReactElement => (
+  <Item
+    colon={colon}
+    hasFeedback={hasFeedback}
+    labelAlign={labelAlign}
+    noStyle={noStyle}
+    required={required}
+    trigger={trigger}
+    validateFirst={validateFirst}
+    validateTrigger={validateTrigger}
+    valuePropName={valuePropName}
+    {...props}
+  >
+    {props.children}
+  </Item>
+);
 
 export default CustomFormItem;

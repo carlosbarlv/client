@@ -6,7 +6,7 @@ const { Text } = Typography;
 interface CustomTextProps {
   code?: boolean;
   copyable?: boolean | { text: string; onCopy: () => void };
-  delete?: boolean;
+  deleted?: boolean;
   disabled?: boolean;
   editable?:
     | boolean
@@ -18,26 +18,36 @@ interface CustomTextProps {
   ellipsis?: boolean;
   mark?: boolean;
   underline?: boolean;
-  onChange?: (value: string) => void;
   strong?: boolean;
   type?: 'secondary' | 'warning' | 'danger';
 }
 
-const CustomText: React.FunctionComponent<CustomTextProps> = (
-  props
-): React.ReactElement => <Text {...props}>{props.children}</Text>;
-
-CustomText.defaultProps = {
-  code: false,
-  copyable: false,
-  delete: false,
-  disabled: false,
-  editable: false,
-  ellipsis: false,
-  mark: false,
-  underline: false,
-  onChange: () => {},
-  strong: false,
-};
+const CustomText: React.FunctionComponent<CustomTextProps> = ({
+  code = false,
+  copyable = false,
+  deleted = false,
+  disabled = false,
+  editable = false,
+  ellipsis = false,
+  mark = false,
+  underline = false,
+  strong = false,
+  ...props
+}): React.ReactElement => (
+  <Text
+    code={code}
+    copyable={copyable}
+    delete={deleted}
+    disabled={disabled}
+    editable={editable}
+    ellipsis={ellipsis}
+    mark={mark}
+    underline={underline}
+    strong={strong}
+    {...props}
+  >
+    {props.children}
+  </Text>
+);
 
 export default CustomText;

@@ -6,7 +6,7 @@ const { Title } = Typography;
 interface CustomTitleProps {
   code?: boolean;
   copyable?: boolean | { text: string; onCopy: () => void };
-  delete?: boolean;
+  deleted?: boolean;
   disabled?: boolean;
   editable?:
     | boolean
@@ -26,26 +26,36 @@ interface CustomTitleProps {
       };
   level?: 1 | 2 | 3 | 4;
   mark?: boolean;
-  onChange?: (value: string) => void;
   type?: 'secondary' | 'warning' | 'danger';
   underline?: boolean;
 }
 
-const CustomTitle: React.FunctionComponent<CustomTitleProps> = (
-  props
-): React.ReactElement => <Title {...props}>{props.children}</Title>;
-
-CustomTitle.defaultProps = {
-  code: false,
-  copyable: false,
-  delete: false,
-  disabled: false,
-  editable: false,
-  ellipsis: false,
-  level: 1,
-  mark: false,
-  onChange: () => {},
-  underline: false,
-};
+const CustomTitle: React.FunctionComponent<CustomTitleProps> = ({
+  code = false,
+  copyable = false,
+  deleted = false,
+  disabled = false,
+  editable = false,
+  ellipsis = false,
+  level = 1,
+  mark = false,
+  underline = false,
+  ...props
+}): React.ReactElement => (
+  <Title
+    code={code}
+    copyable={copyable}
+    delete={deleted}
+    disabled={disabled}
+    editable={editable}
+    ellipsis={ellipsis}
+    level={level}
+    mark={mark}
+    underline={underline}
+    {...props}
+  >
+    {props.children}
+  </Title>
+);
 
 export default CustomTitle;

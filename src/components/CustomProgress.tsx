@@ -4,17 +4,26 @@ import { ProgressProps } from 'antd/lib/progress';
 
 type CustomProgressProps = ProgressProps;
 
-const CustomProgress: React.FunctionComponent<CustomProgressProps> = (
-  props
-): React.ReactElement => <Progress {...props}>{props.children}</Progress>;
-
-CustomProgress.defaultProps = {
-  type: 'line',
-  percent: 0,
-  showInfo: true,
-  strokeLinecap: 'round',
-  successPercent: 0,
-  strokeWidth: 10,
-};
+const CustomProgress: React.FunctionComponent<CustomProgressProps> = ({
+  type = 'line',
+  percent = 0,
+  showInfo = true,
+  strokeLinecap = 'round',
+  successPercent = 0,
+  strokeWidth = 10,
+  ...props
+}): React.ReactElement => (
+  <Progress
+    type={type}
+    percent={percent}
+    showInfo={showInfo}
+    strokeLinecap={strokeLinecap}
+    successPercent={successPercent}
+    strokeWidth={strokeWidth}
+    {...props}
+  >
+    {props.children}
+  </Progress>
+);
 
 export default CustomProgress;

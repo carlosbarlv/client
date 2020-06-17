@@ -7,12 +7,13 @@ export type CustomLayoutProps = LayoutProps & {
   style?: React.CSSProperties;
 };
 
-const CustomLayout: React.FunctionComponent<CustomLayoutProps> = (
-  props
-): React.ReactElement => <Layout {...props}>{props.children}</Layout>;
-
-CustomLayout.defaultProps = {
-  style: { height: '100%' },
-};
+const CustomLayout: React.FunctionComponent<CustomLayoutProps> = ({
+  style = { height: '100%' },
+  ...props
+}): React.ReactElement => (
+  <Layout style={style} {...props}>
+    {props.children}
+  </Layout>
+);
 
 export default CustomLayout;
