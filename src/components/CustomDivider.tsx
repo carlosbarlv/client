@@ -4,9 +4,23 @@ import { DividerProps } from 'antd/lib/divider';
 
 type CustomDividerProps = DividerProps;
 
-const CustomDivider: React.FunctionComponent<DividerProps> = (
-  props
-): React.ReactElement => <Divider {...props}>{props.children}</Divider>;
+const CustomDivider: React.FunctionComponent<CustomDividerProps> = ({
+  dashed = false,
+  orientation = 'center',
+  type = 'horizontal',
+  plain = true,
+  ...props
+}): React.ReactElement => (
+  <Divider
+    dashed={dashed}
+    orientation={orientation}
+    type={type}
+    plain={plain}
+    {...props}
+  >
+    {props.children}
+  </Divider>
+);
 
 CustomDivider.defaultProps = {
   dashed: false,

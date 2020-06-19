@@ -17,12 +17,13 @@ interface CustomSubMenuProps {
   onTitleClick?: (e: TitleEventEntity) => void;
 }
 
-const CustomSubMenu: React.FunctionComponent<CustomSubMenuProps> = (
-  props
-): React.ReactElement => <SubMenu {...props}>{props.children}</SubMenu>;
-
-CustomSubMenu.defaultProps = {
-  disabled: false,
-};
+const CustomSubMenu: React.FunctionComponent<CustomSubMenuProps> = ({
+  disabled = false,
+  ...props
+}): React.ReactElement => (
+  <SubMenu disabled={disabled} {...props}>
+    {props.children}
+  </SubMenu>
+);
 
 export default CustomSubMenu;

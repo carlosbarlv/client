@@ -8,14 +8,20 @@ type CustomPasswordInputProps = CustomInputProps & {
   visibilityToggle?: boolean;
 };
 
-const CustomPasswordInput: React.FunctionComponent<CustomPasswordInputProps> = (
-  props
-): React.ReactElement => <Password {...props}>{props.children}</Password>;
-
-CustomPasswordInput.defaultProps = {
-  disabled: false,
-  type: 'text',
-  visibilityToggle: true,
-};
+const CustomPasswordInput: React.FunctionComponent<CustomPasswordInputProps> = ({
+  disabled = false,
+  type = 'text',
+  visibilityToggle = true,
+  ...props
+}): React.ReactElement => (
+  <Password
+    disabled={disabled}
+    type={type}
+    visibilityToggle={visibilityToggle}
+    {...props}
+  >
+    {props.children}
+  </Password>
+);
 
 export default CustomPasswordInput;

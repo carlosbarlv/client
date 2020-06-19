@@ -11,9 +11,14 @@ interface CustomMenuItemProps {
   onClick?: (ev: any) => void;
 }
 
-const CustomMenuItem: React.FunctionComponent<CustomMenuItemProps> = (
-  props
-): React.ReactElement => <Item {...props}>{props.children}</Item>;
+const CustomMenuItem: React.FunctionComponent<CustomMenuItemProps> = ({
+  disabled = false,
+  ...props
+}): React.ReactElement => (
+  <Item disabled={disabled} {...props}>
+    {props.children}
+  </Item>
+);
 
 CustomMenuItem.defaultProps = {
   disabled: false,
