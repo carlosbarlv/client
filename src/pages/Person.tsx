@@ -1,11 +1,17 @@
 import React from 'react';
-import CustomTable from '../components/CustomTable';
 import { ColumnType } from 'antd/lib/table';
-import { Button, Tooltip, Row, Col, Radio } from 'antd';
+import { Button, Tooltip } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
-import Search from 'antd/lib/input/Search';
-import Text from 'antd/lib/typography/Text';
 import { RadioChangeEvent } from 'antd/lib/radio';
+import {
+  CustomTable,
+  CustomRow,
+  CustomCol,
+  CustomText,
+  CustomRadio,
+  CustomRadioGroup,
+  CustomSearch,
+} from '../components';
 
 interface Person {
   action?: React.ReactNode;
@@ -90,23 +96,24 @@ const CustomTitle = () => {
   const handlerRadioChange = (e: RadioChangeEvent) => {
     setRadioValue(e.target.value);
   };
+
   return (
-    <Row>
-      <Col xs={24} md={12}>
+    <CustomRow>
+      <CustomCol xs={24} md={12}>
         <h2>Relación personas</h2>
-      </Col>
-      <Col xs={24} md={12}>
-        <Row justify={'end'}>
-          <Search placeholder={'Buscar...'} />
-          <Text style={{ marginRight: 10 }}>Ver: </Text>
-          <Radio.Group value={radioValue} onChange={handlerRadioChange}>
-            <Radio value="T">Todos</Radio>
-            <Radio value="A">Activos</Radio>
-            <Radio value="I">Inactivos</Radio>
-          </Radio.Group>
-        </Row>
-      </Col>
-    </Row>
+      </CustomCol>
+      <CustomCol xs={24} md={12}>
+        <CustomRow justify={'end'}>
+          <CustomSearch placeholder={'Buscar...'} />
+          <CustomText>Ver: </CustomText>
+          <CustomRadioGroup value={radioValue} onChange={handlerRadioChange}>
+            <CustomRadio value="T">Todos</CustomRadio>
+            <CustomRadio value="A">Activos</CustomRadio>
+            <CustomRadio value="I">Inactivos</CustomRadio>
+          </CustomRadioGroup>
+        </CustomRow>
+      </CustomCol>
+    </CustomRow>
   );
 };
 
