@@ -6,8 +6,6 @@ type CustomTableProps = TableProps<any>;
 
 const CustomTable: React.FunctionComponent<CustomTableProps> = ({
   ...props
-}): React.ReactElement => {
-  return <Table {...props}>{props.children}</Table>;
-};
+}): React.ReactElement => <Table {...props}>{props.children}</Table>;
 
 export default CustomTable;

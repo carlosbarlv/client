@@ -22,6 +22,10 @@ import CustomTitle from './CustomTitle'
 import DrawerOptions from './DrawerOptions'
 import CustomTabs from './CustomTabs'
 import CustomTabPane from './CustomTabPane'
+import CustomTable from './CustomTable'
+import CustomRadio from './CustomRadio'
+import CustomRadioGroup from './CustomRadioGroup'
+import CustomSearch from './CustomSearch'
 
 export {
   Copyright,
@@ -48,4 +52,8 @@ export {
   DrawerOptions,
   CustomTabs,
   CustomTabPane,
+  CustomTable,
+  CustomRadio,
+  CustomRadioGroup,
+  CustomSearch,
 }
