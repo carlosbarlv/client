@@ -4,12 +4,10 @@ import { FormItemProps } from 'antd/lib/form';
 
 const { Item } = Form;
 
-type CustomFormItemProps = FormItemProps;
-
-const CustomFormItem: React.FunctionComponent<CustomFormItemProps> = ({
+const CustomFormItem: React.FunctionComponent<FormItemProps> = ({
   colon = true,
   hasFeedback = false,
-  labelAlign = 'right' as CustomFormItemProps['labelAlign'],
+  labelAlign = 'right' as FormItemProps['labelAlign'],
   noStyle = false,
   required = false,
   trigger = 'onChange',

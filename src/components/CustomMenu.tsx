@@ -2,9 +2,7 @@ import React from 'react';
 import { Menu } from 'antd';
 import { MenuProps } from 'antd/lib/menu';
 
-type CustomMenuProps = MenuProps;
-
-const CustomMenu: React.FunctionComponent<CustomMenuProps> = ({
+const CustomMenu: React.FunctionComponent<MenuProps> = ({
   forceSubMenuRender = false,
   inlineIndent = 24,
   mode = 'vertical',

@@ -2,9 +2,7 @@ import React from 'react';
 import { Table } from 'antd';
 import { TableProps } from 'antd/lib/table';
 
-type CustomTableProps = TableProps<any>;
-
-const CustomTable: React.FunctionComponent<CustomTableProps> = ({
+const CustomTable: React.FunctionComponent<TableProps<any>> = ({
   ...props
 }): React.ReactElement => <Table {...props}>{props.children}</Table>;
 

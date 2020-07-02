@@ -91,10 +91,10 @@ const data: Person[] = [
   },
 ];
 
-const CustomTitle = () => {
-  const [radioValue, setRadioValue] = React.useState('T');
-  const handlerRadioChange = (e: RadioChangeEvent) => {
-    setRadioValue(e.target.value);
+const AddPersonTableTitle = (): React.ReactElement => {
+  const [entryStateFilter, setEntryStateFilter] = React.useState('T');
+  const handleRadioChange = (e: RadioChangeEvent) => {
+    setEntryStateFilter(e.target.value);
   };
 
   return (
@@ -106,7 +106,10 @@ const CustomTitle = () => {
         <CustomRow justify={'end'}>
           <CustomSearch placeholder={'Buscar...'} />
           <CustomText>Ver: </CustomText>
-          <CustomRadioGroup value={radioValue} onChange={handlerRadioChange}>
+          <CustomRadioGroup
+            value={entryStateFilter}
+            onChange={handleRadioChange}
+          >
             <CustomRadio value="T">Todos</CustomRadio>
             <CustomRadio value="A">Activos</CustomRadio>
             <CustomRadio value="I">Inactivos</CustomRadio>
@@ -117,10 +120,12 @@ const CustomTitle = () => {
   );
 };
 
-const RelationPerson: React.FunctionComponent<any> = (): React.ReactElement => (
-  <div>
-    <CustomTable title={CustomTitle} columns={columns} dataSource={data} />
-  </div>
+const Person: React.FunctionComponent<any> = (): React.ReactElement => (
+  <CustomTable
+    title={AddPersonTableTitle}
+    columns={columns}
+    dataSource={data}
+  />
 );
 
-export default RelationPerson;
+export default Person;

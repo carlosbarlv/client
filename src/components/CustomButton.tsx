@@ -2,9 +2,7 @@ import React from 'react';
 import { Button } from 'antd';
 import { ButtonProps } from 'antd/lib/button';
 
-type CustomButtonProps = ButtonProps;
-
-const CustomButton: React.FunctionComponent<CustomButtonProps> = ({
+const CustomButton: React.FunctionComponent<ButtonProps> = ({
   block = false,
   danger = false,
   disabled = false,

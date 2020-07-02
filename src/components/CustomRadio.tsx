@@ -2,9 +2,7 @@ import React from 'react';
 import { Radio } from 'antd';
 import { RadioProps } from 'antd/lib/radio';
 
-type CustomRadioProps = RadioProps;
-
-const CustomRadio: React.FunctionComponent<CustomRadioProps> = ({
+const CustomRadio: React.FunctionComponent<RadioProps> = ({
   ...props
 }): React.ReactElement => <Radio {...props}>{props.children}</Radio>;
 

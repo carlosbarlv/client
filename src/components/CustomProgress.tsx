@@ -2,9 +2,7 @@ import React from 'react';
 import { Progress } from 'antd';
 import { ProgressProps } from 'antd/lib/progress';
 
-type CustomProgressProps = ProgressProps;
-
-const CustomProgress: React.FunctionComponent<CustomProgressProps> = ({
+const CustomProgress: React.FunctionComponent<ProgressProps> = ({
   type = 'line',
   percent = 0,
   showInfo = true,
