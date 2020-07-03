@@ -1,8 +1,8 @@
-import React from 'react';
-import { Col } from 'antd';
-import { ColProps } from 'antd/lib/col';
+import React from 'react'
+import { Col } from 'antd'
+import { ColProps } from 'antd/lib/col'
 
-type CustomColProps = ColProps;
+type CustomColProps = ColProps
 
 const CustomCol: React.FunctionComponent<CustomColProps> = ({
   flex = 0,
@@ -36,6 +36,6 @@ const CustomCol: React.FunctionComponent<CustomColProps> = ({
   >
     {props.children}
   </Col>
-);
+)
 
-export default CustomCol;
+export default CustomCol

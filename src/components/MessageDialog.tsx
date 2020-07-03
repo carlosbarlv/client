@@ -1,22 +1,22 @@
-import React from 'react';
+import React from 'react'
 import {
+  Button,
   Dialog,
-  DialogTitle,
+  DialogActions,
   DialogContent,
   DialogContentText,
-  DialogActions,
-  Button,
-} from '@material-ui/core';
+  DialogTitle,
+} from '@material-ui/core'
 
 interface MessageDialogProps {
-  isOpen: boolean;
-  message: string;
-  onClose?: () => void;
-  primaryOptionOnClick?: () => void;
-  primaryOptionText?: string;
-  secondaryOptionOnClick?: () => void;
-  secondaryOptionText?: string;
-  title: string;
+  isOpen: boolean
+  message: string
+  onClose?: () => void
+  primaryOptionOnClick?: () => void
+  primaryOptionText?: string
+  secondaryOptionOnClick?: () => void
+  secondaryOptionText?: string
+  title: string
 }
 
 const MessageDialog = ({
@@ -54,7 +54,7 @@ const MessageDialog = ({
         )}
       </DialogActions>
     </Dialog>
-  );
-};
+  )
+}
 
-export default MessageDialog;
+export default MessageDialog

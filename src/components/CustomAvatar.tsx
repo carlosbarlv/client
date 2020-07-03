@@ -1,8 +1,8 @@
-import React from 'react';
-import { Avatar } from 'antd';
-import { AvatarProps } from 'antd/lib/avatar';
+import React from 'react'
+import { Avatar } from 'antd'
+import { AvatarProps } from 'antd/lib/avatar'
 
-type CustomAvatarProps = AvatarProps;
+type CustomAvatarProps = AvatarProps
 
 const CustomAvatar: React.FunctionComponent<CustomAvatarProps> = ({
   alt = '',
@@ -24,6 +24,6 @@ const CustomAvatar: React.FunctionComponent<CustomAvatarProps> = ({
   >
     {props.children}
   </Avatar>
-);
+)
 
-export default CustomAvatar;
+export default CustomAvatar

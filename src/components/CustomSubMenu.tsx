@@ -1,20 +1,20 @@
-import React, { ReactNode } from 'react';
-import { Menu } from 'antd';
+import React, { ReactNode } from 'react'
+import { Menu } from 'antd'
 
-const { SubMenu } = Menu;
+const { SubMenu } = Menu
 
 interface TitleEventEntity {
-  key: string;
-  domEvent: Event;
+  key: string
+  domEvent: Event
 }
 
 interface CustomSubMenuProps {
-  popupClassName?: string;
-  disabled?: boolean;
-  key?: string;
-  title?: string | ReactNode;
-  icon?: ReactNode;
-  onTitleClick?: (e: TitleEventEntity) => void;
+  popupClassName?: string
+  disabled?: boolean
+  key?: string
+  title?: string | ReactNode
+  icon?: ReactNode
+  onTitleClick?: (e: TitleEventEntity) => void
 }
 
 const CustomSubMenu: React.FunctionComponent<CustomSubMenuProps> = ({
@@ -24,6 +24,6 @@ const CustomSubMenu: React.FunctionComponent<CustomSubMenuProps> = ({
   <SubMenu disabled={disabled} {...props}>
     {props.children}
   </SubMenu>
-);
+)
 
-export default CustomSubMenu;
+export default CustomSubMenu

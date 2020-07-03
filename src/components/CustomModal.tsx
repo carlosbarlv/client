@@ -1,8 +1,8 @@
-import React from 'react';
-import { Modal } from 'antd';
-import { ModalProps } from 'antd/lib/modal';
+import React from 'react'
+import { Modal } from 'antd'
+import { ModalProps } from 'antd/lib/modal'
 
-type CustomModalProps = ModalProps;
+type CustomModalProps = ModalProps
 
 const CustomModal: React.FunctionComponent<CustomModalProps> = ({
   bodyStyle = {},
@@ -42,6 +42,6 @@ const CustomModal: React.FunctionComponent<CustomModalProps> = ({
   >
     {props.children}
   </Modal>
-);
+)
 
-export default CustomModal;
+export default CustomModal

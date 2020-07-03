@@ -1,4 +1,4 @@
-import Login from './Login';
-import RegisterPerson from './RegisterPerson';
+import Login from './Login'
+import RegisterPerson from './RegisterPerson'
 
-export { Login, RegisterPerson };
+export { Login, RegisterPerson }

@@ -1,11 +1,11 @@
-import React from 'react';
-import { CustomTabs, CustomTabPane } from '../components';
+import React from 'react'
+import { CustomTabPane, CustomTabs } from '../components'
 
 type TabConfig = {
-  title: string;
-  type: string;
-  node: React.ReactNode;
-};
+  title: string
+  type: string
+  node: React.ReactNode
+}
 
 const tabOptions: ReadonlyArray<TabConfig> = [
   {
@@ -53,7 +53,7 @@ const tabOptions: ReadonlyArray<TabConfig> = [
     type: 'personaFisica-personaJuridica',
     node: <div>transacciones</div>,
   },
-];
+]
 
 const RegisterPerson: React.FunctionComponent = () => {
   return (
@@ -64,7 +64,7 @@ const RegisterPerson: React.FunctionComponent = () => {
         </CustomTabPane>
       ))}
     </CustomTabs>
-  );
-};
+  )
+}
 
-export default RegisterPerson;
+export default RegisterPerson

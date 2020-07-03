@@ -1,10 +1,10 @@
-import React from 'react';
-import { Layout } from 'antd';
-import { SiderProps } from 'antd/lib/layout';
+import React from 'react'
+import { Layout } from 'antd'
+import { SiderProps } from 'antd/lib/layout'
 
-const { Sider } = Layout;
+const { Sider } = Layout
 
-type CustomSiderProps = SiderProps;
+type CustomSiderProps = SiderProps
 
 const CustomSider: React.FunctionComponent<CustomSiderProps> = ({
   collapsedWidth = 80,
@@ -24,6 +24,6 @@ const CustomSider: React.FunctionComponent<CustomSiderProps> = ({
   >
     {props.children}
   </Sider>
-);
+)
 
-export default CustomSider;
+export default CustomSider

@@ -1,8 +1,8 @@
-import React from 'react';
-import { Row } from 'antd';
-import { RowProps } from 'antd/lib/row';
+import React from 'react'
+import { Row } from 'antd'
+import { RowProps } from 'antd/lib/row'
 
-type CustomRowProps = RowProps;
+type CustomRowProps = RowProps
 
 const CustomRow: React.FunctionComponent<CustomRowProps> = ({
   align = 'middle',
@@ -13,6 +13,6 @@ const CustomRow: React.FunctionComponent<CustomRowProps> = ({
   <Row align={align} gutter={gutter} justify={justify} {...props}>
     {props.children}
   </Row>
-);
+)
 
-export default CustomRow;
+export default CustomRow

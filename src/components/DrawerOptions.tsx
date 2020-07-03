@@ -1,8 +1,8 @@
-import React from 'react';
-import { CustomMenu, CustomSubMenu, CustomMenuItem } from '../components';
-import { useHistory } from 'react-router-dom';
+import React from 'react'
+import { CustomMenu, CustomMenuItem, CustomSubMenu } from '../components'
+import { useHistory } from 'react-router-dom'
 
-let history: any;
+let history: any
 
 const getMenuItems = (userOptions: object[] = []) => {
   return userOptions.map((route: any) => {
@@ -14,23 +14,23 @@ const getMenuItems = (userOptions: object[] = []) => {
       <CustomMenuItem
         key={route.id}
         onClick={() => {
-          if (route.MODULO) history.push(route.MODULO);
+          if (route.MODULO) history.push(route.MODULO)
         }}
       >
         {route.name}
       </CustomMenuItem>
-    );
-  });
-};
+    )
+  })
+}
 
 const DrawerOptions = (props: any) => {
-  const { userMenuOptions = [] } = props;
-  history = useHistory();
+  const { userMenuOptions = [] } = props
+  history = useHistory()
   return (
     <CustomMenu mode={'inline'} inlineIndent={10}>
       {getMenuItems(userMenuOptions)}
     </CustomMenu>
-  );
-};
+  )
+}
 
-export default DrawerOptions;
+export default DrawerOptions

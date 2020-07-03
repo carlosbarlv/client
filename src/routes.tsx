@@ -1,12 +1,8 @@
-import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { Login, RegisterPerson } from './pages';
-import ProtectedRoutesWrapper from './components/ProtectedRoutesWrapper';
-import {
-  PATH_MAIN,
-  PATH_LOGIN,
-  PATH_REGISTER_PERSON,
-} from './constants/routes';
+import React from 'react'
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
+import { Login, RegisterPerson } from './pages'
+import ProtectedRoutesWrapper from './components/ProtectedRoutesWrapper'
+import { PATH_LOGIN, PATH_MAIN, PATH_REGISTER_PERSON } from './constants/routes'
 
 const Routes = () => {
   return (
@@ -23,7 +19,7 @@ const Routes = () => {
         </ProtectedRoutesWrapper>
       </Switch>
     </Router>
-  );
-};
+  )
+}
 
-export default Routes;
+export default Routes

@@ -1,8 +1,8 @@
-import React from 'react';
-import { Menu } from 'antd';
-import { MenuProps } from 'antd/lib/menu';
+import React from 'react'
+import { Menu } from 'antd'
+import { MenuProps } from 'antd/lib/menu'
 
-type CustomMenuProps = MenuProps;
+type CustomMenuProps = MenuProps
 
 const CustomMenu: React.FunctionComponent<CustomMenuProps> = ({
   forceSubMenuRender = false,
@@ -28,6 +28,6 @@ const CustomMenu: React.FunctionComponent<CustomMenuProps> = ({
   >
     {props.children}
   </Menu>
-);
+)
 
-export default CustomMenu;
+export default CustomMenu
