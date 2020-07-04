@@ -120,7 +120,7 @@ const AddPersonTableTitle = (): React.ReactElement => {
   );
 };
 
-const Person: React.FunctionComponent<any> = (): React.ReactElement => (
+const Person = (): React.ReactElement => (
   <CustomTable
     title={AddPersonTableTitle}
     columns={columns}
