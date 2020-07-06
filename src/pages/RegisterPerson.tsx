@@ -1,5 +1,6 @@
 import React from 'react'
 import { CustomTabPane, CustomTabs } from '../components'
+import Person from './Person'
 
 type TabConfig = {
   title: string
@@ -11,7 +12,7 @@ const tabOptions: ReadonlyArray<TabConfig> = [
   {
     title: 'Relación de Personas',
     type: 'root-personaFisica-personaJuridica',
-    node: <div>RelacionPersona</div>,
+    node: <Person />,
   },
   {
     title: 'Persona Física',

@@ -3,7 +3,7 @@ import { Typography } from 'antd'
 
 const { Title } = Typography
 
-interface CustomTitleProps {
+export interface CustomTitleProps {
   code?: boolean
   copyable?: boolean | { text: string; onCopy: () => void }
   deleted?: boolean

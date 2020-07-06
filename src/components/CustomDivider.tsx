@@ -2,9 +2,7 @@ import React from 'react'
 import { Divider } from 'antd'
 import { DividerProps } from 'antd/lib/divider'
 
-type CustomDividerProps = DividerProps
-
-const CustomDivider: React.FunctionComponent<CustomDividerProps> = ({
+const CustomDivider: React.FunctionComponent<DividerProps> = ({
   dashed = false,
   orientation = 'center',
   type = 'horizontal',

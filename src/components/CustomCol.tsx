@@ -2,9 +2,7 @@ import React from 'react'
 import { Col } from 'antd'
 import { ColProps } from 'antd/lib/col'
 
-type CustomColProps = ColProps
-
-const CustomCol: React.FunctionComponent<CustomColProps> = ({
+const CustomCol: React.FunctionComponent<ColProps> = ({
   flex = 0,
   lg = {},
   md = {},

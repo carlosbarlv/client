@@ -2,9 +2,7 @@ import React from 'react'
 import { Avatar } from 'antd'
 import { AvatarProps } from 'antd/lib/avatar'
 
-type CustomAvatarProps = AvatarProps
-
-const CustomAvatar: React.FunctionComponent<CustomAvatarProps> = ({
+const CustomAvatar: React.FunctionComponent<AvatarProps> = ({
   alt = '',
   onError = () => false,
   shape = 'circle',

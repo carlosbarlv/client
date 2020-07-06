@@ -2,9 +2,7 @@ import React from 'react'
 import { Modal } from 'antd'
 import { ModalProps } from 'antd/lib/modal'
 
-type CustomModalProps = ModalProps
-
-const CustomModal: React.FunctionComponent<CustomModalProps> = ({
+const CustomModal: React.FunctionComponent<ModalProps> = ({
   bodyStyle = {},
   cancelText = 'Cancel',
   centered = false,

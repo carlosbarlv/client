@@ -4,9 +4,7 @@ import { SiderProps } from 'antd/lib/layout'
 
 const { Sider } = Layout
 
-type CustomSiderProps = SiderProps
-
-const CustomSider: React.FunctionComponent<CustomSiderProps> = ({
+const CustomSider: React.FunctionComponent<SiderProps> = ({
   collapsedWidth = 80,
   collapsible = false,
   reverseArrow = false,

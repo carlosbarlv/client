@@ -2,9 +2,7 @@ import React from 'react'
 import { Row } from 'antd'
 import { RowProps } from 'antd/lib/row'
 
-type CustomRowProps = RowProps
-
-const CustomRow: React.FunctionComponent<CustomRowProps> = ({
+const CustomRow: React.FunctionComponent<RowProps> = ({
   align = 'middle',
   gutter = 0,
   justify = 'end',
