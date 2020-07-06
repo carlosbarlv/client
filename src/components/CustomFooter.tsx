@@ -1,11 +1,11 @@
-import React from 'react';
-import { Layout } from 'antd';
-import { CustomLayoutProps } from './CustomLayout';
+import React from 'react'
+import { Layout } from 'antd'
+import { CustomLayoutProps } from './CustomLayout'
 
-const { Footer } = Layout;
+const { Footer } = Layout
 
 const CustomFooter: React.FunctionComponent<CustomLayoutProps> = (
   props
-): React.ReactElement => <Footer {...props}>{props.children}</Footer>;
+): React.ReactElement => <Footer {...props}>{props.children}</Footer>
 
-export default CustomFooter;
+export default CustomFooter

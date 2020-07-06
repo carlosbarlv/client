@@ -1,7 +1,7 @@
-import React from 'react';
+import React from 'react'
 
 const Copyright: React.FunctionComponent = () => {
-  return <p>{`Copyright © ${new Date().getFullYear()}  BPS&TEC.`}</p>;
-};
+  return <p>{`Copyright © ${new Date().getFullYear()}  BPS&TEC.`}</p>
+}
 
-export default Copyright;
+export default Copyright

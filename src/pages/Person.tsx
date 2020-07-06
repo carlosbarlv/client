@@ -1,27 +1,27 @@
-import React from 'react';
-import { ColumnType } from 'antd/lib/table';
-import { Button, Tooltip } from 'antd';
-import { EditOutlined } from '@ant-design/icons';
-import { RadioChangeEvent } from 'antd/lib/radio';
+import React from 'react'
+import { ColumnType } from 'antd/lib/table'
+import { Button, Tooltip } from 'antd'
+import { EditOutlined } from '@ant-design/icons'
+import { RadioChangeEvent } from 'antd/lib/radio'
 import {
-  CustomTable,
-  CustomRow,
   CustomCol,
-  CustomText,
   CustomRadio,
   CustomRadioGroup,
+  CustomRow,
   CustomSearch,
-} from '../components';
+  CustomTable,
+  CustomText,
+} from '../components'
 
 interface Person {
-  action?: React.ReactNode;
-  codigo: string | number;
-  nombre: string;
-  doc_identidad: string;
-  telefono: string;
-  email: string;
-  categoria: string;
-  key: string;
+  action?: React.ReactNode
+  codigo: string | number
+  nombre: string
+  doc_identidad: string
+  telefono: string
+  email: string
+  categoria: string
+  key: string
 }
 
 const Action = (): React.ReactElement => {
@@ -29,8 +29,8 @@ const Action = (): React.ReactElement => {
     <Tooltip title={'Editar'}>
       <Button shape={'circle'} icon={<EditOutlined />} />
     </Tooltip>
-  );
-};
+  )
+}
 
 const columns: ColumnType<Person>[] = [
   {
@@ -68,7 +68,7 @@ const columns: ColumnType<Person>[] = [
     title: 'Categoría',
     dataIndex: 'categoria',
   },
-];
+]
 
 const data: Person[] = [
   {
@@ -89,13 +89,13 @@ const data: Person[] = [
     categoria: '12',
     key: '12',
   },
-];
+]
 
 const AddPersonTableTitle = (): React.ReactElement => {
-  const [entryStateFilter, setEntryStateFilter] = React.useState('T');
+  const [entryStateFilter, setEntryStateFilter] = React.useState('T')
   const handleRadioChange = (e: RadioChangeEvent) => {
-    setEntryStateFilter(e.target.value);
-  };
+    setEntryStateFilter(e.target.value)
+  }
 
   return (
     <CustomRow>
@@ -117,8 +117,8 @@ const AddPersonTableTitle = (): React.ReactElement => {
         </CustomRow>
       </CustomCol>
     </CustomRow>
-  );
-};
+  )
+}
 
 const Person = (): React.ReactElement => (
   <CustomTable
@@ -126,6 +126,6 @@ const Person = (): React.ReactElement => (
     columns={columns}
     dataSource={data}
   />
-);
+)
 
-export default Person;
+export default Person

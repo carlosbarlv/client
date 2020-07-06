@@ -1,12 +1,12 @@
-import React from 'react';
-import { Input } from 'antd';
-import { CustomInputProps } from './CustomInput';
+import React from 'react'
+import { Input } from 'antd'
+import { CustomInputProps } from './CustomInput'
 
-const { Password } = Input;
+const { Password } = Input
 
 type CustomPasswordInputProps = CustomInputProps & {
-  visibilityToggle?: boolean;
-};
+  visibilityToggle?: boolean
+}
 
 const CustomPasswordInput: React.FunctionComponent<CustomPasswordInputProps> = ({
   disabled = false,
@@ -22,6 +22,6 @@ const CustomPasswordInput: React.FunctionComponent<CustomPasswordInputProps> = (
   >
     {props.children}
   </Password>
-);
+)
 
-export default CustomPasswordInput;
+export default CustomPasswordInput

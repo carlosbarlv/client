@@ -1,8 +1,8 @@
-import React from 'react';
-import { Tabs } from 'antd';
-import { TabPaneProps } from 'antd/lib/tabs';
+import React from 'react'
+import { Tabs } from 'antd'
+import { TabPaneProps } from 'antd/lib/tabs'
 
-const { TabPane } = Tabs;
+const { TabPane } = Tabs
 
 const CustomTabPane: React.FunctionComponent<TabPaneProps> = ({
   forceRender = false,
@@ -11,6 +11,6 @@ const CustomTabPane: React.FunctionComponent<TabPaneProps> = ({
   <TabPane forceRender={forceRender} {...props}>
     {props.children}
   </TabPane>
-);
+)
 
-export default CustomTabPane;
+export default CustomTabPane

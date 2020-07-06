@@ -1,23 +1,23 @@
-import React, { useEffect } from 'react';
-import { Redirect } from 'react-router-dom';
-import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
-import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
+import React, { useEffect } from 'react'
+import { Redirect } from 'react-router-dom'
+import styled from 'styled-components'
+import { useDispatch, useSelector } from 'react-redux'
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 import {
-  CustomLayout,
-  CustomSider,
+  Copyright,
+  CustomContent,
+  CustomDivider,
   CustomFooter,
   CustomHeader,
-  CustomContent,
+  CustomLayout,
+  CustomSider,
   CustomText,
-  Copyright,
-  CustomDivider,
   DrawerOptions,
-} from '../components';
-import { getMenuOptions } from '../actions/user';
-import { getBusinessInfo } from '../actions/business';
-import { isLoggedIn, getSessionInfo } from '../utils/session';
-import { PATH_LOGIN } from '../constants/routes';
+} from '../components'
+import { getMenuOptions } from '../actions/user'
+import { getBusinessInfo } from '../actions/business'
+import { getSessionInfo, isLoggedIn } from '../utils/session'
+import { PATH_LOGIN } from '../constants/routes'
 
 const SiderHeaderContainer = styled.div`
   text-align: center;
@@ -30,27 +30,27 @@ const SiderHeaderContainer = styled.div`
     display: block;
     font-weight: bold;
   }
-`;
+`
 
 const HeaderTextContainer = styled(CustomText)`
   color: #fff;
   font-size: 20px;
-`;
+`
 
 const ProtectedRoutesWrapper = (props: any) => {
-  const dispatch = useDispatch(),
-    userStore = useSelector((state: any) => state.user),
-    businessStore = useSelector((state: any) => state.business),
-    [isCollapsed, setIsCollapsed] = React.useState(true),
-    { username = '', businessId = '' } = getSessionInfo(),
-    handleDrawerToggle = () => {
-      setIsCollapsed(!isCollapsed);
-    };
+  const dispatch = useDispatch()
+  const userStore = useSelector((state: any) => state.user)
+  const businessStore = useSelector((state: any) => state.business)
+  const [isCollapsed, setIsCollapsed] = React.useState(true)
+  const { username = '', businessId = '' } = getSessionInfo()
+  const handleDrawerToggle = () => {
+    setIsCollapsed(!isCollapsed)
+  }
 
   useEffect(() => {
-    dispatch(getMenuOptions(username, businessId));
-    dispatch(getBusinessInfo(businessId));
-  }, [businessId, username, dispatch]);
+    dispatch(getMenuOptions(username, businessId))
+    dispatch(getBusinessInfo(businessId))
+  }, [businessId, username, dispatch])
 
   return isLoggedIn() ? (
     <CustomLayout>
@@ -107,7 +107,7 @@ const ProtectedRoutesWrapper = (props: any) => {
     </CustomLayout>
   ) : (
     <Redirect to={PATH_LOGIN} />
-  );
-};
+  )
+}
 
-export default ProtectedRoutesWrapper;
+export default ProtectedRoutesWrapper

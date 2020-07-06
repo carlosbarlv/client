@@ -1,8 +1,8 @@
-import React from 'react';
-import { Form } from 'antd';
-import { FormItemProps } from 'antd/lib/form';
+import React from 'react'
+import { Form } from 'antd'
+import { FormItemProps } from 'antd/lib/form'
 
-const { Item } = Form;
+const { Item } = Form
 
 const CustomFormItem: React.FunctionComponent<FormItemProps> = ({
   colon = true,
@@ -30,6 +30,6 @@ const CustomFormItem: React.FunctionComponent<FormItemProps> = ({
   >
     {props.children}
   </Item>
-);
+)
 
-export default CustomFormItem;
+export default CustomFormItem

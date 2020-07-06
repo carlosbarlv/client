@@ -1,33 +1,33 @@
-import React from 'react';
-import { Typography } from 'antd';
+import React from 'react'
+import { Typography } from 'antd'
 
-const { Title } = Typography;
+const { Title } = Typography
 
 export interface CustomTitleProps {
-  code?: boolean;
-  copyable?: boolean | { text: string; onCopy: () => void };
-  deleted?: boolean;
-  disabled?: boolean;
+  code?: boolean
+  copyable?: boolean | { text: string; onCopy: () => void }
+  deleted?: boolean
+  disabled?: boolean
   editable?:
     | boolean
     | {
-        editing: boolean;
-        onStart: () => void;
-        onChange: (value: string) => void;
-      };
+        editing: boolean
+        onStart: () => void
+        onChange: (value: string) => void
+      }
   ellipsis?:
     | boolean
     | {
-        rows?: number;
-        expandable?: boolean;
-        suffix?: string;
-        onExpand?: React.MouseEventHandler<HTMLElement>;
-        onEllipsis?: (ellipsis: boolean) => void;
-      };
-  level?: 1 | 2 | 3 | 4;
-  mark?: boolean;
-  type?: 'secondary' | 'warning' | 'danger';
-  underline?: boolean;
+        rows?: number
+        expandable?: boolean
+        suffix?: string
+        onExpand?: React.MouseEventHandler<HTMLElement>
+        onEllipsis?: (ellipsis: boolean) => void
+      }
+  level?: 1 | 2 | 3 | 4
+  mark?: boolean
+  type?: 'secondary' | 'warning' | 'danger'
+  underline?: boolean
 }
 
 const CustomTitle: React.FunctionComponent<CustomTitleProps> = ({
@@ -56,6 +56,6 @@ const CustomTitle: React.FunctionComponent<CustomTitleProps> = ({
   >
     {props.children}
   </Title>
-);
+)
 
-export default CustomTitle;
+export default CustomTitle

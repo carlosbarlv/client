@@ -1,6 +1,6 @@
-import React from 'react';
-import { Button } from 'antd';
-import { ButtonProps } from 'antd/lib/button';
+import React from 'react'
+import { Button } from 'antd'
+import { ButtonProps } from 'antd/lib/button'
 
 const CustomButton: React.FunctionComponent<ButtonProps> = ({
   block = false,
@@ -22,6 +22,6 @@ const CustomButton: React.FunctionComponent<ButtonProps> = ({
   >
     {props.children}
   </Button>
-);
+)
 
-export default CustomButton;
+export default CustomButton

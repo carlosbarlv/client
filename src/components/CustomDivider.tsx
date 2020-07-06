@@ -1,6 +1,6 @@
-import React from 'react';
-import { Divider } from 'antd';
-import { DividerProps } from 'antd/lib/divider';
+import React from 'react'
+import { Divider } from 'antd'
+import { DividerProps } from 'antd/lib/divider'
 
 const CustomDivider: React.FunctionComponent<DividerProps> = ({
   dashed = false,
@@ -18,13 +18,13 @@ const CustomDivider: React.FunctionComponent<DividerProps> = ({
   >
     {props.children}
   </Divider>
-);
+)
 
 CustomDivider.defaultProps = {
   dashed: false,
   orientation: 'center',
   type: 'horizontal',
   plain: true,
-};
+}
 
-export default CustomDivider;
+export default CustomDivider

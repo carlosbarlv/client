@@ -1,25 +1,25 @@
-import React from 'react';
-import { Typography } from 'antd';
+import React from 'react'
+import { Typography } from 'antd'
 
-const { Text } = Typography;
+const { Text } = Typography
 
 interface CustomTextProps {
-  code?: boolean;
-  copyable?: boolean | { text: string; onCopy: () => void };
-  deleted?: boolean;
-  disabled?: boolean;
+  code?: boolean
+  copyable?: boolean | { text: string; onCopy: () => void }
+  deleted?: boolean
+  disabled?: boolean
   editable?:
     | boolean
     | {
-        editing: boolean;
-        onStart: () => void;
-        onChange: (value: string) => void;
-      };
-  ellipsis?: boolean;
-  mark?: boolean;
-  underline?: boolean;
-  strong?: boolean;
-  type?: 'secondary' | 'warning' | 'danger';
+        editing: boolean
+        onStart: () => void
+        onChange: (value: string) => void
+      }
+  ellipsis?: boolean
+  mark?: boolean
+  underline?: boolean
+  strong?: boolean
+  type?: 'secondary' | 'warning' | 'danger'
 }
 
 const CustomText: React.FunctionComponent<CustomTextProps> = ({
@@ -48,6 +48,6 @@ const CustomText: React.FunctionComponent<CustomTextProps> = ({
   >
     {props.children}
   </Text>
-);
+)
 
-export default CustomText;
+export default CustomText

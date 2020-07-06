@@ -1,6 +1,6 @@
-import React from 'react';
-import { Tabs } from 'antd';
-import { TabsProps } from 'antd/lib/tabs';
+import React from 'react'
+import { Tabs } from 'antd'
+import { TabsProps } from 'antd/lib/tabs'
 
 const CustomTabs: React.FunctionComponent<TabsProps> = ({
   hideAdd = false,
@@ -20,6 +20,6 @@ const CustomTabs: React.FunctionComponent<TabsProps> = ({
   >
     {props.children}
   </Tabs>
-);
+)
 
-export default CustomTabs;
+export default CustomTabs

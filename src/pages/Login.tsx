@@ -1,10 +1,11 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import { Modal } from 'antd';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import styled from 'styled-components';
+import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Redirect } from 'react-router-dom'
+import { Modal } from 'antd'
+import { LockOutlined, UserOutlined } from '@ant-design/icons'
+import styled from 'styled-components'
 import {
+  Copyright,
   CustomAvatar,
   CustomButton,
   CustomCol,
@@ -17,28 +18,27 @@ import {
   CustomPasswordInput,
   CustomRow,
   CustomTitle,
-  Copyright,
-} from '../components';
-import { authenticateUser, authenticateUserHideError } from '../actions/login';
-import { isLoggedIn } from '../utils/session';
-import { PATH_MAIN } from '../constants/routes';
+} from '../components'
+import { authenticateUser, authenticateUserHideError } from '../actions/login'
+import { isLoggedIn } from '../utils/session'
+import { PATH_MAIN } from '../constants/routes'
 
 interface ILoginState {
-  isSubmitted: boolean;
-  showAuthenticationError: boolean;
+  isSubmitted: boolean
+  showAuthenticationError: boolean
 }
 
 interface IProps {
-  login: ILoginState;
+  login: ILoginState
 }
 
 const StyledCol = styled(CustomCol)`
   height: 100%;
-`;
+`
 
 const StyledRow = styled(CustomRow)`
   height: 100%;
-`;
+`
 
 const ContentContainer = styled.div`
   text-align: center;
@@ -47,20 +47,20 @@ const ContentContainer = styled.div`
   padding: 35px 20px;
   box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2),
     0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12);
-`;
+`
 
 const FormContainer = styled.div`
   text-align: left;
-`;
+`
 
 const Login: React.FunctionComponent = () => {
   const { showAuthenticationError, isSubmitted } = useSelector(
-      (state: IProps) => state.login
-    ),
-    dispatch = useDispatch();
+    (state: IProps) => state.login
+  )
+  const dispatch = useDispatch()
 
   if (isLoggedIn()) {
-    return <Redirect to={PATH_MAIN} />;
+    return <Redirect to={PATH_MAIN} />
   }
 
   if (showAuthenticationError) {
@@ -69,9 +69,9 @@ const Login: React.FunctionComponent = () => {
       content:
         'Ocurrió un error al iniciar sesión, por favor verifique sus datos.',
       onOk() {
-        dispatch(authenticateUserHideError());
+        dispatch(authenticateUserHideError())
       },
-    });
+    })
   }
 
   return (
@@ -85,7 +85,7 @@ const Login: React.FunctionComponent = () => {
               <CustomDivider />
               <CustomForm
                 onFinish={({ username, password }) => {
-                  dispatch(authenticateUser(username, password));
+                  dispatch(authenticateUser(username, password))
                 }}
               >
                 <FormContainer>
@@ -137,7 +137,7 @@ const Login: React.FunctionComponent = () => {
         </StyledRow>
       </CustomContent>
     </CustomLayout>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

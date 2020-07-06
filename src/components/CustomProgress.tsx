@@ -1,6 +1,6 @@
-import React from 'react';
-import { Progress } from 'antd';
-import { ProgressProps } from 'antd/lib/progress';
+import React from 'react'
+import { Progress } from 'antd'
+import { ProgressProps } from 'antd/lib/progress'
 
 const CustomProgress: React.FunctionComponent<ProgressProps> = ({
   type = 'line',
@@ -22,6 +22,6 @@ const CustomProgress: React.FunctionComponent<ProgressProps> = ({
   >
     {props.children}
   </Progress>
-);
+)
 
-export default CustomProgress;
+export default CustomProgress
