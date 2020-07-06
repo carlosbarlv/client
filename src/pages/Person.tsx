@@ -93,7 +93,7 @@ const data: Person[] = [
 
 const AddPersonTableTitle = (): React.ReactElement => {
   const [entryStateFilter, setEntryStateFilter] = React.useState('T')
-  const handleRadioChange = (e: RadioChangeEvent) => {
+  const handleStateFilterRadioChange = (e: RadioChangeEvent) => {
     setEntryStateFilter(e.target.value)
   }
 
@@ -108,7 +108,7 @@ const AddPersonTableTitle = (): React.ReactElement => {
           <CustomText>Ver: </CustomText>
           <CustomRadioGroup
             value={entryStateFilter}
-            onChange={handleRadioChange}
+            onChange={handleStateFilterRadioChange}
           >
             <CustomRadio value="T">Todos</CustomRadio>
             <CustomRadio value="A">Activos</CustomRadio>
