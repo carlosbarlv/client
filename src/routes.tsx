@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { ReactElement } from 'react'
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
 import { Login, RegisterPerson } from './pages'
 import ProtectedRoutesWrapper from './components/ProtectedRoutesWrapper'
 import { PATH_LOGIN, PATH_MAIN, PATH_REGISTER_PERSON } from './constants/routes'
 
-const Routes = () => {
+const Routes = (): ReactElement => {
   return (
     <Router>
       <Switch>

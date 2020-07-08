@@ -23,13 +23,13 @@ import { authenticateUser, authenticateUserHideError } from '../actions/login'
 import { isLoggedIn } from '../utils/session'
 import { PATH_MAIN } from '../constants/routes'
 
-interface ILoginState {
+type State = {
   isSubmitted: boolean
   showAuthenticationError: boolean
 }
 
-interface IProps {
-  login: ILoginState
+type Props = {
+  login: State
 }
 
 const StyledCol = styled(CustomCol)`
@@ -55,7 +55,7 @@ const FormContainer = styled.div`
 
 const Login: React.FunctionComponent = () => {
   const { showAuthenticationError, isSubmitted } = useSelector(
-    (state: IProps) => state.login
+    (state: Props) => state.login
   )
   const dispatch = useDispatch()
 

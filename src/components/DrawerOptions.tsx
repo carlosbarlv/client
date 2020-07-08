@@ -1,34 +1,39 @@
-import React from 'react'
+import React, { ReactElement } from 'react'
 import { CustomMenu, CustomMenuItem, CustomSubMenu } from '../components'
 import { useHistory } from 'react-router-dom'
+import { MenuOption } from '../reducers/user'
 
-let history: any
+let history
 
-const getMenuItems = (userOptions: object[] = []) => {
-  return userOptions.map((route: any) => {
-    return route.children && route.children.length ? (
-      <CustomSubMenu key={route.id} title={route.name}>
-        {getMenuItems(route.children)}
+const getMenuItems = (userOptions: MenuOption[]) => {
+  return userOptions.map((route: MenuOption) => {
+    return route.CHILDREN && route.CHILDREN.length ? (
+      <CustomSubMenu key={route.ID} title={route.NAME}>
+        {getMenuItems(route.CHILDREN)}
       </CustomSubMenu>
     ) : (
       <CustomMenuItem
-        key={route.id}
+        key={route.ID}
         onClick={() => {
           if (route.MODULO) history.push(route.MODULO)
         }}
       >
-        {route.name}
+        {route.NAME}
       </CustomMenuItem>
     )
   })
 }
 
-const DrawerOptions = (props: any) => {
-  const { userMenuOptions = [] } = props
+type Props = {
+  userMenuOptions: MenuOption[]
+}
+
+const DrawerOptions = (props: Props): ReactElement => {
   history = useHistory()
+
   return (
     <CustomMenu mode={'inline'} inlineIndent={10}>
-      {getMenuItems(userMenuOptions)}
+      {getMenuItems(props.userMenuOptions)}
     </CustomMenu>
   )
 }

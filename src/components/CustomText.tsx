@@ -3,7 +3,7 @@ import { Typography } from 'antd'
 
 const { Text } = Typography
 
-interface CustomTextProps {
+type CustomTextProps = {
   code?: boolean
   copyable?: boolean | { text: string; onCopy: () => void }
   deleted?: boolean

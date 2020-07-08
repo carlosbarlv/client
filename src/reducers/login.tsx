@@ -4,6 +4,13 @@ import {
   LOGIN_AUTHENTICATE_HIDE_ERROR,
   LOGIN_AUTHENTICATE_SUCCESS,
 } from '../constants/actions'
+import { LoginAction } from '../actions/login'
+
+export type LoginState = {
+  isLoggedIn: boolean
+  isSubmitted: boolean
+  showAuthenticationError: boolean
+}
 
 const initialState = {
   isLoggedIn: false,
@@ -11,7 +18,10 @@ const initialState = {
   showAuthenticationError: false,
 }
 
-const login = (state = initialState, action: any) => {
+const login = (
+  state: LoginState = initialState,
+  action: LoginAction
+): LoginState => {
   switch (action.type) {
     case LOGIN_AUTHENTICATE:
       return {

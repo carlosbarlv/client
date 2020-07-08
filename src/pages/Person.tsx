@@ -13,7 +13,7 @@ import {
   CustomText,
 } from '../components'
 
-interface Person {
+type Person = {
   action?: React.ReactNode
   codigo: string | number
   nombre: string

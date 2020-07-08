@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { ReactElement, useEffect } from 'react'
 import { Redirect } from 'react-router-dom'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
@@ -18,6 +18,7 @@ import { getMenuOptions } from '../actions/user'
 import { getBusinessInfo } from '../actions/business'
 import { getSessionInfo, isLoggedIn } from '../utils/session'
 import { PATH_LOGIN } from '../constants/routes'
+import { StoreState } from '../reducers'
 
 const SiderHeaderContainer = styled.div`
   text-align: center;
@@ -37,10 +38,14 @@ const HeaderTextContainer = styled(CustomText)`
   font-size: 20px;
 `
 
-const ProtectedRoutesWrapper = (props: any) => {
+type Props = {
+  children: ReactElement[] | ReactElement
+}
+
+const ProtectedRoutesWrapper = (props: Props): ReactElement => {
   const dispatch = useDispatch()
-  const userStore = useSelector((state: any) => state.user)
-  const businessStore = useSelector((state: any) => state.business)
+  const userStore = useSelector((state: StoreState) => state.user)
+  const businessStore = useSelector((state: StoreState) => state.business)
   const [isCollapsed, setIsCollapsed] = React.useState(true)
   const { username = '', businessId = '' } = getSessionInfo()
   const handleDrawerToggle = () => {
@@ -52,7 +57,11 @@ const ProtectedRoutesWrapper = (props: any) => {
     dispatch(getBusinessInfo(businessId))
   }, [businessId, username, dispatch])
 
-  return isLoggedIn() ? (
+  if (!isLoggedIn()) {
+    return <Redirect to={PATH_LOGIN} />
+  }
+
+  return (
     <CustomLayout>
       <CustomSider
         collapsed={isCollapsed}
@@ -105,8 +114,6 @@ const ProtectedRoutesWrapper = (props: any) => {
         </CustomFooter>
       </CustomLayout>
     </CustomLayout>
-  ) : (
-    <Redirect to={PATH_LOGIN} />
   )
 }
 

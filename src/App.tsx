@@ -4,7 +4,7 @@ import store from './store'
 import Routes from './routes'
 import 'antd/dist/antd.css'
 
-function App() {
+function App(): React.ReactElement {
   return (
     <Provider store={store}>
       <Routes />

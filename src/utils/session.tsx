@@ -1,6 +1,14 @@
-export const isLoggedIn = () => sessionStorage.getItem('BPS-user') !== null
+export const isLoggedIn = (): boolean => {
+  return sessionStorage.getItem('BPS-user') !== null
+}
 
-export const createSession = (user: any) => {
+type UserData = {
+  businessId: string
+  token: string
+  username: string
+}
+
+export const createSession = (user: UserData): void => {
   const { businessId, token, username } = user
   const sessionInfo = JSON.stringify({
     businessId,
@@ -11,11 +19,11 @@ export const createSession = (user: any) => {
   sessionStorage.setItem('BPS-user', sessionInfo)
 }
 
-export const removeSession = () => {
+export const removeSession = (): void => {
   sessionStorage.removeItem('BPS-user')
 }
 
-export const getSessionInfo = () => {
+export const getSessionInfo = (): UserData => {
   return isLoggedIn()
     ? JSON.parse(sessionStorage.getItem('BPS-user') || '')
     : {}

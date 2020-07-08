@@ -3,12 +3,12 @@ import { Menu } from 'antd'
 
 const { SubMenu } = Menu
 
-interface TitleEventEntity {
+type TitleEventEntity = {
   key: string
   domEvent: Event
 }
 
-interface CustomSubMenuProps {
+type CustomSubMenuProps = {
   popupClassName?: string
   disabled?: boolean
   key?: string

@@ -6,17 +6,18 @@ import {
 } from '../actions/business'
 import { WEB_SERVICE_API_BUSINESS } from '../constants/routes'
 import { USER_GET_MENU_OPTIONS } from '../constants/actions'
+import { GetMenuOptionsAction } from '../actions/user'
 
-function* getBusinessInfo({ businessId }: any) {
+function* getBusinessInfo(payload: GetMenuOptionsAction) {
   try {
     const response = yield call(Axios.post, WEB_SERVICE_API_BUSINESS, {
-      pidEmpresa: businessId,
+      pidEmpresa: payload.businessId,
     })
 
     if (response.data.items && !response.data.items.length) {
       yield put(getBusinessInfoFailure())
     } else {
-      const { NOMBRE_EMPRESA: name, NOMBRE_CC: ccName } = response.data.items[0]
+      const [{ NOMBRE_EMPRESA: name, NOMBRE_CC: ccName }] = response.data.items
 
       yield put(getBusinessInfoSuccess(name, ccName))
     }

@@ -1,17 +1,10 @@
-import React, { ReactNode } from 'react'
+import React from 'react'
 import { Menu } from 'antd'
+import { MenuItemProps } from 'antd/lib/menu/MenuItem'
 
 const { Item } = Menu
 
-interface CustomMenuItemProps {
-  disabled?: boolean
-  key?: string
-  title?: string | ReactNode
-  icon?: ReactNode
-  onClick?: (ev: any) => void
-}
-
-const CustomMenuItem: React.FunctionComponent<CustomMenuItemProps> = ({
+const CustomMenuItem: React.FunctionComponent<MenuItemProps> = ({
   disabled = false,
   ...props
 }): React.ReactElement => (
