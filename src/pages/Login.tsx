@@ -19,7 +19,7 @@ import {
   CustomRow,
   Heading2,
 } from '../components'
-import { authenticateUser, authenticateUserHideError } from '../actions/login'
+import { authenticateUser, authenticateUserHideError } from '../actions/user'
 import { isLoggedIn } from '../utils/session'
 import { PATH_MAIN } from '../constants/routes'
 
@@ -29,7 +29,7 @@ type State = {
 }
 
 type Props = {
-  login: State
+  user: State
 }
 
 const StyledCol = styled(CustomCol)`
@@ -55,7 +55,7 @@ const FormContainer = styled.div`
 
 const Login: React.FunctionComponent = () => {
   const { showAuthenticationError, isSubmitted } = useSelector(
-    (state: Props) => state.login
+    (state: Props) => state.user
   )
   const dispatch = useDispatch()
 

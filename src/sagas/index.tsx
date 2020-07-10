@@ -1,5 +1,4 @@
-import { watchAuthenticateUser } from './login'
-import { watchGetUserMenuOptions } from './user'
+import { watchAuthenticateUser, watchGetUserMenuOptions } from './user'
 import { watchGetBusinessInfo } from './business'
 import { all } from 'redux-saga/effects'
 
