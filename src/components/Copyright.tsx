@@ -1,7 +1,10 @@
 import React from 'react'
+import { SecondaryParagraph } from './'
 
 const Copyright: React.FunctionComponent = () => {
-  return <p>{`Copyright © ${new Date().getFullYear()}  BPS&TEC.`}</p>
+  return (
+    <SecondaryParagraph>{`Copyright © ${new Date().getFullYear()}  BPS&TEC.`}</SecondaryParagraph>
+  )
 }
 
 export default Copyright

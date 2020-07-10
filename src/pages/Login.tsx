@@ -17,7 +17,7 @@ import {
   CustomLayout,
   CustomPasswordInput,
   CustomRow,
-  CustomTitle,
+  Heading2,
 } from '../components'
 import { authenticateUser, authenticateUserHideError } from '../actions/login'
 import { isLoggedIn } from '../utils/session'
@@ -42,7 +42,7 @@ const StyledRow = styled(CustomRow)`
 
 const ContentContainer = styled.div`
   text-align: center;
-  background-color: white;
+  background-color: ${({ theme }) => theme.backgroundColor};
   height: 100%;
   padding: 35px 20px;
   box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2),
@@ -81,7 +81,7 @@ const Login: React.FunctionComponent = () => {
           <StyledCol xs={24} sm={16} md={10}>
             <ContentContainer>
               <CustomAvatar size={40} icon={<LockOutlined />} />
-              <CustomTitle level={2}>Iniciar Sesión</CustomTitle>
+              <Heading2>Iniciar Sesión</Heading2>
               <CustomDivider />
               <CustomForm
                 onFinish={({ username, password }) => {

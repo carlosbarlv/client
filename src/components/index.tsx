@@ -26,6 +26,14 @@ import CustomTable from './CustomTable'
 import CustomRadio from './CustomRadio'
 import CustomRadioGroup from './CustomRadioGroup'
 import CustomSearch from './CustomSearch'
+import {
+  Heading1,
+  Heading2,
+  Heading3,
+  Heading4,
+  Paragraph,
+  SecondaryParagraph,
+} from './CustomTypography'
 
 export {
   Copyright,
@@ -56,4 +64,10 @@ export {
   CustomText,
   CustomTitle,
   DrawerOptions,
+  Heading1,
+  Heading2,
+  Heading3,
+  Heading4,
+  Paragraph,
+  SecondaryParagraph,
 }
