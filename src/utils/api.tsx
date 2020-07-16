@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from 'axios'
 import { getSessionInfo } from './session'
 import {
+  WEB_SERVICE_API_GET_PERSONAS,
   WEB_SERVICE_API_LOGIN,
   WEB_SERVICE_API_PERSONAL_MENU,
 } from '../constants/routes'
@@ -23,10 +24,19 @@ const getResponseParams = (): RequestHeaders => {
   }
 }
 
+const getDefaultData = () => {
+  const { businessId } = getSessionInfo()
+
+  return {
+    businessId,
+  }
+}
+
 function postRequest<T>(url: string, data: object): Promise<AxiosResponse<T>> {
   const config = getResponseParams()
+  const defaultData = getDefaultData()
 
-  const result = axios.post(url, data, config)
+  const result = axios.post(url, { ...defaultData, ...data }, config)
 
   return result
 }
@@ -68,4 +78,27 @@ const getUserMenuOptions = (
 export const userApiHelpers = {
   authenticateUser,
   getUserMenuOptions,
+}
+
+const getPaginatedUrl = (url: string, page = 1, size = 1): string => {
+  return `${url}?page=${page}&size=${size}`
+}
+
+export type GetPersonaListPayload = {
+  status?: string
+}
+
+const getPersonaList = (
+  data: GetPersonaListPayload,
+  pageNumber = 1,
+  pageSize = 10
+): Promise<AxiosResponse<GetPersonaListPayload>> => {
+  return postRequest(
+    getPaginatedUrl(WEB_SERVICE_API_GET_PERSONAS, pageNumber, pageSize),
+    data
+  )
+}
+
+export const partnersApiHelpers = {
+  getPersonaList,
 }

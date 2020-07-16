@@ -1,9 +1,9 @@
-import React from 'react';
-import RadioGroup from 'antd/lib/radio/group';
-import { RadioGroupProps } from 'antd/lib/radio';
+import React from 'react'
+import { Radio } from 'antd'
+import { RadioGroupProps } from 'antd/lib/radio'
 
 const CustomRadioGroup: React.FunctionComponent<RadioGroupProps> = ({
   ...props
-}): React.ReactElement => <RadioGroup {...props}>{props.children}</RadioGroup>;
+}): React.ReactElement => <Radio.Group {...props}>{props.children}</Radio.Group>
 
-export default CustomRadioGroup;
+export default CustomRadioGroup

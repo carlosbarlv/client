@@ -15,7 +15,7 @@ export type MenuOption = {
   NAME: string
   ID: string
   PARENT: string
-  MODULO: Nullable<string>
+  MODULE: Nullable<string>
   CHILDREN?: MenuOption[]
 }
 

@@ -22,15 +22,7 @@ import {
 import { authenticateUser, authenticateUserHideError } from '../actions/user'
 import { isLoggedIn } from '../utils/session'
 import { PATH_MAIN } from '../constants/routes'
-
-type State = {
-  isSubmitted: boolean
-  showAuthenticationError: boolean
-}
-
-type Props = {
-  user: State
-}
+import { StoreState } from '../reducers'
 
 const StyledCol = styled(CustomCol)`
   height: 100%;
@@ -55,7 +47,7 @@ const FormContainer = styled.div`
 
 const Login: React.FunctionComponent = () => {
   const { showAuthenticationError, isSubmitted } = useSelector(
-    (state: Props) => state.user
+    (state: StoreState) => state.user
   )
   const dispatch = useDispatch()
 
