@@ -16,7 +16,7 @@ import {
 } from '../components'
 import { getMenuOptions } from '../actions/user'
 import { getBusinessInfo } from '../actions/business'
-import { getSessionInfo, isLoggedIn } from '../utils/session'
+import { getSessionInfo, isLoggedIn, removeSession } from '../utils/session'
 import { PATH_LOGIN } from '../constants/routes'
 import { StoreState } from '../reducers'
 
@@ -58,6 +58,8 @@ const ProtectedRoutesWrapper = (props: Props): ReactElement => {
   }, [businessId, username, dispatch])
 
   if (!isLoggedIn()) {
+    removeSession()
+
     return <Redirect to={PATH_LOGIN} />
   }
 

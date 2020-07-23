@@ -9,18 +9,16 @@ import {
 type RequestHeaders = {
   headers: {
     'Content-Type': string
-    authorization: string
   }
+  withCredentials: boolean
 }
 
 const getResponseParams = (): RequestHeaders => {
-  const { token } = getSessionInfo()
-
   return {
     headers: {
       'Content-Type': 'application/json',
-      authorization: token,
     },
+    withCredentials: true,
   }
 }
 
@@ -45,9 +43,9 @@ function unauthorizedPostRequest<T>(
   url: string,
   data: T
 ): Promise<AxiosResponse<T>> {
-  const result = axios.post(url, data)
+  const config = getResponseParams()
 
-  return result
+  return axios.post(url, data, config)
 }
 
 type authenticateUserPayload = {
