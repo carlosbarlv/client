@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from 'axios'
 import { getSessionInfo } from './session'
 import {
+  WEB_SERVICE_API_GENERAL_GET_NACIONALITIES,
   WEB_SERVICE_API_GET_PERSONAS,
   WEB_SERVICE_API_LOGIN,
   WEB_SERVICE_API_PERSONAL_MENU,
@@ -37,6 +38,12 @@ function postRequest<T>(url: string, data: object): Promise<AxiosResponse<T>> {
   const result = axios.post(url, { ...defaultData, ...data }, config)
 
   return result
+}
+
+function getRequest<T>(url: string): Promise<AxiosResponse<T>> {
+  const config = getResponseParams()
+
+  return axios.get(url, config)
 }
 
 function unauthorizedPostRequest<T>(
@@ -99,4 +106,12 @@ const getPersonaList = (
 
 export const partnersApiHelpers = {
   getPersonaList,
+}
+
+const getNationalities = (): Promise<AxiosResponse<GetPersonaListPayload>> => {
+  return getRequest(WEB_SERVICE_API_GENERAL_GET_NACIONALITIES)
+}
+
+export const nationalitiesApiHelpers = {
+  getNationalities,
 }
