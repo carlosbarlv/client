@@ -2,6 +2,7 @@ import { watchAuthenticateUser, watchGetUserMenuOptions } from './user'
 import { watchGetBusinessInfo } from './business'
 import { watchGetPaginatedPartners } from './partners'
 import { all } from 'redux-saga/effects'
+import { watchGetNationalities } from './general'
 
 export default function* rootSaga(): Generator {
   yield all([
@@ -9,5 +10,6 @@ export default function* rootSaga(): Generator {
     watchGetBusinessInfo(),
     watchGetUserMenuOptions(),
     watchGetPaginatedPartners(),
+    watchGetNationalities(),
   ])
 }
