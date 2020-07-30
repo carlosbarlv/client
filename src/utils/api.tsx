@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios'
-import { getSessionInfo } from './session'
+import { getSessionInfo, getSessionToken } from './session'
 import {
   WEB_SERVICE_API_GENERAL_GET_NACIONALITIES,
   WEB_SERVICE_API_GET_PERSONAS,
@@ -10,16 +10,16 @@ import {
 type RequestHeaders = {
   headers: {
     'Content-Type': string
+    Authorization: string
   }
-  withCredentials: boolean
 }
 
 const getResponseParams = (): RequestHeaders => {
   return {
     headers: {
       'Content-Type': 'application/json',
+      Authorization: getSessionToken(),
     },
-    withCredentials: true,
   }
 }
 

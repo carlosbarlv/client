@@ -14,16 +14,24 @@ export const isLoggedIn = (): boolean => {
 type UserData = {
   businessId: string
   username: string
+  sessionCookie: {
+    token: string
+    expiration: string
+  }
 }
 
 export const createSession = (user: UserData): void => {
-  const { businessId, username } = user
+  const { businessId, username, sessionCookie } = user
+  const { token: sessionToken, expiration: sessionExpiration } = sessionCookie
   const sessionInfo = JSON.stringify({
     businessId,
     username,
   })
 
   Cookies.set(COOKIE_KEY_USER_DATA, sessionInfo)
+  Cookies.set(COOKIE_KEY_SESSION_TOKEN, sessionToken, {
+    expires: Date.parse(sessionExpiration),
+  })
 }
 
 export const removeSession = (): void => {
@@ -34,4 +42,8 @@ export const removeSession = (): void => {
 
 export const getSessionInfo = (): UserData => {
   return isLoggedIn() ? Cookies.getJSON(COOKIE_KEY_USER_DATA) : {}
+}
+
+export const getSessionToken = (): string => {
+  return Cookies.get(COOKIE_KEY_SESSION_TOKEN) || ''
 }
