@@ -26,6 +26,7 @@ import CustomTable from './CustomTable'
 import CustomRadio from './CustomRadio'
 import CustomRadioGroup from './CustomRadioGroup'
 import CustomSearch from './CustomSearch'
+import CustomTooltip from './CustomTooltip'
 import {
   Heading1,
   Heading2,
@@ -63,6 +64,7 @@ export {
   CustomTabs,
   CustomText,
   CustomTitle,
+  CustomTooltip,
   DrawerOptions,
   Heading1,
   Heading2,

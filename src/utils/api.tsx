@@ -3,6 +3,7 @@ import { getSessionInfo, getSessionToken } from './session'
 import {
   WEB_SERVICE_API_GENERAL_GET_NACIONALITIES,
   WEB_SERVICE_API_GET_PERSONAS,
+  WEB_SERVICE_API_GET_PRODUCT_RANGES,
   WEB_SERVICE_API_LOGIN,
   WEB_SERVICE_API_PERSONAL_MENU,
 } from '../constants/routes'
@@ -40,12 +41,6 @@ function postRequest<T>(url: string, data: object): Promise<AxiosResponse<T>> {
   return result
 }
 
-function getRequest<T>(url: string): Promise<AxiosResponse<T>> {
-  const config = getResponseParams()
-
-  return axios.get(url, config)
-}
-
 function unauthorizedPostRequest<T>(
   url: string,
   data: T
@@ -53,6 +48,12 @@ function unauthorizedPostRequest<T>(
   const config = getResponseParams()
 
   return axios.post(url, data, config)
+}
+
+function getRequest<T>(url: string): Promise<AxiosResponse<T>> {
+  const config = getResponseParams()
+
+  return axios.get(url, config)
 }
 
 type authenticateUserPayload = {
@@ -114,4 +115,14 @@ const getNationalities = (): Promise<AxiosResponse<GetPersonaListPayload>> => {
 
 export const nationalitiesApiHelpers = {
   getNationalities,
+}
+
+const getProductRanges = (): Promise<AxiosResponse> => {
+  const { businessId } = getSessionInfo()
+
+  return getRequest(`${WEB_SERVICE_API_GET_PRODUCT_RANGES}/${businessId}`)
+}
+
+export const catchementsApiHelpers = {
+  getProductRanges,
 }

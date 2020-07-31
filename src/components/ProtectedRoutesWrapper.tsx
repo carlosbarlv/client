@@ -110,7 +110,9 @@ const ProtectedRoutesWrapper = (props: Props): ReactElement => {
             {businessStore.ccName ? ` - ${businessStore.ccName}` : ''}
           </HeaderTextContainer>
         </CustomHeader>
-        <CustomContent>{props.children}</CustomContent>
+        <CustomContent style={{ padding: '15px' }}>
+          {props.children}
+        </CustomContent>
         <CustomFooter style={{ textAlign: 'center' }}>
           <Copyright />
         </CustomFooter>

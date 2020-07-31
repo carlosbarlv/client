@@ -1,6 +1,7 @@
 import { watchAuthenticateUser, watchGetUserMenuOptions } from './user'
 import { watchGetBusinessInfo } from './business'
 import { watchGetPaginatedPartners } from './partners'
+import { watchGetProductRanges } from './catchements'
 import { all } from 'redux-saga/effects'
 import { watchGetNationalities } from './general'
 
@@ -11,5 +12,6 @@ export default function* rootSaga(): Generator {
     watchGetUserMenuOptions(),
     watchGetPaginatedPartners(),
     watchGetNationalities(),
+    watchGetProductRanges(),
   ])
 }
