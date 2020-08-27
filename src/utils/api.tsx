@@ -1,12 +1,14 @@
 import axios, { AxiosResponse } from 'axios'
 import { getSessionInfo, getSessionToken } from './session'
 import {
+  WEB_SERVICE_API_CREATE_UPDATE_PRODUCT_RANGES,
   WEB_SERVICE_API_GENERAL_GET_NACIONALITIES,
   WEB_SERVICE_API_GET_PERSONAS,
   WEB_SERVICE_API_GET_PRODUCT_RANGES,
   WEB_SERVICE_API_LOGIN,
   WEB_SERVICE_API_PERSONAL_MENU,
 } from '../constants/routes'
+import { ProductRange } from '../reducers/catchements'
 
 type RequestHeaders = {
   headers: {
@@ -24,19 +26,16 @@ const getResponseParams = (): RequestHeaders => {
   }
 }
 
-const getDefaultData = () => {
-  const { businessId } = getSessionInfo()
-
-  return {
-    businessId,
-  }
-}
-
 function postRequest<T>(url: string, data: object): Promise<AxiosResponse<T>> {
   const config = getResponseParams()
-  const defaultData = getDefaultData()
+  const result = axios.post(url, data, config)
 
-  const result = axios.post(url, { ...defaultData, ...data }, config)
+  return result
+}
+
+function putRequest<T>(url: string, data: object): Promise<AxiosResponse<T>> {
+  const config = getResponseParams()
+  const result = axios.put(url, data, config)
 
   return result
 }
@@ -123,6 +122,30 @@ const getProductRanges = (): Promise<AxiosResponse> => {
   return getRequest(`${WEB_SERVICE_API_GET_PRODUCT_RANGES}/${businessId}`)
 }
 
+const createProductRange = (
+  rangoProducto: ProductRange
+): Promise<AxiosResponse> => {
+  const { businessId } = getSessionInfo()
+
+  return postRequest(WEB_SERVICE_API_CREATE_UPDATE_PRODUCT_RANGES, {
+    ...rangoProducto,
+    ID_EMPRESA: businessId,
+  })
+}
+
+const updateProductRange = (
+  rangoProducto: ProductRange
+): Promise<AxiosResponse> => {
+  const { businessId } = getSessionInfo()
+
+  return putRequest(WEB_SERVICE_API_CREATE_UPDATE_PRODUCT_RANGES, {
+    ...rangoProducto,
+    ID_EMPRESA: businessId,
+  })
+}
+
 export const catchementsApiHelpers = {
   getProductRanges,
+  createProductRange,
+  updateProductRange,
 }

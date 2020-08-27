@@ -27,6 +27,8 @@ import CustomRadio from './CustomRadio'
 import CustomRadioGroup from './CustomRadioGroup'
 import CustomSearch from './CustomSearch'
 import CustomTooltip from './CustomTooltip'
+import CustomModal from './CustomModal'
+import CustomNumberInput from './CustomNumberInput'
 import {
   Heading1,
   Heading2,
@@ -51,6 +53,8 @@ export {
   CustomLayout,
   CustomMenu,
   CustomMenuItem,
+  CustomModal,
+  CustomNumberInput,
   CustomPasswordInput,
   CustomProgress,
   CustomRadio,

@@ -1,9 +1,17 @@
 import {
+  CATCHEMENTS_CREATE_PRODUCT_RANGE,
+  CATCHEMENTS_CREATE_PRODUCT_RANGE_FAILURE,
+  CATCHEMENTS_CREATE_PRODUCT_RANGE_SUCCESS,
   CATCHEMENTS_GET_PRODUCT_RANGES,
   CATCHEMENTS_GET_PRODUCT_RANGES_FAILURE,
   CATCHEMENTS_GET_PRODUCT_RANGES_SUCCESS,
+  CATCHEMENTS_SET_PRODUCT_RANGE_MODAL_VISIBILITY,
+  CATCHEMENTS_UPDATE_PRODUCT_RANGE,
+  CATCHEMENTS_UPDATE_PRODUCT_RANGE_FAILURE,
+  CATCHEMENTS_UPDATE_PRODUCT_RANGE_SUCCESS,
 } from '../constants/actions'
 import { CatchementsAction } from '../actions/catchements'
+import { updateObjectArray } from '../utils/general'
 
 export type ProductRange = {
   ID_EMPRESA: string
@@ -29,11 +37,15 @@ export type ProductRange = {
 export type CatchementsState = {
   productRanges: ProductRange[]
   fetchingProductRanges: boolean
+  sendingProductRangeData: boolean
+  showProductRangeModal: boolean
 }
 
 const initialState = {
   productRanges: [],
   fetchingProductRanges: false,
+  sendingProductRangeData: false,
+  showProductRangeModal: false,
 }
 
 const catchements = (
@@ -59,6 +71,56 @@ const catchements = (
       return {
         ...state,
         fetchingProductRanges: false,
+      }
+    case CATCHEMENTS_CREATE_PRODUCT_RANGE:
+      return {
+        ...state,
+        sendingProductRangeData: true,
+      }
+    case CATCHEMENTS_CREATE_PRODUCT_RANGE_SUCCESS: {
+      const { newProductRange } = action
+
+      return {
+        ...state,
+        sendingProductRangeData: false,
+        showProductRangeModal: false,
+        productRanges: [...state.productRanges, newProductRange],
+      }
+    }
+    case CATCHEMENTS_CREATE_PRODUCT_RANGE_FAILURE:
+      return {
+        ...state,
+        sendingProductRangeData: false,
+      }
+    case CATCHEMENTS_UPDATE_PRODUCT_RANGE:
+      return {
+        ...state,
+        sendingProductRangeData: true,
+      }
+    case CATCHEMENTS_UPDATE_PRODUCT_RANGE_SUCCESS: {
+      const { updatedProductRange } = action
+      const updatedProductRangeList = updateObjectArray(
+        state.productRanges,
+        updatedProductRange,
+        'ID_RANGO'
+      )
+
+      return {
+        ...state,
+        sendingProductRangeData: false,
+        showProductRangeModal: false,
+        productRanges: updatedProductRangeList,
+      }
+    }
+    case CATCHEMENTS_UPDATE_PRODUCT_RANGE_FAILURE:
+      return {
+        ...state,
+        sendingProductRangeData: false,
+      }
+    case CATCHEMENTS_SET_PRODUCT_RANGE_MODAL_VISIBILITY:
+      return {
+        ...state,
+        showProductRangeModal: action.showProductRangeModal,
       }
     default:
       return state
