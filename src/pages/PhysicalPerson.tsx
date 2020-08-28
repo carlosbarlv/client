@@ -2,27 +2,17 @@ import React from 'react'
 import {
   CustomButton,
   CustomCol,
-  CustomDivider,
   CustomForm,
   CustomFormItem,
-  CustomInput,
   CustomLayout,
   CustomRow,
-  CustomTitle,
 } from '../components'
 import GeneralData from '../components/GeneralData'
 import styled from 'styled-components'
-
-const formItemLayout = {
-  labelCol: {
-    xs: { span: 24 },
-    sm: { span: 8 },
-  },
-  wrapperCol: {
-    xs: { span: 24 },
-    sm: { span: 24 },
-  },
-}
+import IncomeInformation from '../components/IncomeInformation'
+import { PlusOutlined } from '@ant-design/icons'
+import PoliticallyExposedPerson from '../components/PoliticallyExposedPerson'
+import { formItemLayout } from '../themes'
 
 const FormContainer = styled.div`
   padding-left: 10px;
@@ -70,17 +60,14 @@ const PhysicalPerson = (): React.ReactElement => {
         >
           <CustomForm {...formItemLayout} validateMessages={validateMessages}>
             <FormContainer>
-              <CustomDivider orientation={'left'}>
-                <CustomTitle level={4}>Datos Generales</CustomTitle>
-              </CustomDivider>
-              <CustomRow justify={'start'}>
-                <CustomCol xs={24} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                  <CustomFormItem label={'Código'} name={'codigo'}>
-                    <CustomInput disabled placeholder={'Código persona'} />
-                  </CustomFormItem>
-                </CustomCol>
-              </CustomRow>
               <GeneralData />
+              <CustomRow justify={'end'}>
+                <CustomButton icon={<PlusOutlined />} type={'primary'}>
+                  Agregar Relacionado
+                </CustomButton>
+              </CustomRow>
+              <IncomeInformation />
+              <PoliticallyExposedPerson />
               <CustomFormItem>
                 <CustomButton htmlType={'submit'} type={'primary'}>
                   Guardar

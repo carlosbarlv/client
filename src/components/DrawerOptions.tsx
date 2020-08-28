@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react'
-import { CustomMenu, CustomMenuItem, CustomSubMenu } from '../components'
 import { useHistory } from 'react-router-dom'
+import { CustomMenu, CustomMenuItem, CustomSubMenu } from '../components'
 import { MenuOption } from '../reducers/user'
 
 let history

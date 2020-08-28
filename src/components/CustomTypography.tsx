@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components'
+import styled, { css, CSSObject } from 'styled-components'
 
 const baseHeadingStyles = css`
   color: ${({ theme }) => theme.primaryTextColor};
@@ -25,10 +25,10 @@ export const Heading4 = styled.h4`
 `
 
 export const Paragraph = styled.p`
-  color: ${({ theme }) => theme.primaryTextColor};
+  color: ${({ theme }): CSSObject => theme.primaryTextColor};
   font-size: 14px;
 `
 
 export const SecondaryParagraph = styled(Paragraph)`
-  color: ${({ theme }) => theme.secondaryTextColor};
+  color: ${({ theme }): CSSObject => theme.secondaryTextColor};
 `

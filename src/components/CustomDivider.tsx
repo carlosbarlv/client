@@ -5,15 +5,15 @@ import { DividerProps } from 'antd/lib/divider'
 const CustomDivider: React.FunctionComponent<DividerProps> = ({
   dashed = false,
   orientation = 'center',
-  type = 'horizontal',
   plain = true,
+  type = 'horizontal',
   ...props
 }): React.ReactElement => (
   <Divider
     dashed={dashed}
     orientation={orientation}
-    type={type}
     plain={plain}
+    type={type}
     {...props}
   >
     {props.children}

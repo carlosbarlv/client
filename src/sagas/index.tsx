@@ -7,17 +7,25 @@ import {
   watchUpdateProductRangeSaga,
 } from './catchements'
 import { all } from 'redux-saga/effects'
-import { watchGetNationalities } from './general'
+import {
+  watchGetCoins,
+  watchGetNationalities,
+  watchGetPartnersCategories,
+} from './general'
+import { watchGetPaginatedEconomicActivities } from './economicActivities'
 
 export default function* rootSaga(): Generator {
   yield all([
     watchAuthenticateUser(),
     watchGetBusinessInfo(),
-    watchGetUserMenuOptions(),
-    watchGetPaginatedPartners(),
     watchGetNationalities(),
+    watchGetPaginatedPartners(),
+    watchGetPartnersCategories(),
     watchGetProductRanges(),
     watchCreateProductRange(),
     watchUpdateProductRangeSaga(),
+    watchGetUserMenuOptions(),
+    watchGetPaginatedEconomicActivities(),
+    watchGetCoins(),
   ])
 }

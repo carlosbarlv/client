@@ -1,9 +1,21 @@
 import { call, put, takeLatest } from 'redux-saga/effects'
-import { nationalitiesApiHelpers } from '../utils/api'
-import { GENERAL_GET_NATIONALITIES } from '../constants/actions'
 import {
+  coinsApiHelpers,
+  nationalitiesApiHelpers,
+  partnersCategoriesApiHelpers,
+} from '../utils/api'
+import {
+  GENERAL_GET_COINS,
+  GENERAL_GET_NATIONALITIES,
+  GENERAL_GET_PARTNERS_CATEGORIES,
+} from '../constants/actions'
+import {
+  getCoinsFailure,
+  getCoinsSuccess,
   getNationalitiesFailure,
   getNationalitiesSuccess,
+  getPartnersCategoriesFailure,
+  getPartnersCategoriesSuccess,
 } from '../actions/general'
 
 function* getNationalitiesSaga() {
@@ -20,8 +32,42 @@ function* getNationalitiesSaga() {
   }
 }
 
+function* getPartnersCategoriesSaga() {
+  try {
+    const response = yield call(() =>
+      partnersCategoriesApiHelpers.getPartnersCategories()
+    )
+
+    const { data: partnersCategories } = response.data
+
+    yield put(getPartnersCategoriesSuccess(partnersCategories))
+  } catch (error) {
+    yield put(getPartnersCategoriesFailure())
+  }
+}
+
+function* getCoinsSaga() {
+  try {
+    const response = yield call(() => coinsApiHelpers.getCoins())
+
+    const { data: coins } = response.data
+
+    yield put(getCoinsSuccess(coins))
+  } catch (error) {
+    yield put(getCoinsFailure())
+  }
+}
+
 function* watchGetNationalities() {
   yield takeLatest(GENERAL_GET_NATIONALITIES, getNationalitiesSaga)
 }
 
-export { watchGetNationalities }
+function* watchGetPartnersCategories() {
+  yield takeLatest(GENERAL_GET_PARTNERS_CATEGORIES, getPartnersCategoriesSaga)
+}
+
+function* watchGetCoins() {
+  yield takeLatest(GENERAL_GET_COINS, getCoinsSaga)
+}
+
+export { watchGetNationalities, watchGetPartnersCategories, watchGetCoins }

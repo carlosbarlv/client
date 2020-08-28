@@ -2,13 +2,17 @@ import axios, { AxiosResponse } from 'axios'
 import { getSessionInfo, getSessionToken } from './session'
 import {
   WEB_SERVICE_API_CREATE_UPDATE_PRODUCT_RANGES,
+  WEB_SERVICE_API_GENERAL_GET_LIST_PARAMETERS,
   WEB_SERVICE_API_GENERAL_GET_NACIONALITIES,
+  WEB_SERVICE_API_GET_COINS,
+  WEB_SERVICE_API_GET_ECONOMIC_ACTIVITY,
   WEB_SERVICE_API_GET_PERSONAS,
   WEB_SERVICE_API_GET_PRODUCT_RANGES,
   WEB_SERVICE_API_LOGIN,
   WEB_SERVICE_API_PERSONAL_MENU,
 } from '../constants/routes'
 import { ProductRange } from '../reducers/catchements'
+import { ID_PARTNERS_CATEGORIES_LIST } from '../constants/general'
 
 type RequestHeaders = {
   headers: {
@@ -148,4 +152,34 @@ export const catchementsApiHelpers = {
   getProductRanges,
   createProductRange,
   updateProductRange,
+}
+
+const getPartnersCategories = (): Promise<AxiosResponse> => {
+  const { businessId } = getSessionInfo()
+
+  return getRequest(
+    `${WEB_SERVICE_API_GENERAL_GET_LIST_PARAMETERS}/${businessId}/${ID_PARTNERS_CATEGORIES_LIST}`
+  )
+}
+
+export const partnersCategoriesApiHelpers = {
+  getPartnersCategories,
+}
+
+const getEconomicActivities = (): Promise<AxiosResponse> => {
+  return getRequest(`${WEB_SERVICE_API_GET_ECONOMIC_ACTIVITY}`)
+}
+
+export const economicActivitiesApiHelpers = {
+  getEconomicActivities,
+}
+
+const getCoins = (): Promise<AxiosResponse> => {
+  const { businessId } = getSessionInfo()
+
+  return getRequest(`${WEB_SERVICE_API_GET_COINS}/${businessId}`)
+}
+
+export const coinsApiHelpers = {
+  getCoins,
 }

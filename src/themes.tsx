@@ -24,3 +24,31 @@ export const mediaQueries = {
 }
 
 export const maxDesktopWidth = '1180px'
+
+export const defaultBreakpoints = {
+  xs: 24,
+  sm: 24,
+  md: 12,
+  lg: 12,
+  xl: 12,
+  xxl: 12,
+}
+
+export const formItemLayout = {
+  labelCol: {
+    xs: { span: 24 },
+    sm: { span: 8 },
+  },
+  wrapperCol: {
+    xs: { span: 24 },
+    sm: { span: 24 },
+  },
+}
+
+export const labelColFullWidth = {
+  labelCol: {
+    xs: { span: 2 },
+    sm: { span: 8 },
+    md: { span: 4 },
+  },
+}

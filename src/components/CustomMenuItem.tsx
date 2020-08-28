@@ -13,8 +13,4 @@ const CustomMenuItem: React.FunctionComponent<MenuItemProps> = ({
   </Item>
 )
 
-CustomMenuItem.defaultProps = {
-  disabled: false,
-}
-
 export default CustomMenuItem

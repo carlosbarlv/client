@@ -1,10 +1,21 @@
 import React from 'react'
 import DatePicker, { DatePickerProps } from 'antd/lib/date-picker'
+import localeProp from 'antd/es/date-picker/locale/es_ES'
+import 'moment/locale/es'
 
-const CustomDatePicker: React.FunctionComponent<DatePickerProps> = ({
+type CustomDatePickerProps = DatePickerProps & {
+  locale?: object
+}
+
+const CustomDatePicker: React.FunctionComponent<CustomDatePickerProps> = ({
+  locale = localeProp,
   ...props
 }): React.ReactElement => {
-  return <DatePicker {...props}>{props.children}</DatePicker>
+  return (
+    <DatePicker locale={locale} {...props}>
+      {props.children}
+    </DatePicker>
+  )
 }
 
 export default CustomDatePicker
