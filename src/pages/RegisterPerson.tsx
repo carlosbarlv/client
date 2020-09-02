@@ -2,6 +2,7 @@ import React from 'react'
 import { CustomTabPane, CustomTabs } from '../components'
 import Person from './Person'
 import PhysicalPerson from './PhysicalPerson'
+import LegalPerson from './LegalPerson'
 
 type TabConfig = {
   title: string
@@ -23,7 +24,7 @@ const tabOptions: ReadonlyArray<TabConfig> = [
   {
     title: 'Persona Jurídica',
     type: 'personaJuridica',
-    node: <div>PersonaJuridica</div>,
+    node: <LegalPerson />,
   },
   {
     title: 'Proveedor',
@@ -59,7 +60,7 @@ const tabOptions: ReadonlyArray<TabConfig> = [
 
 const RegisterPerson: React.FunctionComponent = () => {
   return (
-    <CustomTabs type={'card'} activeKey={'1'}>
+    <CustomTabs type={'card'} activeKey={'2'}>
       {tabOptions.map((value: TabConfig, index: number) => (
         <CustomTabPane tab={value.title} key={`${index}`}>
           {value.node}
