@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { PlusOutlined } from '@ant-design/icons'
 import { Select } from 'antd'
 import {
@@ -6,27 +7,40 @@ import {
   CustomCol,
   CustomDivider,
   CustomForm,
+  CustomFormContainer,
   CustomFormItem,
   CustomInput,
   CustomInputGroup,
   CustomInputNumber,
   CustomLayout,
   CustomRow,
+  CustomSelect,
   CustomSpace,
   CustomTitle,
+  LegalRepresentatives,
 } from '../components'
-import CustomSelect from '../components/CustomSelect'
-import CustomFormContainer from '../components/CustomFormContainer'
-import LegalRepresentatives from '../components/LegalRepresentatives'
 import {
   defaultBreakpoints,
   formItemLayout,
   labelColFullWidth,
 } from '../themes'
+import { getPartnersCategories } from '../actions/general'
 import { validateMessages } from '../constants/general'
+import { PartnersCategories } from '../reducers/general'
+import { StoreState } from '../reducers'
 
 const LegalPerson = (): React.ReactElement => {
   const { Option } = Select
+
+  const dispatch = useDispatch()
+
+  const { partnersCategories } = useSelector(
+    (state: StoreState) => state.general
+  )
+
+  useEffect(() => {
+    dispatch(getPartnersCategories())
+  }, [dispatch])
 
   return (
     <CustomRow justify={'center'}>
@@ -135,7 +149,7 @@ const LegalPerson = (): React.ReactElement => {
                 </CustomCol>
                 <CustomCol {...defaultBreakpoints}>
                   <CustomFormItem
-                    label={'Cat. Socios'}
+                    label={'Categoría Socios'}
                     name={'categoriaSocio'}
                     rules={[
                       {
@@ -143,8 +157,20 @@ const LegalPerson = (): React.ReactElement => {
                       },
                     ]}
                   >
-                    <CustomSelect placeholder="Categoria Socios" allowClear>
-                      <Option value="#1">#1</Option>
+                    <CustomSelect placeholder="Categoría Socios" allowClear>
+                      {partnersCategories.map(
+                        (
+                          parnertCategory: PartnersCategories,
+                          index: number
+                        ) => (
+                          <Option
+                            key={`${parnertCategory.desc}-${index}`}
+                            value={`${parnertCategory.value}`}
+                          >
+                            {parnertCategory.desc}
+                          </Option>
+                        )
+                      )}
                     </CustomSelect>
                   </CustomFormItem>
                 </CustomCol>

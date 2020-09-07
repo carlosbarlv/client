@@ -60,7 +60,7 @@ const tabOptions: ReadonlyArray<TabConfig> = [
 
 const RegisterPerson: React.FunctionComponent = () => {
   return (
-    <CustomTabs type={'card'} activeKey={'2'}>
+    <CustomTabs type={'card'}>
       {tabOptions.map((value: TabConfig, index: number) => (
         <CustomTabPane tab={value.title} key={`${index}`}>
           {value.node}

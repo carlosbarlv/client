@@ -35,6 +35,8 @@ import CustomTooltip from './CustomTooltip'
 import CustomModal from './CustomModal'
 import CustomNumberInput from './CustomNumberInput'
 import DrawerOptions from './DrawerOptions'
+import CustomFormContainer from './CustomFormContainer'
+import LegalRepresentatives from './LegalRepresentatives'
 import {
   Heading1,
   Heading2,
@@ -88,4 +90,6 @@ export {
   Heading4,
   Paragraph,
   SecondaryParagraph,
+  CustomFormContainer,
+  LegalRepresentatives,
 }
