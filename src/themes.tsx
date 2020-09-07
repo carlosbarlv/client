@@ -52,3 +52,13 @@ export const labelColFullWidth = {
     md: { span: 4 },
   },
 }
+
+export const defaultBreakpointsForInputGroupLeft = {
+  xs: 24,
+  sm: 8,
+}
+
+export const defaultBreakpointsForInputGroupRight = {
+  xs: 24,
+  sm: 16,
+}

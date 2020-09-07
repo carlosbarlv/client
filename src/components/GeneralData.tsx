@@ -8,6 +8,7 @@ import { getNationalities, getPartnersCategories } from '../actions/general'
 import { PartnersCategories } from '../reducers/general'
 import { defaultBreakpoints } from '../themes'
 import {
+  CustomButton,
   CustomCol,
   CustomDatePicker,
   CustomDivider,
@@ -19,6 +20,7 @@ import {
   CustomSelect,
   CustomTitle,
 } from '.'
+import { PlusOutlined } from '@ant-design/icons'
 
 const { Option } = Select
 
@@ -38,188 +40,205 @@ const GeneralData = (): React.ReactElement => {
   }, [dispatch])
 
   return (
-    <CustomRow justify={'start'}>
-      <CustomDivider orientation={'left'}>
-        <CustomTitle level={4}>Datos Generales</CustomTitle>
-      </CustomDivider>
-      <CustomCol {...defaultBreakpoints}>
-        <CustomFormItem label={'Código'} name={'codigo'}>
-          <CustomInput disabled placeholder={'Código persona'} />
-        </CustomFormItem>
-      </CustomCol>
-      <CustomCol {...defaultBreakpoints}></CustomCol>
-      <CustomCol {...defaultBreakpoints}>
-        <CustomFormItem
-          label={'Cédula'}
-          name={'cedula'}
-          rules={[
-            {
-              required: true,
-              type: 'number',
-              len: 11,
-              transform: (value: string) =>
-                Number(value) ? value.length : value,
-            },
-          ]}
-        >
-          <CustomInput placeholder={'00000000000'} autoComplete={'off'} />
-        </CustomFormItem>
-      </CustomCol>
-
-      <CustomCol {...defaultBreakpoints}>
-        <CustomFormItem
-          label={'No. Pasaporte'}
-          name={'pasaporte'}
-          rules={[
-            {
-              required: true,
-            },
-          ]}
-        >
-          <CustomInput placeholder={'No. Pasaporte'} />
-        </CustomFormItem>
-      </CustomCol>
-
-      <CustomCol {...defaultBreakpoints}>
-        <CustomFormItem
-          label={'Nombre(s)'}
-          name={'nombre'}
-          rules={[
-            {
-              required: true,
-            },
-          ]}
-        >
-          <CustomInput placeholder={'Nombre(s)'} />
-        </CustomFormItem>
-      </CustomCol>
-      <CustomCol {...defaultBreakpoints}>
-        <CustomFormItem
-          label={'Apellido(s)'}
-          name={'apellido'}
-          rules={[
-            {
-              required: true,
-            },
-          ]}
-        >
-          <CustomInput placeholder={'Apellido(s)'} />
-        </CustomFormItem>
-      </CustomCol>
-      <CustomCol {...defaultBreakpoints}>
-        <CustomFormItem label={'Apodo'} name={'apodo'}>
-          <CustomInput placeholder={'Apodo (opcional)'} />
-        </CustomFormItem>
-      </CustomCol>
-      <CustomCol {...defaultBreakpoints}>
-        <CustomFormItem
-          label={'Nacionalidad'}
-          name={'nacionalidad'}
-          rules={[
-            {
-              required: true,
-            },
-          ]}
-        >
-          <CustomSelect placeholder={'Nacionalidad'} allowClear showSearch>
-            {nationalities.map((nationality: string, index: number) => (
-              <Option key={`${nationality}-${index}`} value={`${nationality}`}>
-                {nationality}
-              </Option>
-            ))}
-          </CustomSelect>
-        </CustomFormItem>
-      </CustomCol>
-
-      <CustomCol {...defaultBreakpoints}>
-        <CustomFormItem
-          label={'Lugar de nac.'}
-          name={'lugarNacimiento'}
-          rules={[
-            {
-              required: true,
-            },
-          ]}
-        >
-          <CustomInput placeholder={'Lugar de nacimiento'} />
-        </CustomFormItem>
-      </CustomCol>
-
-      <CustomCol {...defaultBreakpoints}>
-        <CustomFormItem
-          label={'Fecha de nacimiento'}
-          name={'fechaNacimiento'}
-          rules={[{ required: true }]}
-        >
-          <CustomDatePicker
-            allowClear
-            disabledDate={(date: moment.Moment) => {
-              return date && date > moment().endOf('day')
-            }}
-            format={'DD/MM/YYYY'}
-            placeholder={'Fecha nacimiento'}
-          />
-        </CustomFormItem>
-      </CustomCol>
-
-      <CustomCol {...defaultBreakpoints}>
-        <CustomFormItem
-          label={'Sexo'}
-          name={'sexo'}
-          rules={[{ required: true }]}
-        >
-          <CustomRadioGroup
-            value={entryStateSex}
-            onChange={handleStateSexRadioChange}
+    <div>
+      <CustomRow justify={'start'}>
+        <CustomDivider orientation={'left'}>
+          <CustomTitle level={4}>Datos Generales</CustomTitle>
+        </CustomDivider>
+        <CustomCol {...defaultBreakpoints}>
+          <CustomFormItem label={'Código'} name={'ID_PERSONA'}>
+            <CustomInput disabled placeholder={'Código persona'} />
+          </CustomFormItem>
+        </CustomCol>
+        <CustomCol {...defaultBreakpoints}></CustomCol>
+        <CustomCol {...defaultBreakpoints}>
+          <CustomFormItem
+            label={'Cédula'}
+            name={'DOCUMENTO_IDENTIDAD'}
+            rules={[
+              {
+                required: true,
+                type: 'number',
+                len: 11,
+                transform: (value: string) =>
+                  Number(value) ? value.length : value,
+              },
+            ]}
           >
-            <CustomRadio value={'M'}>Masculino</CustomRadio>
-            <CustomRadio value={'F'}>Femenino</CustomRadio>
-          </CustomRadioGroup>
-        </CustomFormItem>
-      </CustomCol>
+            <CustomInput placeholder={'00000000000'} autoComplete={'off'} />
+          </CustomFormItem>
+        </CustomCol>
 
-      <CustomCol {...defaultBreakpoints}>
-        <CustomFormItem
-          label={'Estado Civil'}
-          name={'estadoCivil'}
-          rules={[{ required: true }]}
-        >
-          <CustomRadioGroup
-            value={entryStateSex}
-            onChange={handleStateSexRadioChange}
+        <CustomCol {...defaultBreakpoints}>
+          <CustomFormItem
+            label={'No. Pasaporte'}
+            name={'NO_PASAPORTE'}
+            rules={[
+              {
+                required: true,
+              },
+            ]}
           >
-            <CustomRadio value={'S'}>Soltero(a)</CustomRadio>
-            <CustomRadio value={'C'}>Casado(a)</CustomRadio>
-            <CustomRadio value={'U'}>Unión Libre</CustomRadio>
-          </CustomRadioGroup>
-        </CustomFormItem>
-      </CustomCol>
+            <CustomInput placeholder={'No. Pasaporte'} />
+          </CustomFormItem>
+        </CustomCol>
 
-      <CustomCol {...defaultBreakpoints}>
-        <CustomFormItem
-          label={'Categoría Solicitada'}
-          name={'categoriaSolicitada'}
-          rules={[
-            {
-              required: true,
-            },
-          ]}
-        >
-          <CustomSelect placeholder={'Categoría solicitada'} allowClear>
-            {partnersCategories.map(
-              (parnertCategory: PartnersCategories, index: number) => (
+        <CustomCol {...defaultBreakpoints}>
+          <CustomFormItem
+            label={'Nombre(s)'}
+            name={'NOMBRES'}
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+          >
+            <CustomInput placeholder={'Nombre(s)'} />
+          </CustomFormItem>
+        </CustomCol>
+        <CustomCol {...defaultBreakpoints}>
+          <CustomFormItem
+            label={'Apellido(s)'}
+            name={'APELLIDOS'}
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+          >
+            <CustomInput placeholder={'Apellido(s)'} />
+          </CustomFormItem>
+        </CustomCol>
+        <CustomCol {...defaultBreakpoints}>
+          <CustomFormItem label={'Apodo'} name={'APODO'}>
+            <CustomInput placeholder={'Apodo (opcional)'} />
+          </CustomFormItem>
+        </CustomCol>
+        <CustomCol {...defaultBreakpoints}>
+          <CustomFormItem
+            label={'Nacionalidad'}
+            name={'NACIONALIDAD'}
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+          >
+            <CustomSelect placeholder={'Nacionalidad'} allowClear showSearch>
+              {nationalities.map((nationality: string, index: number) => (
                 <Option
-                  key={`${parnertCategory.desc}-${index}`}
-                  value={`${parnertCategory.value}`}
+                  key={`${nationality}-${index}`}
+                  value={`${nationality}`}
                 >
-                  {parnertCategory.desc}
+                  {nationality}
                 </Option>
-              )
-            )}
-          </CustomSelect>
-        </CustomFormItem>
-      </CustomCol>
-    </CustomRow>
+              ))}
+            </CustomSelect>
+          </CustomFormItem>
+        </CustomCol>
+
+        <CustomCol {...defaultBreakpoints}>
+          <CustomFormItem
+            label={'Lugar de nac.'}
+            name={'LUGAR_NAC'}
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+          >
+            <CustomInput placeholder={'Lugar de nacimiento'} />
+          </CustomFormItem>
+        </CustomCol>
+
+        <CustomCol {...defaultBreakpoints}>
+          <CustomFormItem
+            label={'Fecha de nacimiento'}
+            name={'FECHA_NAC'}
+            rules={[{ required: true }]}
+            labelCol={{
+              xs: 24,
+              sm: 8,
+              md: 12,
+              lg: 8,
+            }}
+          >
+            <CustomDatePicker
+              allowClear
+              disabledDate={(date: moment.Moment) => {
+                return date && date > moment().endOf('day')
+              }}
+              format={'DD/MM/YYYY'}
+              placeholder={'Fecha nacimiento'}
+            />
+          </CustomFormItem>
+        </CustomCol>
+
+        <CustomCol {...defaultBreakpoints}>
+          <CustomFormItem
+            label={'Sexo'}
+            name={'SEXO'}
+            rules={[{ required: true }]}
+          >
+            <CustomRadioGroup
+              value={entryStateSex}
+              onChange={handleStateSexRadioChange}
+            >
+              <CustomRadio value={'M'}>Masculino</CustomRadio>
+              <CustomRadio value={'F'}>Femenino</CustomRadio>
+            </CustomRadioGroup>
+          </CustomFormItem>
+        </CustomCol>
+
+        <CustomCol {...defaultBreakpoints}>
+          <CustomFormItem
+            label={'Estado Civil'}
+            name={'ESTADO_CIVIL'}
+            rules={[{ required: true }]}
+          >
+            <CustomRadioGroup
+              value={entryStateSex}
+              onChange={handleStateSexRadioChange}
+            >
+              <CustomRadio value={'S'}>Soltero(a)</CustomRadio>
+              <CustomRadio value={'C'}>Casado(a)</CustomRadio>
+              <CustomRadio value={'U'}>Unión Libre</CustomRadio>
+            </CustomRadioGroup>
+          </CustomFormItem>
+        </CustomCol>
+
+        <CustomCol {...defaultBreakpoints}>
+          <CustomFormItem
+            label={'Categoría Solicitada'}
+            name={'ID_CATEGORIA_SOCIO'}
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+          >
+            <CustomSelect placeholder={'Categoría solicitada'} allowClear>
+              {partnersCategories.map(
+                (parnertCategory: PartnersCategories, index: number) => (
+                  <Option
+                    key={`${parnertCategory.desc}-${index}`}
+                    value={`${parnertCategory.value}`}
+                  >
+                    {parnertCategory.desc}
+                  </Option>
+                )
+              )}
+            </CustomSelect>
+          </CustomFormItem>
+        </CustomCol>
+      </CustomRow>
+
+      <CustomRow justify={'end'}>
+        <CustomButton icon={<PlusOutlined />} type={'primary'}>
+          Agregar Relacionado
+        </CustomButton>
+      </CustomRow>
+    </div>
   )
 }
 export default GeneralData

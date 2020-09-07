@@ -2,7 +2,12 @@ import React, { useEffect } from 'react'
 import moment from 'moment'
 import { Select } from 'antd'
 import { RadioChangeEvent } from 'antd/lib/radio'
-import { defaultBreakpoints, labelColFullWidth } from '../themes'
+import {
+  defaultBreakpoints,
+  defaultBreakpointsForInputGroupLeft,
+  defaultBreakpointsForInputGroupRight,
+  labelColFullWidth,
+} from '../themes'
 import { getEconomicActivity } from '../actions/economicActivities'
 import {
   CustomCol,
@@ -54,7 +59,7 @@ const IncomeInformation = (): React.ReactElement => {
       <CustomCol {...defaultBreakpoints}>
         <CustomFormItem
           label={'Ocupación'}
-          name={'ocupacion'}
+          name={'OCUPACION'}
           rules={[
             {
               required: true,
@@ -71,7 +76,7 @@ const IncomeInformation = (): React.ReactElement => {
       <CustomCol {...defaultBreakpoints}>
         <CustomFormItem
           label={'Lugar de trabajo'}
-          name={'lugarTrabajo'}
+          name={'NOMBRE_EMPRESA'}
           rules={[
             {
               required: true,
@@ -86,7 +91,7 @@ const IncomeInformation = (): React.ReactElement => {
       <CustomCol {...defaultBreakpoints}>
         <CustomFormItem
           label={'Tipo de empleo'}
-          name={'tipoEmpleo'}
+          name={'TIPO_EMPLEO'}
           rules={[
             {
               required: true,
@@ -107,7 +112,7 @@ const IncomeInformation = (): React.ReactElement => {
       <CustomCol {...defaultBreakpoints}>
         <CustomFormItem
           label={'Posición en la empresa'}
-          name={'posicionEmpresa'}
+          name={'POSICION_EMPRESA'}
           rules={[
             {
               required: true,
@@ -122,7 +127,7 @@ const IncomeInformation = (): React.ReactElement => {
       <CustomCol {...defaultBreakpoints}>
         <CustomFormItem
           label={'Fecha de ingreso'}
-          name={'fechaIngreso'}
+          name={'FECHA_ENTRADA_EMPRESA'}
           rules={[
             {
               required: true,
@@ -141,48 +146,52 @@ const IncomeInformation = (): React.ReactElement => {
       </CustomCol>
 
       <CustomCol xs={24}>
-        <CustomFormItem
-          label={'Actividad Económica'}
-          name={'actividadEconomica'}
-          rules={[
-            {
-              required: true,
-            },
-          ]}
-          {...labelColFullWidth}
-        >
-          <CustomFormItem noStyle>
-            <CustomInput
-              disabled
-              placeholder={'id actividad'}
-              style={{ width: '25%' }}
-            />
-          </CustomFormItem>
-          <CustomFormItem noStyle>
-            {/* TODO: no busca :/ */}
-            <CustomSelect
-              placeholder={'Descripción actividad económica'}
-              showSearch
-              allowClear
-              style={{ width: '75%' }}
-            >
-              {economicActivities.map((economicActivity: EconomicActivity) => (
-                <Option
-                  key={economicActivity.ID_ACTIVIDAD_ECONOMICA}
-                  value={economicActivity.ID_ACTIVIDAD_ECONOMICA}
+        <CustomFormItem label={'Actividad Económica'} {...labelColFullWidth}>
+          <CustomRow justify={'start'}>
+            <CustomCol {...defaultBreakpointsForInputGroupLeft}>
+              <CustomFormItem
+                label={'Id actividad'}
+                name={'ID_ACTIVIDAD_ECONOMICA'}
+                noStyle
+                rules={[{ required: true }]}
+              >
+                <CustomInput disabled placeholder={'Id actividad'} />
+              </CustomFormItem>
+            </CustomCol>
+
+            <CustomCol {...defaultBreakpointsForInputGroupRight}>
+              <CustomFormItem
+                label={'Descripción actividad'}
+                name={'DACTIVIDAD_ECONOMICA'}
+                noStyle
+                rules={[{ required: true }]}
+              >
+                <CustomSelect
+                  placeholder={'Descripción actividad económica'}
+                  showSearch
+                  allowClear
                 >
-                  {economicActivity.CONCEPTO}
-                </Option>
-              ))}
-            </CustomSelect>
-          </CustomFormItem>
+                  {economicActivities.map(
+                    (economicActivity: EconomicActivity) => (
+                      <Option
+                        key={economicActivity.ID_ACTIVIDAD_ECONOMICA}
+                        value={economicActivity.ID_ACTIVIDAD_ECONOMICA}
+                      >
+                        {economicActivity.CONCEPTO}
+                      </Option>
+                    )
+                  )}
+                </CustomSelect>
+              </CustomFormItem>
+            </CustomCol>
+          </CustomRow>
         </CustomFormItem>
       </CustomCol>
 
       <CustomCol {...defaultBreakpoints}>
         <CustomFormItem
           label={'Supervisor'}
-          name={'nombreSupervidor'}
+          name={'NOMBRE_SUPERVISOR'}
           rules={[
             {
               required: true,
@@ -194,19 +203,23 @@ const IncomeInformation = (): React.ReactElement => {
       </CustomCol>
 
       <CustomCol {...defaultBreakpoints}>
-        <CustomFormItem
-          label={'Tiempo empresa'}
-          name={'tiempoEmpresa'}
-          rules={[{ required: true }]}
-        >
+        <CustomFormItem label={'Tiempo empresa'} rules={[{ required: true }]}>
           <CustomInputGroup compact>
-            <CustomFormItem label={'Años'}>
+            <CustomFormItem
+              label={'Años'}
+              name={'ANIO_TIEMPO_EMPRESA'}
+              rules={[{ required: true }]}
+            >
               <CustomInputNumber
                 placeholder={'Años en empresa'}
                 type={'number'}
               />
             </CustomFormItem>
-            <CustomFormItem label={'Meses'}>
+            <CustomFormItem
+              label={'Meses'}
+              name={'MESES_TIEMPO_EMPRESA'}
+              rules={[{ required: true }]}
+            >
               <CustomInputNumber
                 placeholder={'Meses en empresa'}
                 type={'number'}
@@ -217,69 +230,108 @@ const IncomeInformation = (): React.ReactElement => {
       </CustomCol>
 
       <CustomCol {...defaultBreakpoints}>
-        <CustomFormItem
-          label={'Ingresos'}
-          name={'ingresos'}
-          rules={[
-            {
-              required: true,
-            },
-          ]}
-        >
-          <CustomInputNumber
-            placeholder={'Ingreso promedio'}
-            style={{ width: '50%' }}
-            type={'number'}
-          />
-          <CustomSelect
-            placeholder={'Moneda'}
-            showSearch
-            style={{ width: '50%' }}
-          >
-            {coins.map((coin: Coins) => (
-              <Option
-                key={coin.ID_MONEDA}
-                value={coin.ID_MONEDA}
-              >{`${coin.ID_MONEDA} (${coin.DESCRIPCION})`}</Option>
-            ))}
-          </CustomSelect>
+        <CustomFormItem label={'Ingreso promedio'}>
+          <CustomRow justify={'start'}>
+            <CustomCol xs={24} sm={12}>
+              <CustomFormItem
+                label={'Ingreso promedio'}
+                name={'INGRESO_PROMEDIO'}
+                noStyle
+                rules={[
+                  {
+                    required: true,
+                  },
+                ]}
+              >
+                <CustomInputNumber
+                  placeholder={'Ingreso promedio'}
+                  style={{ width: '100%' }}
+                  type={'number'}
+                />
+              </CustomFormItem>
+            </CustomCol>
+
+            <CustomCol xs={24} sm={12}>
+              <CustomFormItem
+                label={'Moneda ingresos promedio'}
+                name={'ID_MONEDA_DEF'}
+                noStyle
+                rules={[
+                  {
+                    required: true,
+                  },
+                ]}
+              >
+                <CustomSelect placeholder={'Moneda'} showSearch>
+                  {coins.map((coin: Coins) => (
+                    <Option
+                      key={coin.ID_MONEDA}
+                      value={coin.ID_MONEDA}
+                    >{`${coin.ID_MONEDA} (${coin.DESCRIPCION})`}</Option>
+                  ))}
+                </CustomSelect>
+              </CustomFormItem>
+            </CustomCol>
+          </CustomRow>
         </CustomFormItem>
       </CustomCol>
 
       <CustomCol {...defaultBreakpoints}>
-        <CustomFormItem
-          label={'Otros Ingresos'}
-          name={'otrosIngresos'}
-          rules={[
-            {
-              required: true,
-            },
-          ]}
-        >
-          <CustomInputNumber
-            placeholder={'Otros Ingresos'}
-            style={{ width: '50%' }}
-            type={'number'}
-          />
-          <CustomSelect
-            placeholder={'Moneda'}
-            showSearch
-            style={{ width: '50%' }}
-          >
-            {coins.map((coin: Coins) => (
-              <Option
-                key={coin.ID_MONEDA}
-                value={coin.ID_MONEDA}
-              >{`${coin.ID_MONEDA} (${coin.DESCRIPCION})`}</Option>
-            ))}
-          </CustomSelect>
+        <CustomFormItem label={'Otros Ingresos'}>
+          <CustomRow justify={'start'}>
+            <CustomCol xs={24} sm={12}>
+              <CustomFormItem
+                label={'Otros ingresos'}
+                name={'OTROS_INGRESOS'}
+                noStyle
+                rules={[
+                  {
+                    required: true,
+                  },
+                ]}
+              >
+                <CustomInputNumber
+                  placeholder={'Otros Ingresos'}
+                  style={{ width: '100%' }}
+                  type={'number'}
+                />
+              </CustomFormItem>
+            </CustomCol>
+
+            <CustomCol xs={24} sm={12}>
+              <CustomFormItem
+                label={'Moneda otros ingresos'}
+                name={'ID_MONEDA_OTROS_ING'}
+                noStyle
+                rules={[
+                  {
+                    required: true,
+                  },
+                ]}
+              >
+                <CustomSelect placeholder={'Moneda'} showSearch>
+                  {coins.map((coin: Coins) => (
+                    <Option
+                      key={coin.ID_MONEDA}
+                      value={coin.ID_MONEDA}
+                    >{`${coin.ID_MONEDA} (${coin.DESCRIPCION})`}</Option>
+                  ))}
+                </CustomSelect>
+              </CustomFormItem>
+            </CustomCol>
+          </CustomRow>
         </CustomFormItem>
       </CustomCol>
 
       <CustomCol xs={24}>
         <CustomFormItem
           label={'Justifique'}
-          name={'justifique'}
+          name={'RAZON_OTROS_INGRESOS'}
+          rules={[
+            {
+              required: true,
+            },
+          ]}
           {...labelColFullWidth}
         >
           <CustomTextArea placeholder={'Justifiue otros ingresos'} />

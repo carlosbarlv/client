@@ -45,6 +45,9 @@ import {
   Paragraph,
   SecondaryParagraph,
 } from './CustomTypography'
+import CustomStep from './CustomStep'
+import CustomSteps from './CustomSteps'
+import CustomFormProvider from './CustomFormProvider'
 
 export {
   Copyright,
@@ -57,6 +60,7 @@ export {
   CustomFooter,
   CustomForm,
   CustomFormItem,
+  CustomFormProvider,
   CustomHeader,
   CustomInput,
   CustomInputGroup,
@@ -75,6 +79,8 @@ export {
   CustomSelect,
   CustomSider,
   CustomSpace,
+  CustomStep,
+  CustomSteps,
   CustomSubMenu,
   CustomTable,
   CustomTabPane,

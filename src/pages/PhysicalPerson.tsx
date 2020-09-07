@@ -6,13 +6,22 @@ import {
   CustomFormItem,
   CustomLayout,
   CustomRow,
+  CustomSpace,
+  CustomStep,
+  CustomSteps,
 } from '../components'
 import GeneralData from '../components/GeneralData'
 import styled from 'styled-components'
 import IncomeInformation from '../components/IncomeInformation'
-import { PlusOutlined } from '@ant-design/icons'
 import PoliticallyExposedPerson from '../components/PoliticallyExposedPerson'
 import { formItemLayout } from '../themes'
+import { Form, Modal } from 'antd'
+
+type Steps = {
+  description: string
+  node: React.ReactNode
+  title: string
+}
 
 const FormContainer = styled.div`
   padding-left: 10px;
@@ -20,6 +29,9 @@ const FormContainer = styled.div`
 `
 
 const PhysicalPerson = (): React.ReactElement => {
+  const [stepPositionState, setStepPositionState] = React.useState(0)
+  const [form] = Form.useForm()
+
   const validateMessages = {
     required: `$\{label} es requerido.`,
     types: {
@@ -38,16 +50,52 @@ const PhysicalPerson = (): React.ReactElement => {
     },
   }
 
+  const steps: Steps[] = [
+    {
+      description: 'Información básica',
+      node: <GeneralData />,
+      title: 'Datos generales',
+    },
+    {
+      description: 'Información de ingresos',
+      node: <IncomeInformation />,
+      title: 'Ingresos',
+    },
+    {
+      description: 'Persona Expuesta Políticamente',
+      node: <PoliticallyExposedPerson />,
+      title: 'Peps',
+    },
+  ]
+
+  const handleNextButtonOnClick = async (
+    event: React.MouseEvent<HTMLElement, MouseEvent>
+  ) => {
+    if (stepPositionState < steps.length - 1) {
+      event.preventDefault()
+    }
+    try {
+      await form.validateFields()
+      if (stepPositionState < steps.length - 1) {
+        setStepPositionState(stepPositionState + 1)
+      }
+    } catch (error) {
+      Modal.error({
+        title: 'Faltan algunos datos',
+        content: 'Por favor completa todos los campos requeridos.',
+      })
+    }
+  }
+
+  const handlePrevButtonOnClick = () => {
+    if (stepPositionState > 0) {
+      setStepPositionState(stepPositionState - 1)
+    }
+  }
+
   return (
     <CustomRow justify={'center'}>
-      <CustomCol
-        {...{
-          xs: 24,
-          sm: 24,
-          md: 24,
-          xl: 18,
-        }}
-      >
+      <CustomCol xs={24} xl={18}>
         <CustomLayout
           style={{
             background: 'white',
@@ -58,21 +106,47 @@ const PhysicalPerson = (): React.ReactElement => {
             marginRight: 20,
           }}
         >
-          <CustomForm {...formItemLayout} validateMessages={validateMessages}>
+          <CustomForm
+            {...formItemLayout}
+            form={form}
+            validateMessages={validateMessages}
+          >
             <FormContainer>
-              <GeneralData />
-              <CustomRow justify={'end'}>
-                <CustomButton icon={<PlusOutlined />} type={'primary'}>
-                  Agregar Relacionado
-                </CustomButton>
+              <CustomSteps current={stepPositionState}>
+                {steps.map((step: Steps) => (
+                  <CustomStep
+                    description={step.description}
+                    key={step.title}
+                    title={step.title}
+                  />
+                ))}
+              </CustomSteps>
+              {steps[stepPositionState].node}
+
+              <CustomRow justify={'start'}>
+                <CustomSpace>
+                  <CustomFormItem>
+                    <CustomButton
+                      htmlType={'submit'}
+                      type={'primary'}
+                      onClick={handleNextButtonOnClick}
+                    >
+                      Siguiente
+                    </CustomButton>
+                  </CustomFormItem>
+
+                  {stepPositionState > 0 && (
+                    <CustomFormItem>
+                      <CustomButton
+                        htmlType={'button'}
+                        onClick={handlePrevButtonOnClick}
+                      >
+                        Anterior
+                      </CustomButton>
+                    </CustomFormItem>
+                  )}
+                </CustomSpace>
               </CustomRow>
-              <IncomeInformation />
-              <PoliticallyExposedPerson />
-              <CustomFormItem>
-                <CustomButton htmlType={'submit'} type={'primary'}>
-                  Guardar
-                </CustomButton>
-              </CustomFormItem>
             </FormContainer>
           </CustomForm>
         </CustomLayout>

@@ -1,7 +1,12 @@
 import React from 'react'
 import { Select } from 'antd'
 import { SelectValue } from 'antd/lib/select'
-import { defaultBreakpoints, labelColFullWidth } from '../themes'
+import {
+  defaultBreakpoints,
+  defaultBreakpointsForInputGroupLeft,
+  defaultBreakpointsForInputGroupRight,
+  labelColFullWidth,
+} from '../themes'
 import {
   CustomCol,
   CustomDatePicker,
@@ -13,6 +18,7 @@ import {
   CustomTitle,
   CustomTooltip,
 } from '.'
+import moment from 'moment'
 
 const { Option } = Select
 
@@ -28,9 +34,7 @@ const PoliticallyExposedPerson = (): React.ReactElement => {
   return (
     <CustomRow>
       <CustomDivider orientation={'left'}>
-        <CustomTitle level={4}>
-          Persona Expuesta Políticamente (PoliticallyExposedPerson)
-        </CustomTitle>
+        <CustomTitle level={4}>Persona Expuesta Políticamente</CustomTitle>
       </CustomDivider>
 
       <CustomCol {...defaultBreakpoints}>
@@ -44,7 +48,7 @@ const PoliticallyExposedPerson = (): React.ReactElement => {
               ?
             </span>
           }
-          name={'pep'}
+          name={'IND_PEP'}
           rules={[
             {
               required: true,
@@ -65,10 +69,10 @@ const PoliticallyExposedPerson = (): React.ReactElement => {
       <CustomCol {...defaultBreakpoints}>
         <CustomFormItem
           label={'Estado'}
-          name={'estado'}
+          name={'ENTIDAD_PEP'}
           rules={[
             {
-              required: true,
+              required: entryTypePoliticallyExposedPerson !== '0',
             },
           ]}
         >
@@ -80,50 +84,97 @@ const PoliticallyExposedPerson = (): React.ReactElement => {
       </CustomCol>
 
       <CustomCol xs={24}>
-        <CustomFormItem
-          label={'Cargo'}
-          name={'cargoPep'}
-          {...labelColFullWidth}
-        >
-          <CustomSelect
-            disabled={entryTypePoliticallyExposedPerson === '0'}
-            style={{ width: '25%' }}
-          >
-            <Option value={'C'}>Cargo</Option>
-          </CustomSelect>
+        <CustomFormItem label={'Cargo'} {...labelColFullWidth}>
+          <CustomRow justify={'start'}>
+            <CustomCol {...defaultBreakpointsForInputGroupLeft}>
+              <CustomFormItem
+                label={'Cargo'}
+                name={'ID_CARGO'}
+                noStyle
+                rules={[
+                  {
+                    required: entryTypePoliticallyExposedPerson !== '0',
+                  },
+                ]}
+              >
+                <CustomSelect
+                  disabled={entryTypePoliticallyExposedPerson === '0'}
+                  placeholder={'Id cargo'}
+                >
+                  <Option value={'C'}>Cargo</Option>
+                </CustomSelect>
+              </CustomFormItem>
+            </CustomCol>
 
-          <CustomInput
-            disabled={entryTypePoliticallyExposedPerson === '0'}
-            placeholder={'Descripción cargo'}
-            style={{ width: '75%' }}
-          />
+            <CustomCol {...defaultBreakpointsForInputGroupRight}>
+              <CustomFormItem
+                label={'Descripción cargo'}
+                name={'descCargo'}
+                noStyle
+                rules={[
+                  {
+                    required: entryTypePoliticallyExposedPerson !== '0',
+                  },
+                ]}
+              >
+                <CustomInput
+                  disabled={entryTypePoliticallyExposedPerson === '0'}
+                  placeholder={'Descripción cargo'}
+                />
+              </CustomFormItem>
+            </CustomCol>
+          </CustomRow>
         </CustomFormItem>
       </CustomCol>
 
       <CustomCol xs={24}>
-        <CustomFormItem
-          label={'Entidad'}
-          name={'entidadPep'}
-          {...labelColFullWidth}
-        >
-          <CustomSelect
-            disabled={entryTypePoliticallyExposedPerson === '0'}
-            style={{ width: '25%' }}
-          >
-            <Option value={'C'}>Cargo</Option>
-          </CustomSelect>
+        <CustomFormItem label={'Entidad'} {...labelColFullWidth}>
+          <CustomRow justify={'start'}>
+            <CustomCol {...defaultBreakpointsForInputGroupLeft}>
+              <CustomFormItem
+                label={'Entidad'}
+                name={'entidadPep'}
+                noStyle
+                rules={[
+                  { required: entryTypePoliticallyExposedPerson !== '0' },
+                ]}
+                {...labelColFullWidth}
+              >
+                <CustomSelect
+                  disabled={entryTypePoliticallyExposedPerson === '0'}
+                  placeholder={'Id entidad'}
+                >
+                  <Option value={'C'}>Cargo</Option>
+                </CustomSelect>
+              </CustomFormItem>
+            </CustomCol>
 
-          <CustomInput
-            disabled={entryTypePoliticallyExposedPerson === '0'}
-            placeholder={'Descripción entidad'}
-            style={{ width: '75%' }}
-          />
+            <CustomCol {...defaultBreakpointsForInputGroupRight}>
+              <CustomFormItem
+                label={'Descripción entidad'}
+                name={'descEntidad'}
+                noStyle
+                rules={[
+                  { required: entryTypePoliticallyExposedPerson !== '0' },
+                ]}
+                {...labelColFullWidth}
+              >
+                <CustomInput
+                  disabled={entryTypePoliticallyExposedPerson === '0'}
+                  placeholder={'Descripción entidad'}
+                />
+              </CustomFormItem>
+            </CustomCol>
+          </CustomRow>
         </CustomFormItem>
       </CustomCol>
 
       <CustomCol {...defaultBreakpoints}>
         <CustomFormItem label={'Fecha inicio'} name={'fechaInicio'}>
           <CustomDatePicker
+            disabledDate={(date: moment.Moment) => {
+              return date && date > moment().endOf('day')
+            }}
             disabled={entryTypePoliticallyExposedPerson === '0'}
             placeholder={'Fecha inicio'}
           />
@@ -133,6 +184,9 @@ const PoliticallyExposedPerson = (): React.ReactElement => {
       <CustomCol {...defaultBreakpoints}>
         <CustomFormItem label={'Fecha final'} name={'fechaFinal'}>
           <CustomDatePicker
+            disabledDate={(date: moment.Moment) => {
+              return date && date < moment().endOf('day')
+            }}
             disabled={entryTypePoliticallyExposedPerson === '0'}
             placeholder={'Fecha final'}
           />
