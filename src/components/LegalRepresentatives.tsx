@@ -1,11 +1,6 @@
 import React from 'react'
 import { ColumnType } from 'antd/lib/table'
-import {
-  CustomDivider,
-  CustomRow,
-  CustomTable,
-  CustomTitle,
-} from '../components'
+import { CustomDivider, CustomTable, CustomTitle } from '.'
 
 type Representatives = {
   codigo: string | number
@@ -17,7 +12,7 @@ type Representatives = {
 const columns: ColumnType<Representatives>[] = [
   {
     key: 'codigo',
-    title: 'Codigo',
+    title: 'Código',
     dataIndex: 'CODIGO',
   },
   {
@@ -34,17 +29,12 @@ const columns: ColumnType<Representatives>[] = [
 
 const LegalRepresentatives = (): React.ReactElement => {
   return (
-    <CustomRow justify={'start'}>
+    <>
       <CustomDivider orientation={'left'}>
         <CustomTitle level={4}>Representantes Legales</CustomTitle>
       </CustomDivider>
-      <CustomTable
-        columns={columns}
-        pagination={false}
-        bordered
-        sticky
-      ></CustomTable>
-    </CustomRow>
+      <CustomTable columns={columns} pagination={false} bordered></CustomTable>
+    </>
   )
 }
 

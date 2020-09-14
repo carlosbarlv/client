@@ -37,6 +37,13 @@ import CustomNumberInput from './CustomNumberInput'
 import DrawerOptions from './DrawerOptions'
 import CustomFormContainer from './CustomFormContainer'
 import LegalRepresentatives from './LegalRepresentatives'
+import Phone from './Phone'
+import Addresses from './Addresses'
+import GeneralData from './LegalPersonGeneralData'
+import RelatedRecord from './RelatedRecord'
+import PoliticallyExposedPerson from './PoliticallyExposedPerson'
+import SocialNetworks from './SocialNetworks'
+import CustomCheckBox from './CustomCheckBox'
 import {
   Heading1,
   Heading2,
@@ -98,4 +105,11 @@ export {
   SecondaryParagraph,
   CustomFormContainer,
   LegalRepresentatives,
+  Phone,
+  GeneralData,
+  Addresses,
+  RelatedRecord,
+  PoliticallyExposedPerson,
+  SocialNetworks,
+  CustomCheckBox,
 }
