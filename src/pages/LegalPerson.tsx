@@ -1,7 +1,6 @@
 import React from 'react'
 import { PlusOutlined } from '@ant-design/icons'
 import {
-  Addresses,
   CustomButton,
   CustomCol,
   CustomForm,
@@ -13,10 +12,7 @@ import {
   CustomTitle,
   GeneralData,
   LegalRepresentatives,
-  Phone,
-  PoliticallyExposedPerson,
   RelatedRecord,
-  SocialNetworks,
 } from '../components'
 import { formItemLayout } from '../themes'
 import { validateMessages } from '../constants/general'
@@ -34,8 +30,6 @@ const LegalPerson = (): React.ReactElement => {
               padding: '35px 20px',
               boxShadow:
                 '0px 3px 5px -1px rgba(0, 0, 0, 0.2),0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12)',
-              marginLeft: 20,
-              marginRight: 20,
             }}
           >
             <CustomForm {...formItemLayout} validateMessages={validateMessages}>
@@ -68,7 +62,7 @@ const LegalPerson = (): React.ReactElement => {
         centered
         title={<CustomTitle level={4}>Registro de relacionados</CustomTitle>}
         visible={visible}
-        width={'90%'}
+        width={'85%'}
         onOk={() => setVisible(false)}
         onCancel={() => setVisible(false)}
         okText={'Agregar'}
@@ -76,32 +70,7 @@ const LegalPerson = (): React.ReactElement => {
           marginTop: 20,
         }}
       >
-        <CustomRow justify={'center'}>
-          <CustomCol xs={24}>
-            <CustomLayout
-              style={{
-                background: 'white',
-                marginLeft: 20,
-                marginRight: 20,
-              }}
-            >
-              <CustomForm
-                {...formItemLayout}
-                validateMessages={validateMessages}
-              >
-                <CustomFormContainer>
-                  <RelatedRecord />
-                  <Addresses />
-                  <PoliticallyExposedPerson />
-                  <CustomRow justify={'space-between'} align={'top'}>
-                    <Phone />
-                    <SocialNetworks />
-                  </CustomRow>
-                </CustomFormContainer>
-              </CustomForm>
-            </CustomLayout>
-          </CustomCol>
-        </CustomRow>
+        <RelatedRecord />
       </CustomModal>
     </>
   )

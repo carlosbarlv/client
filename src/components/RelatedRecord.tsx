@@ -1,187 +1,31 @@
-import React, { useEffect } from 'react'
-import moment from 'moment'
-import { Select } from 'antd'
+import React from 'react'
 import {
-  CustomCol,
-  CustomDatePicker,
-  CustomDivider,
-  CustomFormItem,
-  CustomInput,
-  CustomInputGroup,
-  CustomInputNumber,
-  CustomRadio,
-  CustomRadioGroup,
+  Addresses,
+  CustomForm,
+  CustomFormContainer,
   CustomRow,
-  CustomSelect,
-  CustomTitle,
-} from '.'
-import { defaultBreakpoints } from '../themes'
-import { useDispatch, useSelector } from 'react-redux'
-import { StoreState } from '../reducers'
-import { getNationalities } from '../actions/general'
+  Phone,
+  PoliticallyExposedPerson,
+  SocialNetworks,
+} from '../components'
+import { RelatedRecordGeneralData } from '.'
+import { formItemLayout } from '../themes'
+import { validateMessages } from '../constants/general'
 
-const Relatedrecord: React.FunctionComponent = () => {
-  const { Option } = Select
-
-  const dispatch = useDispatch()
-  const { nationalities } = useSelector((state: StoreState) => state.general)
-
-  useEffect(() => {
-    dispatch(getNationalities())
-  }, [dispatch])
-
+const RelatedRecord: React.FunctionComponent = () => {
   return (
-    <CustomRow>
-      <CustomDivider orientation={'left'}>
-        <CustomTitle level={4}>Datos Generales</CustomTitle>
-      </CustomDivider>
-      <CustomCol {...defaultBreakpoints}>
-        <CustomFormItem
-          label={'Nombres'}
-          name={'nombres'}
-          rules={[{ required: true }]}
-        >
-          <CustomInput placeholder={'Nombres'} />
-        </CustomFormItem>
-      </CustomCol>
-      <CustomCol {...defaultBreakpoints}>
-        <CustomFormItem
-          label={'Apellidos'}
-          name={'apellidos'}
-          rules={[{ required: true }]}
-        >
-          <CustomInput placeholder={'Apellidos'} />
-        </CustomFormItem>
-      </CustomCol>
-      <CustomCol {...defaultBreakpoints}>
-        <CustomFormItem
-          label={'Apodo'}
-          name={'apodo'}
-          rules={[{ required: true }]}
-        >
-          <CustomInput placeholder={'Apodo'} />
-        </CustomFormItem>
-      </CustomCol>
-      <CustomCol {...defaultBreakpoints}></CustomCol>
-      <CustomCol {...defaultBreakpoints}>
-        <CustomFormItem
-          label={'Doc. Identidad'}
-          name={'documentoIdentidad'}
-          rules={[
-            {
-              required: true,
-              type: 'number',
-              len: 11,
-              transform: (value: string) =>
-                Number(value) ? value.length : value,
-            },
-          ]}
-        >
-          <CustomInput
-            placeholder={'Documento de identidad'}
-            autoComplete={'off'}
-          />
-        </CustomFormItem>
-      </CustomCol>
-      <CustomCol {...defaultBreakpoints}>
-        <CustomFormItem
-          label={'No. Pasaporte'}
-          name={'numeroPasaporte'}
-          rules={[{ required: true }]}
-        >
-          <CustomInput placeholder={'No. Pasaporte'} />
-        </CustomFormItem>
-      </CustomCol>
-      <CustomCol {...defaultBreakpoints}>
-        <CustomFormItem
-          label={'Fecha nac.'}
-          name={'fechaNacimeinto'}
-          rules={[{ required: true }]}
-        >
-          <CustomDatePicker
-            allowClear
-            placeholder={'Fecha de nacimeinto'}
-            disabledDate={(date: moment.Moment) => {
-              return date && date > moment().endOf('day')
-            }}
-          />
-        </CustomFormItem>
-      </CustomCol>
-      <CustomCol {...defaultBreakpoints}>
-        <CustomFormItem
-          label={'Sexo'}
-          name={'sexo'}
-          rules={[{ required: true }]}
-        >
-          <CustomRadioGroup>
-            <CustomRadio value={'M'}>Masculino</CustomRadio>
-            <CustomRadio value={'F'}>Femenino</CustomRadio>
-          </CustomRadioGroup>
-        </CustomFormItem>
-      </CustomCol>
-      <CustomCol {...defaultBreakpoints}>
-        <CustomFormItem
-          label={'Estado civil'}
-          name={'estadoCivil'}
-          rules={[{ required: true }]}
-        >
-          <CustomRadioGroup>
-            <CustomRadio value={'S'}>Soltero(a)</CustomRadio>
-            <CustomRadio value={'C'}>Casado(a)</CustomRadio>
-            <CustomRadio value={'UL'}>Unión libre</CustomRadio>
-          </CustomRadioGroup>
-        </CustomFormItem>
-      </CustomCol>
-      <CustomCol {...defaultBreakpoints}></CustomCol>
-      <CustomCol {...defaultBreakpoints}>
-        <CustomFormItem
-          label={'Nacionalidadd'}
-          name={'naccionalidad'}
-          rules={[{ required: true }]}
-        >
-          <CustomSelect placeholder={'Nacionalidad'} allowClear showSearch>
-            {nationalities.map((nationality: string, index: number) => (
-              <Option key={`${nationality}-${index}`} value={`${nationality}`}>
-                {nationality}
-              </Option>
-            ))}
-          </CustomSelect>
-        </CustomFormItem>
-      </CustomCol>
-      <CustomCol {...defaultBreakpoints}></CustomCol>
-      <CustomCol {...defaultBreakpoints}>
-        <CustomFormItem
-          label={'Posición'}
-          name={'posicion'}
-          rules={[{ required: true }]}
-        >
-          <CustomInput placeholder={'Posición'} />
-        </CustomFormItem>
-      </CustomCol>
-      <CustomCol {...defaultBreakpoints}>
-        <CustomFormItem
-          label={'Tiempo empresa'}
-          name={'tiempoEmpresa'}
-          rules={[{ required: true }]}
-        >
-          <CustomInputGroup compact>
-            <CustomFormItem label={'Años'} rules={[{ required: true }]}>
-              <CustomInputNumber
-                placeholder={'Años en empresa'}
-                type={'number'}
-              />
-            </CustomFormItem>
-            <CustomFormItem label={'Meses'} rules={[{ required: true }]}>
-              <CustomInputNumber
-                placeholder={'Meses en empresa'}
-                type={'number'}
-              />
-            </CustomFormItem>
-          </CustomInputGroup>
-        </CustomFormItem>
-      </CustomCol>
-    </CustomRow>
+    <CustomForm {...formItemLayout} validateMessages={validateMessages}>
+      <CustomFormContainer>
+        <RelatedRecordGeneralData />
+        <Addresses />
+        <PoliticallyExposedPerson />
+        <CustomRow justify={'space-between'} align={'top'}>
+          <Phone />
+          <SocialNetworks />
+        </CustomRow>
+      </CustomFormContainer>
+    </CustomForm>
   )
 }
 
-export default Relatedrecord
+export default RelatedRecord

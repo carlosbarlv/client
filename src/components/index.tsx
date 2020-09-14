@@ -40,6 +40,7 @@ import LegalRepresentatives from './LegalRepresentatives'
 import Phone from './Phone'
 import Addresses from './Addresses'
 import GeneralData from './LegalPersonGeneralData'
+import RelatedRecordGeneralData from './RelatedRecordGeneralData'
 import RelatedRecord from './RelatedRecord'
 import PoliticallyExposedPerson from './PoliticallyExposedPerson'
 import SocialNetworks from './SocialNetworks'
@@ -108,8 +109,9 @@ export {
   Phone,
   GeneralData,
   Addresses,
-  RelatedRecord,
+  RelatedRecordGeneralData,
   PoliticallyExposedPerson,
   SocialNetworks,
   CustomCheckBox,
+  RelatedRecord,
 }
