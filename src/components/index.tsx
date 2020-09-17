@@ -45,6 +45,7 @@ import RelatedRecord from './RelatedRecord'
 import PoliticallyExposedPerson from './PoliticallyExposedPerson'
 import SocialNetworks from './SocialNetworks'
 import CustomCheckBox from './CustomCheckBox'
+import AddressesAndPhone from './AddressesAndPhone'
 import {
   Heading1,
   Heading2,
@@ -114,4 +115,5 @@ export {
   SocialNetworks,
   CustomCheckBox,
   RelatedRecord,
+  AddressesAndPhone,
 }

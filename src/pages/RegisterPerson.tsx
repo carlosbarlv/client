@@ -3,6 +3,7 @@ import { CustomTabPane, CustomTabs } from '../components'
 import Person from './Person'
 import PhysicalPerson from './PhysicalPerson'
 import LegalPerson from './LegalPerson'
+import AddressesAndPhone from '../components/AddressesAndPhone'
 
 type TabConfig = {
   title: string
@@ -39,7 +40,7 @@ const tabOptions: ReadonlyArray<TabConfig> = [
   {
     title: 'Direcciones y teléfonos',
     type: 'personaFisica-personaJuridica',
-    node: <div>DireccionesTelefonos</div>,
+    node: <AddressesAndPhone />,
   },
   {
     title: 'Referencias',
