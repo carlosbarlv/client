@@ -16,7 +16,7 @@ const getMenuItems = (userOptions: MenuOption[]) => {
         key={route.ID}
         onClick={() => {
           if (route.MODULE) {
-            history.push(route.MODULE)
+            history.push(route.MODULE, { activityId: route.ID })
           }
         }}
       >

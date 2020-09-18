@@ -8,6 +8,7 @@ import {
 } from './catchements'
 import { all } from 'redux-saga/effects'
 import {
+  watchGetActivityParameters,
   watchGetCoins,
   watchGetNationalities,
   watchGetPartnersCategories,
@@ -27,5 +28,6 @@ export default function* rootSaga(): Generator {
     watchGetUserMenuOptions(),
     watchGetPaginatedEconomicActivities(),
     watchGetCoins(),
+    watchGetActivityParameters(),
   ])
 }

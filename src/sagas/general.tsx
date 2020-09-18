@@ -1,15 +1,21 @@
 import { call, put, takeLatest } from 'redux-saga/effects'
 import {
+  activityParametersApiHelpers,
   coinsApiHelpers,
   nationalitiesApiHelpers,
   partnersCategoriesApiHelpers,
 } from '../utils/api'
 import {
+  GENERAL_GET_ACTIVITY_PARAMETERS,
   GENERAL_GET_COINS,
   GENERAL_GET_NATIONALITIES,
   GENERAL_GET_PARTNERS_CATEGORIES,
 } from '../constants/actions'
 import {
+  GeneralGetActivityParametersAction,
+  GeneralGetPartnersCategoriesAction,
+  getActivityParametersFailure,
+  getActivityParametersSuccess,
   getCoinsFailure,
   getCoinsSuccess,
   getNationalitiesFailure,
@@ -32,10 +38,16 @@ function* getNationalitiesSaga() {
   }
 }
 
-function* getPartnersCategoriesSaga() {
+function* watchGetNationalities() {
+  yield takeLatest(GENERAL_GET_NATIONALITIES, getNationalitiesSaga)
+}
+
+function* getPartnersCategoriesSaga(
+  payload: GeneralGetPartnersCategoriesAction
+) {
   try {
     const response = yield call(() =>
-      partnersCategoriesApiHelpers.getPartnersCategories()
+      partnersCategoriesApiHelpers.getPartnersCategories(payload.listId)
     )
 
     const { data: partnersCategories } = response.data
@@ -44,6 +56,10 @@ function* getPartnersCategoriesSaga() {
   } catch (error) {
     yield put(getPartnersCategoriesFailure())
   }
+}
+
+function* watchGetPartnersCategories() {
+  yield takeLatest(GENERAL_GET_PARTNERS_CATEGORIES, getPartnersCategoriesSaga)
 }
 
 function* getCoinsSaga() {
@@ -58,16 +74,31 @@ function* getCoinsSaga() {
   }
 }
 
-function* watchGetNationalities() {
-  yield takeLatest(GENERAL_GET_NATIONALITIES, getNationalitiesSaga)
-}
-
-function* watchGetPartnersCategories() {
-  yield takeLatest(GENERAL_GET_PARTNERS_CATEGORIES, getPartnersCategoriesSaga)
-}
-
 function* watchGetCoins() {
   yield takeLatest(GENERAL_GET_COINS, getCoinsSaga)
 }
 
-export { watchGetNationalities, watchGetPartnersCategories, watchGetCoins }
+function* getActivityParameters(payload: GeneralGetActivityParametersAction) {
+  try {
+    const response = yield call(() =>
+      activityParametersApiHelpers.getActivityParameters(payload.activityId)
+    )
+
+    const { data: activityParameters } = response.data
+
+    yield put(getActivityParametersSuccess(activityParameters))
+  } catch (error) {
+    yield put(getActivityParametersFailure())
+  }
+}
+
+function* watchGetActivityParameters() {
+  yield takeLatest(GENERAL_GET_ACTIVITY_PARAMETERS, getActivityParameters)
+}
+
+export {
+  watchGetNationalities,
+  watchGetPartnersCategories,
+  watchGetCoins,
+  watchGetActivityParameters,
+}

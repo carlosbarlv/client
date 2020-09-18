@@ -4,6 +4,7 @@ import {
   WEB_SERVICE_API_CREATE_UPDATE_PRODUCT_RANGES,
   WEB_SERVICE_API_GENERAL_GET_LIST_PARAMETERS,
   WEB_SERVICE_API_GENERAL_GET_NACIONALITIES,
+  WEB_SERVICE_API_GET_ACTIVITY_PARAMETERS,
   WEB_SERVICE_API_GET_COINS,
   WEB_SERVICE_API_GET_ECONOMIC_ACTIVITY,
   WEB_SERVICE_API_GET_PERSONAS,
@@ -12,7 +13,6 @@ import {
   WEB_SERVICE_API_PERSONAL_MENU,
 } from '../constants/routes'
 import { ProductRange } from '../reducers/catchements'
-import { ID_PARTNERS_CATEGORIES_LIST } from '../constants/general'
 
 type RequestHeaders = {
   headers: {
@@ -154,11 +154,11 @@ export const catchementsApiHelpers = {
   updateProductRange,
 }
 
-const getPartnersCategories = (): Promise<AxiosResponse> => {
+const getPartnersCategories = (listId: string): Promise<AxiosResponse> => {
   const { businessId } = getSessionInfo()
 
   return getRequest(
-    `${WEB_SERVICE_API_GENERAL_GET_LIST_PARAMETERS}/${businessId}/${ID_PARTNERS_CATEGORIES_LIST}`
+    `${WEB_SERVICE_API_GENERAL_GET_LIST_PARAMETERS}/${businessId}/${listId}`
   )
 }
 
@@ -182,4 +182,17 @@ const getCoins = (): Promise<AxiosResponse> => {
 
 export const coinsApiHelpers = {
   getCoins,
+}
+
+const getActivityParameters = (activityId: string): Promise<AxiosResponse> => {
+  const { businessId } = getSessionInfo()
+
+  return postRequest(`${WEB_SERVICE_API_GET_ACTIVITY_PARAMETERS}`, {
+    businessId,
+    activityId,
+  })
+}
+
+export const activityParametersApiHelpers = {
+  getActivityParameters,
 }

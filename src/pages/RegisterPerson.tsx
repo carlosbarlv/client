@@ -1,14 +1,24 @@
-import React from 'react'
+import React, { FunctionComponent, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import { CustomTabPane, CustomTabs } from '../components'
 import Person from './Person'
 import PhysicalPerson from './PhysicalPerson'
 import LegalPerson from './LegalPerson'
 import AddressesAndPhone from '../components/AddressesAndPhone'
+import { getActivityParameters } from '../actions/general'
 
 type TabConfig = {
   title: string
   type: string
   node: React.ReactNode
+}
+
+type History = {
+  location: {
+    state: {
+      activityId: string
+    }
+  }
 }
 
 const tabOptions: ReadonlyArray<TabConfig> = [
@@ -59,7 +69,16 @@ const tabOptions: ReadonlyArray<TabConfig> = [
   },
 ]
 
-const RegisterPerson: React.FunctionComponent = () => {
+const RegisterPerson: React.FunctionComponent<
+  FunctionComponent & { history: History }
+> = ({ history }) => {
+  const dispatch = useDispatch()
+  const { activityId } = history.location.state
+
+  useEffect(() => {
+    dispatch(getActivityParameters(activityId))
+  }, [dispatch, activityId])
+
   return (
     <CustomTabs type={'card'} defaultActiveKey={'2'}>
       {tabOptions.map((value: TabConfig, index: number) => (

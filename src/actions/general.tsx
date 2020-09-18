@@ -1,4 +1,7 @@
 import {
+  GENERAL_GET_ACTIVITY_PARAMETERS,
+  GENERAL_GET_ACTIVITY_PARAMETERS_FAILURE,
+  GENERAL_GET_ACTIVITY_PARAMETERS_SUCCESS,
   GENERAL_GET_COINS,
   GENERAL_GET_COINS_FAILURE,
   GENERAL_GET_COINS_SUCCESS,
@@ -9,18 +12,28 @@ import {
   GENERAL_GET_PARTNERS_CATEGORIES_FAILURE,
   GENERAL_GET_PARTNERS_CATEGORIES_SUCCESS,
 } from '../constants/actions'
-import { Coins, PartnersCategories } from '../reducers/general'
+import {
+  ActivityParameters,
+  Coins,
+  PartnersCategories,
+} from '../reducers/general'
 
 type GeneralGetNationalitiesAction = {
   type: typeof GENERAL_GET_NATIONALITIES
 }
 
-type GeneralGetPartnersCategoriesAction = {
+export type GeneralGetPartnersCategoriesAction = {
   type: typeof GENERAL_GET_PARTNERS_CATEGORIES
+  listId: string
 }
 
 type GeneralGetCoinsAction = {
   type: typeof GENERAL_GET_COINS
+}
+
+export type GeneralGetActivityParametersAction = {
+  type: typeof GENERAL_GET_ACTIVITY_PARAMETERS
+  activityId: string
 }
 
 export const getNationalities = (): GeneralGetNationalitiesAction => {
@@ -29,15 +42,27 @@ export const getNationalities = (): GeneralGetNationalitiesAction => {
   }
 }
 
-export const getPartnersCategories = (): GeneralGetPartnersCategoriesAction => {
+export const getPartnersCategories = (
+  listId: string
+): GeneralGetPartnersCategoriesAction => {
   return {
     type: GENERAL_GET_PARTNERS_CATEGORIES,
+    listId,
   }
 }
 
 export const getCoins = (): GeneralGetCoinsAction => {
   return {
     type: GENERAL_GET_COINS,
+  }
+}
+
+export const getActivityParameters = (
+  activityId: string
+): GeneralGetActivityParametersAction => {
+  return {
+    type: GENERAL_GET_ACTIVITY_PARAMETERS,
+    activityId,
   }
 }
 
@@ -54,6 +79,11 @@ type GeneralGetPartnersCategoriesSuccessAction = {
 type GeneralGetCoinsSuccessAction = {
   type: typeof GENERAL_GET_COINS_SUCCESS
   coins: Coins[]
+}
+
+type GeneralGetActivityParametersSuccessAction = {
+  type: typeof GENERAL_GET_ACTIVITY_PARAMETERS_SUCCESS
+  activityParameters: ActivityParameters
 }
 
 export const getNationalitiesSuccess = (
@@ -83,6 +113,15 @@ export const getCoinsSuccess = (
   }
 }
 
+export const getActivityParametersSuccess = (
+  activityParameters: ActivityParameters
+): GeneralGetActivityParametersSuccessAction => {
+  return {
+    type: GENERAL_GET_ACTIVITY_PARAMETERS_SUCCESS,
+    activityParameters,
+  }
+}
+
 type GeneralGetNationalitiesFailureAction = {
   type: typeof GENERAL_GET_NATIONALITIES_FAILURE
 }
@@ -93,6 +132,10 @@ type GeneralGetPartnersCategoriesFailureAction = {
 
 type GeneralGetCoinsFailureAction = {
   type: typeof GENERAL_GET_COINS_FAILURE
+}
+
+type GeneralGetActivityParametersFailureAction = {
+  type: typeof GENERAL_GET_ACTIVITY_PARAMETERS_FAILURE
 }
 
 export const getNationalitiesFailure = (): GeneralGetNationalitiesFailureAction => {
@@ -113,6 +156,12 @@ export const getCoinsFailure = (): GeneralGetCoinsFailureAction => {
   }
 }
 
+export const getActivityParametersFailure = (): GeneralGetActivityParametersFailureAction => {
+  return {
+    type: GENERAL_GET_ACTIVITY_PARAMETERS_FAILURE,
+  }
+}
+
 export type GeneralNationalitiesAction =
   | GeneralGetNationalitiesAction
   | GeneralGetNationalitiesSuccessAction
@@ -127,3 +176,8 @@ export type GeneralCoinsAction =
   | GeneralGetCoinsAction
   | GeneralGetCoinsSuccessAction
   | GeneralGetCoinsFailureAction
+
+export type GeneralActivityParametersAction =
+  | GeneralGetActivityParametersAction
+  | GeneralGetActivityParametersFailureAction
+  | GeneralGetActivityParametersSuccessAction

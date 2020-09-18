@@ -30,14 +30,15 @@ const GeneralData = (): React.ReactElement => {
     setEntryStateSex(e.target.value)
   }
   const dispatch = useDispatch()
-  const { nationalities, partnersCategories } = useSelector(
+  const { nationalities, partnersCategories, activityParameters } = useSelector(
     (state: StoreState) => state.general
   )
 
   useEffect(() => {
     dispatch(getNationalities())
-    dispatch(getPartnersCategories())
-  }, [dispatch])
+    if (activityParameters.ID_LISTA_CATEGORIAS)
+      dispatch(getPartnersCategories(activityParameters.ID_LISTA_CATEGORIAS))
+  }, [dispatch, activityParameters.ID_LISTA_CATEGORIAS])
 
   return (
     <div>
