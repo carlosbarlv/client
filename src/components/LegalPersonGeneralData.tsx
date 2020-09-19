@@ -18,6 +18,9 @@ import { PartnersCategories } from '../reducers/general'
 import { StoreState } from '../reducers'
 
 const GeneralData: React.FunctionComponent = () => {
+  const { activityParameters } = useSelector(
+    (state: StoreState) => state.general
+  )
   const { Option } = Select
 
   const dispatch = useDispatch()
@@ -27,8 +30,8 @@ const GeneralData: React.FunctionComponent = () => {
   )
 
   useEffect(() => {
-    dispatch(getPartnersCategories())
-  }, [dispatch])
+    dispatch(getPartnersCategories(activityParameters.ID_LISTA_CATEGORIAS))
+  }, [dispatch, activityParameters.ID_LISTA_CATEGORIAS])
 
   return (
     <CustomRow justify={'start'}>
