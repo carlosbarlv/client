@@ -23,6 +23,7 @@ import {
   CustomSelect,
   CustomTextArea,
   CustomTitle,
+  CustomTooltip,
 } from '.'
 import { useDispatch, useSelector } from 'react-redux'
 import { StoreState } from '../reducers'
@@ -201,34 +202,22 @@ const IncomeInformation = (): React.ReactElement => {
           <CustomInput placeholder={'Nombre supervisor'} />
         </CustomFormItem>
       </CustomCol>
-
       <CustomCol {...defaultBreakpoints}>
-        <CustomFormItem label={'Tiempo empresa'} rules={[{ required: true }]}>
+        <CustomFormItem
+          label={'Tiempo empresa'}
+          name={'tiempoEmpresa'}
+          rules={[{ required: true }]}
+        >
           <CustomInputGroup compact>
-            <CustomFormItem
-              label={'Años'}
-              name={'ANIO_TIEMPO_EMPRESA'}
-              rules={[{ required: true }]}
-            >
-              <CustomInputNumber
-                placeholder={'Años en empresa'}
-                type={'number'}
-              />
-            </CustomFormItem>
-            <CustomFormItem
-              label={'Meses'}
-              name={'MESES_TIEMPO_EMPRESA'}
-              rules={[{ required: true }]}
-            >
-              <CustomInputNumber
-                placeholder={'Meses en empresa'}
-                type={'number'}
-              />
-            </CustomFormItem>
+            <CustomTooltip title={'Años en la empresa'}>
+              <CustomInputNumber placeholder={'Años'} type={'number'} />
+            </CustomTooltip>
+            <CustomTooltip title={'Meses en la empresa'}>
+              <CustomInputNumber placeholder={'Meses'} type={'number'} />
+            </CustomTooltip>
           </CustomInputGroup>
         </CustomFormItem>
       </CustomCol>
-
       <CustomCol {...defaultBreakpoints}>
         <CustomFormItem label={'Ingreso promedio'}>
           <CustomRow justify={'start'}>
