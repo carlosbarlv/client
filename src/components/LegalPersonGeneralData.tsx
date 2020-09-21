@@ -23,7 +23,6 @@ const GeneralData: React.FunctionComponent = () => {
     (state: StoreState) => state.general
   )
   const { Option } = Select
-
   const dispatch = useDispatch()
 
   const { partnersCategories } = useSelector(

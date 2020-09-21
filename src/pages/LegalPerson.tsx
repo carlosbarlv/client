@@ -1,78 +1,125 @@
 import React from 'react'
-import { PlusOutlined } from '@ant-design/icons'
 import {
+  AddressesAndPhone,
   CustomButton,
   CustomCol,
   CustomForm,
   CustomFormContainer,
   CustomFormItem,
   CustomLayout,
-  CustomModal,
   CustomRow,
-  CustomTitle,
+  CustomSpace,
+  CustomStep,
+  CustomSteps,
   GeneralData,
   LegalRepresentatives,
-  RelatedRecord,
 } from '../components'
 import { formItemLayout } from '../themes'
 import { validateMessages } from '../constants/general'
 
+type Steps = {
+  title: string
+  description: string
+  node: React.ReactNode
+}
+
 const LegalPerson = (): React.ReactElement => {
-  const [visible, setVisible] = React.useState(false)
+  const [stepPositionState, setStepPositionState] = React.useState(0)
+
+  const steps: Steps[] = [
+    {
+      title: 'Datos generales',
+      description: 'Información básica',
+      node: <GeneralData />,
+    },
+    {
+      title: 'Representantes legales',
+      description: 'Agregar representantes legales',
+      node: <LegalRepresentatives />,
+    },
+    {
+      title: 'Direciones y Teléfonos',
+      description: 'Información de dirección',
+      node: <AddressesAndPhone />,
+    },
+  ]
+
+  const handleNextButtonOnClick = (
+    event: React.MouseEvent<HTMLElement, MouseEvent>
+  ) => {
+    if (stepPositionState < steps.length - 1) {
+      setStepPositionState(stepPositionState + 1)
+      event.preventDefault()
+    }
+  }
+
+  const handlePrevButtonOnClick = () => {
+    if (stepPositionState > 0) {
+      setStepPositionState(stepPositionState - 1)
+    }
+  }
 
   return (
-    <>
-      <CustomRow justify={'center'}>
-        <CustomCol xs={24} xl={18}>
-          <CustomLayout
-            style={{
-              background: 'white',
-              padding: '35px 20px',
-              boxShadow:
-                '0px 3px 5px -1px rgba(0, 0, 0, 0.2),0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12)',
-            }}
-          >
-            <CustomForm {...formItemLayout} validateMessages={validateMessages}>
-              <CustomFormContainer>
-                <GeneralData />
-                <CustomRow justify={'end'}>
-                  <CustomButton
-                    icon={<PlusOutlined />}
-                    type={'primary'}
-                    onClick={() => setVisible(true)}
-                  >
-                    Agregar representante
-                  </CustomButton>
-                </CustomRow>
-                <LegalRepresentatives />
-                <CustomRow justify={'start'}>
-                  <CustomFormItem style={{ marginTop: '20px' }}>
-                    <CustomButton htmlType={'submit'} type={'primary'}>
-                      Guardar
-                    </CustomButton>
-                  </CustomFormItem>
-                </CustomRow>
-              </CustomFormContainer>
-            </CustomForm>
-          </CustomLayout>
-        </CustomCol>
-      </CustomRow>
+    <CustomRow justify={'center'}>
+      <CustomCol xs={24} xl={18}>
+        <CustomLayout
+          style={{
+            background: 'white',
+            padding: '35px 20px',
+            boxShadow:
+              '0px 3px 5px -1px rgba(0, 0, 0, 0.2),0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12)',
+          }}
+        >
+          <CustomForm {...formItemLayout} validateMessages={validateMessages}>
+            <CustomFormContainer>
+              <CustomSteps current={stepPositionState}>
+                {steps.map((step: Steps) => (
+                  <CustomStep
+                    description={step.description}
+                    key={step.title}
+                    title={step.title}
+                  />
+                ))}
+              </CustomSteps>
+              {steps[stepPositionState].node}
 
-      <CustomModal
-        centered
-        title={<CustomTitle level={4}>Registro de relacionados</CustomTitle>}
-        visible={visible}
-        width={'85%'}
-        onOk={() => setVisible(false)}
-        onCancel={() => setVisible(false)}
-        okText={'Agregar'}
-        style={{
-          marginTop: 20,
-        }}
-      >
-        <RelatedRecord />
-      </CustomModal>
-    </>
+              <CustomRow justify={'start'} style={{ marginTop: 20 }}>
+                <CustomSpace>
+                  {stepPositionState === steps.length - 1 && (
+                    <CustomFormItem>
+                      <CustomButton htmlType={'submit'} type={'primary'}>
+                        Guardar
+                      </CustomButton>
+                    </CustomFormItem>
+                  )}
+                  {stepPositionState < steps.length - 1 && (
+                    <CustomFormItem>
+                      <CustomButton
+                        htmlType={'submit'}
+                        type={'primary'}
+                        onClick={handleNextButtonOnClick}
+                      >
+                        Siguiente
+                      </CustomButton>
+                    </CustomFormItem>
+                  )}
+                  {stepPositionState > 0 && (
+                    <CustomFormItem>
+                      <CustomButton
+                        htmlType={'button'}
+                        onClick={handlePrevButtonOnClick}
+                      >
+                        Anterior
+                      </CustomButton>
+                    </CustomFormItem>
+                  )}
+                </CustomSpace>
+              </CustomRow>
+            </CustomFormContainer>
+          </CustomForm>
+        </CustomLayout>
+      </CustomCol>
+    </CustomRow>
   )
 }
 

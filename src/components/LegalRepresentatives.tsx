@@ -1,6 +1,15 @@
 import React from 'react'
+import { PlusOutlined } from '@ant-design/icons'
 import { ColumnType } from 'antd/lib/table'
-import { CustomDivider, CustomTable, CustomTitle } from '.'
+import {
+  CustomButton,
+  CustomDivider,
+  CustomModal,
+  CustomRow,
+  CustomTable,
+  CustomTitle,
+  RelatedRecord,
+} from '.'
 
 type Representatives = {
   codigo: string | number
@@ -28,12 +37,43 @@ const columns: ColumnType<Representatives>[] = [
 ]
 
 const LegalRepresentatives = (): React.ReactElement => {
+  const [
+    relatedRecordModalVisibilityState,
+    setRelatedRecordModalVisibilityState,
+  ] = React.useState(false)
+
   return (
     <>
       <CustomDivider orientation={'left'}>
         <CustomTitle level={4}>Representantes Legales</CustomTitle>
       </CustomDivider>
-      <CustomTable columns={columns} pagination={false} bordered></CustomTable>
+
+      <CustomRow justify={'end'} style={{ marginBottom: 20 }}>
+        <CustomButton
+          icon={<PlusOutlined />}
+          type={'primary'}
+          onClick={() => setRelatedRecordModalVisibilityState(true)}
+        >
+          Agregar representante
+        </CustomButton>
+      </CustomRow>
+
+      <CustomTable columns={columns} pagination={false} bordered />
+
+      <CustomModal
+        centered
+        title={<CustomTitle level={4}>Registro de relacionados</CustomTitle>}
+        visible={relatedRecordModalVisibilityState}
+        width={'85%'}
+        footer={null}
+        closable={true}
+        onCancel={() => setRelatedRecordModalVisibilityState(false)}
+        style={{
+          marginTop: 20,
+        }}
+      >
+        <RelatedRecord />
+      </CustomModal>
     </>
   )
 }
