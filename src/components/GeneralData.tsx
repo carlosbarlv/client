@@ -24,15 +24,67 @@ import { PlusOutlined } from '@ant-design/icons'
 
 const { Option } = Select
 
-const GeneralData = (): React.ReactElement => {
-  const [entryStateSex, setEntryStateSex] = React.useState('M')
-  const handleStateSexRadioChange = (e: RadioChangeEvent) => {
-    setEntryStateSex(e.target.value)
+type IdType = {
+  [key: string]: {
+    placeholder: string
+    name: string
+    rules: {
+      len?: number
+      transform?: ((value: string) => string | number) | undefined
+      type?:
+        | 'string'
+        | 'number'
+        | 'boolean'
+        | 'object'
+        | 'enum'
+        | 'method'
+        | 'regexp'
+        | 'integer'
+        | 'float'
+        | 'date'
+        | 'url'
+        | 'hex'
+        | 'email'
+        | undefined
+    }
   }
+}
+
+const GeneralData = (): React.ReactElement => {
   const dispatch = useDispatch()
+  const [entryStateSex, setEntryStateSex] = React.useState('M')
+  const [entryIdTypeState, setEntryIdTypeState] = React.useState('')
+  const idType: IdType = {
+    C: {
+      placeholder: '00000000000',
+      name: 'DOCUMENTO_IDENTIDAD',
+      rules: {
+        len: 11,
+        transform: (value: string) => (Number(value) ? value.length : value),
+        type: 'number',
+      },
+    },
+    P: {
+      placeholder: 'SC0785877',
+      name: 'NO_PASAPORTE',
+      rules: {
+        type: 'string',
+      },
+    },
+    '': {
+      placeholder: 'Elige el tipo de documento (Cédula o pasaporte)',
+      name: '',
+      rules: {
+        type: 'string',
+      },
+    },
+  }
   const { nationalities, partnersCategories, activityParameters } = useSelector(
     (state: StoreState) => state.general
   )
+  const handleStateSexRadioChange = (e: RadioChangeEvent) => {
+    setEntryStateSex(e.target.value)
+  }
 
   useEffect(() => {
     dispatch(getNationalities())
@@ -52,35 +104,33 @@ const GeneralData = (): React.ReactElement => {
           </CustomFormItem>
         </CustomCol>
         <CustomCol {...defaultBreakpoints}></CustomCol>
-        <CustomCol {...defaultBreakpoints}>
-          <CustomFormItem
-            label={'Cédula'}
-            name={'DOCUMENTO_IDENTIDAD'}
-            rules={[
-              {
-                required: true,
-                type: 'number',
-                len: 11,
-                transform: (value: string) =>
-                  Number(value) ? value.length : value,
-              },
-            ]}
-          >
-            <CustomInput placeholder={'00000000000'} autoComplete={'off'} />
-          </CustomFormItem>
-        </CustomCol>
 
         <CustomCol {...defaultBreakpoints}>
+          <CustomFormItem label={'Tipo documento'}>
+            <CustomRadioGroup
+              onChange={(e: RadioChangeEvent) => {
+                setEntryIdTypeState(e.target.value)
+              }}
+              value={entryIdTypeState}
+            >
+              <CustomRadio value={'C'}>Cédula</CustomRadio>
+              <CustomRadio value={'P'}>Pasaporte</CustomRadio>
+            </CustomRadioGroup>
+          </CustomFormItem>
+        </CustomCol>
+        <CustomCol {...defaultBreakpoints}>
           <CustomFormItem
-            label={'No. Pasaporte'}
-            name={'NO_PASAPORTE'}
+            label={'Doc. Identidad'}
+            name={idType[entryIdTypeState].name}
+            normalize={(value: string) => value.toUpperCase()}
             rules={[
-              {
-                required: true,
-              },
+              Object.assign({ required: true }, idType[entryIdTypeState].rules),
             ]}
           >
-            <CustomInput placeholder={'No. Pasaporte'} />
+            <CustomInput
+              disabled={entryIdTypeState === ''}
+              placeholder={idType[entryIdTypeState].placeholder}
+            />
           </CustomFormItem>
         </CustomCol>
 
@@ -88,6 +138,7 @@ const GeneralData = (): React.ReactElement => {
           <CustomFormItem
             label={'Nombre(s)'}
             name={'NOMBRES'}
+            onlyLetters
             rules={[
               {
                 required: true,
@@ -100,6 +151,7 @@ const GeneralData = (): React.ReactElement => {
         <CustomCol {...defaultBreakpoints}>
           <CustomFormItem
             label={'Apellido(s)'}
+            onlyLetters
             name={'APELLIDOS'}
             rules={[
               {
@@ -111,7 +163,7 @@ const GeneralData = (): React.ReactElement => {
           </CustomFormItem>
         </CustomCol>
         <CustomCol {...defaultBreakpoints}>
-          <CustomFormItem label={'Apodo'} name={'APODO'}>
+          <CustomFormItem label={'Apodo'} onlyLetters name={'APODO'}>
             <CustomInput placeholder={'Apodo (opcional)'} />
           </CustomFormItem>
         </CustomCol>
@@ -141,6 +193,7 @@ const GeneralData = (): React.ReactElement => {
         <CustomCol {...defaultBreakpoints}>
           <CustomFormItem
             label={'Lugar de nac.'}
+            onlyLetters
             name={'LUGAR_NAC'}
             rules={[
               {

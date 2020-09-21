@@ -3,6 +3,7 @@ import {
   CustomButton,
   CustomCol,
   CustomForm,
+  CustomFormContainer,
   CustomFormItem,
   CustomLayout,
   CustomRow,
@@ -11,11 +12,17 @@ import {
   CustomSteps,
 } from '../components'
 import GeneralData from '../components/GeneralData'
-import styled from 'styled-components'
 import IncomeInformation from '../components/IncomeInformation'
 import PoliticallyExposedPerson from '../components/PoliticallyExposedPerson'
 import { formItemLayout } from '../themes'
-import { Form, Modal } from 'antd'
+import { Form } from 'antd'
+import { useDispatch, useSelector } from 'react-redux'
+import { validateMessages } from '../constants/general'
+import { createPhysicalPerson } from '../actions/physicalPerson'
+import { PhysicalPersonType } from '../reducers/physicalPerson'
+import { showNotification } from '../utils/general'
+import { StoreState } from '../reducers'
+import { getSessionInfo } from '../utils/session'
 
 type Steps = {
   description: string
@@ -23,32 +30,14 @@ type Steps = {
   title: string
 }
 
-const FormContainer = styled.div`
-  padding-left: 10px;
-  padding-right: 20px;
-`
-
 const PhysicalPerson = (): React.ReactElement => {
+  const dispatch = useDispatch()
   const [stepPositionState, setStepPositionState] = React.useState(0)
+  const [personData, setPersonData] = React.useState({})
   const [form] = Form.useForm()
-
-  const validateMessages = {
-    required: `$\{label} es requerido.`,
-    types: {
-      email: `$\{label} no es un email válido.`,
-      number: `$\{label} no es un número válido.`,
-      regexp: `$\{label} formato no válido.`,
-    },
-    pattern: {
-      mismatch: `$\{label} formato no válido.`,
-    },
-    number: {
-      len: `"$\{label}" debe tener exactamente "$\{len}" caracteres.`,
-    },
-    string: {
-      len: `"$\{label}" debe tener exactamente "$\{len}" caracteres.`,
-    },
-  }
+  const { activityParameters } = useSelector(
+    (state: StoreState) => state.general
+  )
 
   const steps: Steps[] = [
     {
@@ -58,7 +47,7 @@ const PhysicalPerson = (): React.ReactElement => {
     },
     {
       description: 'Información de ingresos',
-      node: <IncomeInformation />,
+      node: <IncomeInformation form={form} />,
       title: 'Ingresos',
     },
     {
@@ -71,19 +60,22 @@ const PhysicalPerson = (): React.ReactElement => {
   const handleNextButtonOnClick = async (
     event: React.MouseEvent<HTMLElement, MouseEvent>
   ) => {
+    const data = form.getFieldsValue()
     if (stepPositionState < steps.length - 1) {
       event.preventDefault()
     }
     try {
       await form.validateFields()
+      setPersonData(Object.assign(personData, data))
       if (stepPositionState < steps.length - 1) {
         setStepPositionState(stepPositionState + 1)
       }
     } catch (error) {
-      Modal.error({
-        title: 'Faltan algunos datos',
-        content: 'Por favor completa todos los campos requeridos.',
-      })
+      showNotification(
+        'Faltan datos',
+        'Por favor llenar los campos requeridos.',
+        'error'
+      )
     }
   }
 
@@ -91,6 +83,39 @@ const PhysicalPerson = (): React.ReactElement => {
     if (stepPositionState > 0) {
       setStepPositionState(stepPositionState - 1)
     }
+  }
+
+  const handleOnFinish = () => {
+    const person = personData as PhysicalPersonType & {
+      descCargo?: ''
+      descEntidad?: ''
+      entidadPep?: ''
+      fechaFinal?: ''
+      fechaInicio?: ''
+    }
+    person.ID_EMPRESA = getSessionInfo().businessId
+    person.RAZON_SOCIAL = `${person.NOMBRES} ${person.APELLIDOS}`
+    person.ESTADO = 'A'
+    person.ID_LIST_TIPO_PERSONA = Number(
+      activityParameters.ID_LIST_TIPO_PERSONA
+    )
+    person.ID_LIST_TIPO_ENTIDAD = Number(
+      activityParameters.ID_LIST_TIPO_ENTIDAD
+    )
+    person.TIPO_ENTIDAD = 'C'
+
+    person.ID_CONDICION = '30' // que condicion por defecto debe ser? Hay que pasarlo como param?
+    person.ID_TIPO_IDENT = 1 // esto es si es cedula o si es pasaporte?
+
+    //eliminar los campos no requeridos antes de mandar al api
+    delete person.ID_PERSONA
+    delete person.USUARIO_INSERCION
+    delete person.descCargo
+    delete person.descEntidad
+    delete person.entidadPep
+    delete person.fechaFinal
+    delete person.fechaInicio
+    dispatch(createPhysicalPerson(person))
   }
 
   return (
@@ -109,9 +134,10 @@ const PhysicalPerson = (): React.ReactElement => {
           <CustomForm
             {...formItemLayout}
             form={form}
+            onFinish={handleOnFinish}
             validateMessages={validateMessages}
           >
-            <FormContainer>
+            <CustomFormContainer>
               <CustomSteps current={stepPositionState}>
                 {steps.map((step: Steps) => (
                   <CustomStep
@@ -131,7 +157,9 @@ const PhysicalPerson = (): React.ReactElement => {
                       type={'primary'}
                       onClick={handleNextButtonOnClick}
                     >
-                      Siguiente
+                      {stepPositionState < steps.length - 1
+                        ? 'Siguiente'
+                        : 'Crear'}
                     </CustomButton>
                   </CustomFormItem>
 
@@ -147,7 +175,7 @@ const PhysicalPerson = (): React.ReactElement => {
                   )}
                 </CustomSpace>
               </CustomRow>
-            </FormContainer>
+            </CustomFormContainer>
           </CustomForm>
         </CustomLayout>
       </CustomCol>

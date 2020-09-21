@@ -76,7 +76,7 @@ const RegisterPerson: React.FunctionComponent<
   const { activityId } = history.location.state
 
   useEffect(() => {
-    dispatch(getActivityParameters(activityId))
+    activityId && dispatch(getActivityParameters(activityId))
   }, [dispatch, activityId])
 
   return (

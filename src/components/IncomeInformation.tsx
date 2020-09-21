@@ -30,11 +30,15 @@ import { StoreState } from '../reducers'
 import { EconomicActivity } from '../reducers/economicActivities'
 import { getCoins } from '../actions/general'
 import { Coins } from '../reducers/general'
+import { FormInstance } from 'antd/lib/form'
 
 const { Option } = Select
 
-const IncomeInformation = (): React.ReactElement => {
+const IncomeInformation = (props: {
+  form: FormInstance
+}): React.ReactElement => {
   const [entryJobTypeState, setEntryJobTypeState] = React.useState('')
+  const [entryOthersState, setEntryOthersState] = React.useState(0)
   const handleStateJobTypeRadioChange = (e: RadioChangeEvent) => {
     setEntryJobTypeState(e.target.value)
   }
@@ -64,8 +68,6 @@ const IncomeInformation = (): React.ReactElement => {
           rules={[
             {
               required: true,
-              type: 'string',
-              pattern: new RegExp('[a-z, A-Z]'),
             },
           ]}
         >
@@ -81,7 +83,6 @@ const IncomeInformation = (): React.ReactElement => {
           rules={[
             {
               required: true,
-              type: 'string',
             },
           ]}
         >
@@ -103,9 +104,9 @@ const IncomeInformation = (): React.ReactElement => {
             value={entryJobTypeState}
             onChange={handleStateJobTypeRadioChange}
           >
-            <CustomRadio value={'PRIV'}>Privado</CustomRadio>
-            <CustomRadio value={'PUBLI'}>Público</CustomRadio>
-            <CustomRadio value={'IND'}>Independiente</CustomRadio>
+            <CustomRadio value={0}>Privado</CustomRadio>
+            <CustomRadio value={1}>Público</CustomRadio>
+            <CustomRadio value={2}>Independiente</CustomRadio>
           </CustomRadioGroup>
         </CustomFormItem>
       </CustomCol>
@@ -163,11 +164,16 @@ const IncomeInformation = (): React.ReactElement => {
             <CustomCol {...defaultBreakpointsForInputGroupRight}>
               <CustomFormItem
                 label={'Descripción actividad'}
-                name={'DACTIVIDAD_ECONOMICA'}
+                // name={'DACTIVIDAD_ECONOMICA'}
                 noStyle
-                rules={[{ required: true }]}
+                // rules={[{ required: true }]}
               >
                 <CustomSelect
+                  onChange={(value: string | number) => {
+                    props.form.setFieldsValue({
+                      ID_ACTIVIDAD_ECONOMICA: value.toString(),
+                    })
+                  }}
                   placeholder={'Descripción actividad económica'}
                   showSearch
                   allowClear
@@ -273,13 +279,11 @@ const IncomeInformation = (): React.ReactElement => {
                 label={'Otros ingresos'}
                 name={'OTROS_INGRESOS'}
                 noStyle
-                rules={[
-                  {
-                    required: true,
-                  },
-                ]}
               >
                 <CustomInputNumber
+                  onChange={(value: string | number | undefined) => {
+                    setEntryOthersState(Number(value))
+                  }}
                   placeholder={'Otros Ingresos'}
                   style={{ width: '100%' }}
                   type={'number'}
@@ -294,11 +298,15 @@ const IncomeInformation = (): React.ReactElement => {
                 noStyle
                 rules={[
                   {
-                    required: true,
+                    required: entryOthersState > 0,
                   },
                 ]}
               >
-                <CustomSelect placeholder={'Moneda'} showSearch>
+                <CustomSelect
+                  disabled={!(entryOthersState > 0)}
+                  placeholder={'Moneda'}
+                  showSearch
+                >
                   {coins.map((coin: Coins) => (
                     <Option
                       key={coin.ID_MONEDA}
@@ -318,12 +326,15 @@ const IncomeInformation = (): React.ReactElement => {
           name={'RAZON_OTROS_INGRESOS'}
           rules={[
             {
-              required: true,
+              required: entryOthersState > 0,
             },
           ]}
           {...labelColFullWidth}
         >
-          <CustomTextArea placeholder={'Justifiue otros ingresos'} />
+          <CustomTextArea
+            disabled={!(entryOthersState > 0)}
+            placeholder={'Justifiue otros ingresos'}
+          />
         </CustomFormItem>
       </CustomCol>
     </CustomRow>

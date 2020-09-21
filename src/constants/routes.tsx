@@ -10,6 +10,7 @@ export const WEB_SERVICE_API_GET_PRODUCT_RANGES = `${WEB_SERVICE_API}/rango_prod
 export const WEB_SERVICE_API_GET_ECONOMIC_ACTIVITY = `${WEB_SERVICE_API}/actividad_economica`
 export const WEB_SERVICE_API_GET_COINS = `${WEB_SERVICE_API}/moneda`
 export const WEB_SERVICE_API_CREATE_UPDATE_PRODUCT_RANGES = `${WEB_SERVICE_API}/rango_productos`
+export const WEB_SERVICE_API_CREATE_UPDATE_PERSON = `${WEB_SERVICE_API}/persona`
 export const WEB_SERVICE_API_GET_ACTIVITY_PARAMETERS = `${WEB_SERVICE_API}/actividad_parametro`
 // Internal routes
 export const PATH_LOGIN = '/login'

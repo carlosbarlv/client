@@ -14,6 +14,7 @@ import {
   watchGetPartnersCategories,
 } from './general'
 import { watchGetPaginatedEconomicActivities } from './economicActivities'
+import { watchCreatePerson } from './physicalPerson'
 
 export default function* rootSaga(): Generator {
   yield all([
@@ -29,5 +30,6 @@ export default function* rootSaga(): Generator {
     watchGetPaginatedEconomicActivities(),
     watchGetCoins(),
     watchGetActivityParameters(),
+    watchCreatePerson(),
   ])
 }
