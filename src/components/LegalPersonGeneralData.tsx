@@ -6,11 +6,11 @@ import {
   CustomDivider,
   CustomFormItem,
   CustomInput,
+  CustomInputGroup,
   CustomInputNumber,
   CustomRow,
   CustomSelect,
   CustomTitle,
-  CustomTooltip,
 } from '.'
 import { defaultBreakpoints, labelColFullWidth } from '../themes'
 import { getPartnersCategories } from '../actions/general'
@@ -85,40 +85,38 @@ const GeneralData: React.FunctionComponent = () => {
       </CustomCol>
       <CustomCol {...defaultBreakpoints}>
         <CustomFormItem label={'Tiempo empresa'}>
-          <CustomFormItem
-            name={'años'}
-            noStyle
-            rules={[
-              {
-                required: true,
-                // ya que este formItem no tiene label es ncesario incluir el mensaje aqui
-                message: 'Años es requerido',
-              },
-            ]}
-          >
-            <CustomTooltip title={'Años en la empresa'}>
+          <CustomInputGroup>
+            <CustomFormItem
+              name={['tiempo_empresa', 'años']}
+              noStyle
+              rules={[
+                {
+                  required: true,
+                  // ya que este formItem no tiene label es ncesario incluir el mensaje aqui
+                  message: 'Años es requerido',
+                },
+              ]}
+            >
               <CustomInputNumber placeholder={'Años'} type={'number'} />
-            </CustomTooltip>
-          </CustomFormItem>
-          <CustomFormItem
-            name={'meses'}
-            noStyle
-            rules={[
-              {
-                required: true,
-                // ya que este formItem no tiene label es ncesario incluir el mensaje aqui
-                message: 'Meses es requerido',
-              },
-            ]}
-          >
-            <CustomTooltip title={'Meses en la empresa'}>
+            </CustomFormItem>
+            <CustomFormItem
+              name={['tiempo_empresa', 'meses']}
+              noStyle
+              rules={[
+                {
+                  required: true,
+                  // ya que este formItem no tiene label es ncesario incluir el mensaje aqui
+                  message: 'Meses es requerido',
+                },
+              ]}
+            >
               <CustomInputNumber
                 placeholder={'Meses'}
                 type={'number'}
                 max={12}
               />
-            </CustomTooltip>
-          </CustomFormItem>
+            </CustomFormItem>
+          </CustomInputGroup>
         </CustomFormItem>
       </CustomCol>
 
