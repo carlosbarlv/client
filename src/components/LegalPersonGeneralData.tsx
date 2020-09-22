@@ -87,26 +87,28 @@ const GeneralData: React.FunctionComponent = () => {
         <CustomFormItem label={'Tiempo empresa'}>
           <CustomInputGroup>
             <CustomFormItem
-              name={['tiempo_empresa', 'años']}
+              label={'Años'}
+              name={'años'}
               noStyle
               rules={[
                 {
                   required: true,
-                  // ya que este formItem no tiene label es ncesario incluir el mensaje aqui
-                  message: 'Años es requerido',
                 },
               ]}
             >
-              <CustomInputNumber placeholder={'Años'} type={'number'} />
+              <CustomInputNumber
+                placeholder={'Años'}
+                type={'number'}
+                style={{ width: '50%' }}
+              />
             </CustomFormItem>
             <CustomFormItem
-              name={['tiempo_empresa', 'meses']}
+              label={'Meses'}
+              name={'meses'}
               noStyle
               rules={[
                 {
                   required: true,
-                  // ya que este formItem no tiene label es ncesario incluir el mensaje aqui
-                  message: 'Meses es requerido',
                 },
               ]}
             >
@@ -114,6 +116,7 @@ const GeneralData: React.FunctionComponent = () => {
                 placeholder={'Meses'}
                 type={'number'}
                 max={12}
+                style={{ width: '50%' }}
               />
             </CustomFormItem>
           </CustomInputGroup>
@@ -129,6 +132,7 @@ const GeneralData: React.FunctionComponent = () => {
           <CustomInputNumber
             placeholder={'Cantidad colaboradores'}
             type={'number'}
+            style={{ width: '50%' }}
           />
         </CustomFormItem>
       </CustomCol>

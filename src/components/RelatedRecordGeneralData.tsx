@@ -14,7 +14,6 @@ import {
   CustomRow,
   CustomSelect,
   CustomTitle,
-  CustomTooltip,
 } from '.'
 import { defaultBreakpoints } from '../themes'
 import { useDispatch, useSelector } from 'react-redux'
@@ -160,18 +159,41 @@ const RelatedRecordGeneralData: React.FunctionComponent = () => {
         </CustomFormItem>
       </CustomCol>
       <CustomCol {...defaultBreakpoints}>
-        <CustomFormItem
-          label={'Tiempo empresa'}
-          name={'tiempoEmpresa'}
-          rules={[{ required: true }]}
-        >
-          <CustomInputGroup compact>
-            <CustomTooltip title={'Años en la empresa'}>
-              <CustomInputNumber placeholder={'Años'} type={'number'} />
-            </CustomTooltip>
-            <CustomTooltip title={'Meses en la empresa'}>
-              <CustomInputNumber placeholder={'Meses'} type={'number'} />
-            </CustomTooltip>
+        <CustomFormItem label={'Tiempo empresa'}>
+          <CustomInputGroup>
+            <CustomFormItem
+              label={'Años'}
+              name={'años'}
+              noStyle
+              rules={[
+                {
+                  required: true,
+                },
+              ]}
+            >
+              <CustomInputNumber
+                placeholder={'Años'}
+                type={'number'}
+                style={{ width: '50%' }}
+              />
+            </CustomFormItem>
+            <CustomFormItem
+              label={'Meses'}
+              name={'meses'}
+              noStyle
+              rules={[
+                {
+                  required: true,
+                },
+              ]}
+            >
+              <CustomInputNumber
+                placeholder={'Meses'}
+                type={'number'}
+                max={12}
+                style={{ width: '50%' }}
+              />
+            </CustomFormItem>
           </CustomInputGroup>
         </CustomFormItem>
       </CustomCol>
