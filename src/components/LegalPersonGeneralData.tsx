@@ -6,7 +6,6 @@ import {
   CustomDivider,
   CustomFormItem,
   CustomInput,
-  CustomInputGroup,
   CustomInputNumber,
   CustomRow,
   CustomSelect,
@@ -85,21 +84,44 @@ const GeneralData: React.FunctionComponent = () => {
         </CustomFormItem>
       </CustomCol>
       <CustomCol {...defaultBreakpoints}>
-        <CustomFormItem
-          label={'Tiempo empresa'}
-          name={'tiempoEmpresa'}
-          rules={[{ required: true }]}
-        >
-          <CustomInputGroup compact>
+        <CustomFormItem label={'Tiempo empresa'}>
+          <CustomFormItem
+            name={'años'}
+            noStyle
+            rules={[
+              {
+                required: true,
+                // ya que este formItem no tiene label es ncesario incluir el mensaje aqui
+                message: 'Años es requerido',
+              },
+            ]}
+          >
             <CustomTooltip title={'Años en la empresa'}>
               <CustomInputNumber placeholder={'Años'} type={'number'} />
             </CustomTooltip>
+          </CustomFormItem>
+          <CustomFormItem
+            name={'meses'}
+            noStyle
+            rules={[
+              {
+                required: true,
+                // ya que este formItem no tiene label es ncesario incluir el mensaje aqui
+                message: 'Meses es requerido',
+              },
+            ]}
+          >
             <CustomTooltip title={'Meses en la empresa'}>
-              <CustomInputNumber placeholder={'Meses'} type={'number'} />
+              <CustomInputNumber
+                placeholder={'Meses'}
+                type={'number'}
+                max={12}
+              />
             </CustomTooltip>
-          </CustomInputGroup>
+          </CustomFormItem>
         </CustomFormItem>
       </CustomCol>
+
       <CustomCol {...defaultBreakpoints}>
         <CustomFormItem
           label={'Cant. Colaboradores'}

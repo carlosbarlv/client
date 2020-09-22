@@ -1,4 +1,5 @@
 import React from 'react'
+import { Form } from 'antd'
 import {
   AddressesAndPhone,
   CustomButton,
@@ -16,6 +17,7 @@ import {
 } from '../components'
 import { formItemLayout } from '../themes'
 import { validateMessages } from '../constants/general'
+import { showNotification } from '../utils/general'
 
 type Steps = {
   title: string
@@ -24,6 +26,7 @@ type Steps = {
 }
 
 const LegalPerson = (): React.ReactElement => {
+  const [form] = Form.useForm()
   const [stepPositionState, setStepPositionState] = React.useState(0)
 
   const steps: Steps[] = [
@@ -44,12 +47,23 @@ const LegalPerson = (): React.ReactElement => {
     },
   ]
 
-  const handleNextButtonOnClick = (
+  const handleNextButtonOnClick = async (
     event: React.MouseEvent<HTMLElement, MouseEvent>
   ) => {
     if (stepPositionState < steps.length - 1) {
-      setStepPositionState(stepPositionState + 1)
       event.preventDefault()
+    }
+    try {
+      await form.validateFields()
+      if (stepPositionState < steps.length - 1) {
+        setStepPositionState(stepPositionState + 1)
+      }
+    } catch (error) {
+      showNotification(
+        'Faltan datos',
+        'Por favor llenar los campos requeridos.',
+        'error'
+      )
     }
   }
 
@@ -70,7 +84,11 @@ const LegalPerson = (): React.ReactElement => {
               '0px 3px 5px -1px rgba(0, 0, 0, 0.2),0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12)',
           }}
         >
-          <CustomForm {...formItemLayout} validateMessages={validateMessages}>
+          <CustomForm
+            {...formItemLayout}
+            validateMessages={validateMessages}
+            form={form}
+          >
             <CustomFormContainer>
               <CustomSteps current={stepPositionState}>
                 {steps.map((step: Steps) => (
