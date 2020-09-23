@@ -24,6 +24,11 @@ import { PhysicalPersonType } from '../reducers/physicalPerson'
 import { showNotification } from '../utils/general'
 import { StoreState } from '../reducers'
 import { getSessionInfo } from '../utils/session'
+import {
+  ArrowLeftOutlined,
+  ArrowRightOutlined,
+  SaveOutlined,
+} from '@ant-design/icons'
 
 type Steps = {
   description: string
@@ -157,28 +162,35 @@ const PhysicalPerson = (): React.ReactElement => {
 
               <CustomRow justify={'start'}>
                 <CustomSpace>
-                  <CustomFormItem>
-                    <CustomButton
-                      htmlType={'submit'}
-                      type={'primary'}
-                      onClick={handleNextButtonOnClick}
-                    >
-                      {stepPositionState < steps.length - 1
-                        ? 'Siguiente'
-                        : 'Crear'}
-                    </CustomButton>
-                  </CustomFormItem>
-
                   {stepPositionState > 0 && (
                     <CustomFormItem>
                       <CustomButton
                         htmlType={'button'}
+                        icon={<ArrowLeftOutlined />}
                         onClick={handlePrevButtonOnClick}
                       >
                         Anterior
                       </CustomButton>
                     </CustomFormItem>
                   )}
+                  <CustomFormItem>
+                    <CustomButton
+                      htmlType={'submit'}
+                      icon={
+                        stepPositionState < steps.length - 1 ? (
+                          <ArrowRightOutlined />
+                        ) : (
+                          <SaveOutlined />
+                        )
+                      }
+                      onClick={handleNextButtonOnClick}
+                      type={'primary'}
+                    >
+                      {stepPositionState < steps.length - 1
+                        ? 'Siguiente'
+                        : 'Crear'}
+                    </CustomButton>
+                  </CustomFormItem>
                 </CustomSpace>
               </CustomRow>
             </CustomFormContainer>
