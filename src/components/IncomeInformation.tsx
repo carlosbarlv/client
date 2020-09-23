@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import moment from 'moment'
 import { Select } from 'antd'
 import { RadioChangeEvent } from 'antd/lib/radio'
+import { QuestionCircleOutlined } from '@ant-design/icons'
 import {
   defaultBreakpoints,
   defaultBreakpointsForInputGroupLeft,
@@ -10,6 +11,7 @@ import {
 } from '../themes'
 import { getEconomicActivity } from '../actions/economicActivities'
 import {
+  CustomButton,
   CustomCol,
   CustomDatePicker,
   CustomDivider,
@@ -212,17 +214,43 @@ const IncomeInformation = (props: {
         </CustomFormItem>
       </CustomCol>
       <CustomCol {...defaultBreakpoints}>
-        <CustomFormItem
-          label={'Tiempo empresa'}
-          name={'tiempoEmpresa'}
-          rules={[{ required: true }]}
-        >
-          <CustomInputGroup compact>
-            <CustomTooltip title={'Años en la empresa'}>
-              <CustomInputNumber placeholder={'Años'} type={'number'} />
-            </CustomTooltip>
-            <CustomTooltip title={'Meses en la empresa'}>
-              <CustomInputNumber placeholder={'Meses'} type={'number'} />
+        <CustomFormItem label={'Tiempo empresa'}>
+          <CustomInputGroup>
+            <CustomFormItem
+              label={'Años'}
+              name={'años'}
+              noStyle
+              rules={[
+                {
+                  required: true,
+                },
+              ]}
+            >
+              <CustomInputNumber
+                placeholder={'Años'}
+                type={'number'}
+                style={{ width: '40%' }}
+              />
+            </CustomFormItem>
+            <CustomFormItem
+              label={'Meses'}
+              name={'meses'}
+              noStyle
+              rules={[
+                {
+                  required: true,
+                },
+              ]}
+            >
+              <CustomInputNumber
+                placeholder={'Meses'}
+                type={'number'}
+                max={11}
+                style={{ width: '40%' }}
+              />
+            </CustomFormItem>
+            <CustomTooltip title={'Años y Meses en la empresa'}>
+              <CustomButton icon={<QuestionCircleOutlined />} type={'link'} />
             </CustomTooltip>
           </CustomInputGroup>
         </CustomFormItem>

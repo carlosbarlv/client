@@ -1,4 +1,5 @@
 import React from 'react'
+import { Form } from 'antd'
 import {
   AddressesAndPhone,
   CustomButton,
@@ -14,11 +15,13 @@ import {
 import { RelatedRecordGeneralData } from '.'
 import { formItemLayout } from '../themes'
 import { validateMessages } from '../constants/general'
+import { showNotification } from '../utils/general'
 import {
   ArrowLeftOutlined,
   ArrowRightOutlined,
   SaveOutlined,
 } from '@ant-design/icons'
+
 
 type Steps = {
   title: string
@@ -27,6 +30,7 @@ type Steps = {
 }
 
 const RelatedRecord: React.FunctionComponent = () => {
+  const [form] = Form.useForm()
   const [stepPositionState, setStepPositionState] = React.useState(0)
 
   const steps: Steps[] = [
@@ -47,12 +51,23 @@ const RelatedRecord: React.FunctionComponent = () => {
     },
   ]
 
-  const handleNextButtonOnClick = (
+  const handleNextButtonOnClick = async (
     event: React.MouseEvent<HTMLElement, MouseEvent>
   ) => {
     if (stepPositionState < steps.length - 1) {
-      setStepPositionState(stepPositionState + 1)
       event.preventDefault()
+    }
+    try {
+      await form.validateFields()
+      if (stepPositionState < steps.length - 1) {
+        setStepPositionState(stepPositionState + 1)
+      }
+    } catch (error) {
+      showNotification(
+        'Faltan datos',
+        'Por favor llenar los campos requeridos.',
+        'error'
+      )
     }
   }
 
@@ -63,7 +78,11 @@ const RelatedRecord: React.FunctionComponent = () => {
   }
 
   return (
-    <CustomForm {...formItemLayout} validateMessages={validateMessages}>
+    <CustomForm
+      {...formItemLayout}
+      form={form}
+      validateMessages={validateMessages}
+    >
       <CustomFormContainer>
         <CustomSteps current={stepPositionState}>
           {steps.map((step: Steps) => (
