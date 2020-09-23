@@ -1,5 +1,6 @@
 import React from 'react'
 import {
+  AddressesAndPhone,
   CustomButton,
   CustomCol,
   CustomForm,
@@ -32,7 +33,7 @@ type Steps = {
 
 const PhysicalPerson = (): React.ReactElement => {
   const dispatch = useDispatch()
-  const [stepPositionState, setStepPositionState] = React.useState(0)
+  const [stepPositionState, setStepPositionState] = React.useState(3)
   const [personData, setPersonData] = React.useState({})
   const [form] = Form.useForm()
   const { activityParameters } = useSelector(
@@ -54,6 +55,11 @@ const PhysicalPerson = (): React.ReactElement => {
       description: 'Persona Expuesta Políticamente',
       node: <PoliticallyExposedPerson />,
       title: 'Peps',
+    },
+    {
+      description: 'Direcciones, teléfonos y/o redes sociales',
+      node: <AddressesAndPhone />,
+      title: 'Direcciones y contactos',
     },
   ]
 
