@@ -1,6 +1,14 @@
 import React from 'react'
 import { ColumnType } from 'antd/lib/table'
-import { CustomCol, CustomDivider, CustomTable, CustomTitle } from '.'
+import {
+  CustomButton,
+  CustomCol,
+  CustomDivider,
+  CustomRow,
+  CustomTable,
+  CustomTitle,
+} from '.'
+import { PlusOutlined } from '@ant-design/icons'
 
 type NumberPhone = {
   tipo: 'string'
@@ -38,6 +46,11 @@ const Phone: React.FunctionComponent = () => {
       <CustomDivider orientation={'left'}>
         <CustomTitle level={4}> Teléfonos </CustomTitle>
       </CustomDivider>
+      <CustomRow justify={'end'} style={{ marginBottom: 10 }}>
+        <CustomButton icon={<PlusOutlined />} type={'primary'}>
+          Agregar teléfono
+        </CustomButton>
+      </CustomRow>
       <CustomTable columns={columns} pagination={false} bordered></CustomTable>
     </CustomCol>
   )

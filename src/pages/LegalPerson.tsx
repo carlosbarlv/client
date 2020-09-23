@@ -18,6 +18,12 @@ import {
 import { formItemLayout } from '../themes'
 import { validateMessages } from '../constants/general'
 import { showNotification } from '../utils/general'
+import {
+  ArrowLeftOutlined,
+  ArrowRightOutlined,
+  SaveOutlined,
+} from '@ant-design/icons'
+
 
 type Steps = {
   title: string
@@ -103,34 +109,35 @@ const LegalPerson = (): React.ReactElement => {
 
               <CustomRow justify={'start'} style={{ marginTop: 20 }}>
                 <CustomSpace>
-                  {stepPositionState === steps.length - 1 && (
-                    <CustomFormItem>
-                      <CustomButton htmlType={'submit'} type={'primary'}>
-                        Guardar
-                      </CustomButton>
-                    </CustomFormItem>
-                  )}
-                  {stepPositionState < steps.length - 1 && (
-                    <CustomFormItem>
-                      <CustomButton
-                        htmlType={'submit'}
-                        type={'primary'}
-                        onClick={handleNextButtonOnClick}
-                      >
-                        Siguiente
-                      </CustomButton>
-                    </CustomFormItem>
-                  )}
                   {stepPositionState > 0 && (
                     <CustomFormItem>
                       <CustomButton
                         htmlType={'button'}
+                        icon={<ArrowLeftOutlined />}
                         onClick={handlePrevButtonOnClick}
                       >
                         Anterior
                       </CustomButton>
                     </CustomFormItem>
                   )}
+                  <CustomFormItem>
+                    <CustomButton
+                      htmlType={'submit'}
+                      icon={
+                        stepPositionState < steps.length - 1 ? (
+                          <ArrowRightOutlined />
+                        ) : (
+                          <SaveOutlined />
+                        )
+                      }
+                      onClick={handleNextButtonOnClick}
+                      type={'primary'}
+                    >
+                      {stepPositionState < steps.length - 1
+                        ? 'Siguiente'
+                        : 'Crear'}
+                    </CustomButton>
+                  </CustomFormItem>
                 </CustomSpace>
               </CustomRow>
             </CustomFormContainer>

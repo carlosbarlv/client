@@ -29,12 +29,12 @@ const Addresses: React.FunctionComponent = () => {
         <CustomRow justify={'end'}>
           <CustomSpace>
             <CustomFormItem>
-              <CustomButton type={'primary'} icon={<EyeOutlined />}>
+              <CustomButton icon={<EyeOutlined />}>
                 Ver direcciones
               </CustomButton>
             </CustomFormItem>
             <CustomFormItem>
-              <CustomButton icon={<PlusOutlined />}>
+              <CustomButton icon={<PlusOutlined />} type={'primary'}>
                 Agregar direcciones
               </CustomButton>
             </CustomFormItem>
