@@ -1,6 +1,14 @@
 import React from 'react'
 import { ColumnType } from 'antd/lib/table'
-import { CustomCol, CustomDivider, CustomTable, CustomTitle } from '.'
+import {
+  CustomButton,
+  CustomCol,
+  CustomDivider,
+  CustomRow,
+  CustomTable,
+  CustomTitle,
+} from '.'
+import { PlusOutlined } from '@ant-design/icons'
 
 type Emails = {
   tipo: 'string'
@@ -33,6 +41,11 @@ const SocialNetworks: React.FunctionComponent = () => {
       <CustomDivider orientation={'left'}>
         <CustomTitle level={4}> Emails / Redes sociales </CustomTitle>
       </CustomDivider>
+      <CustomRow justify={'end'}>
+        <CustomButton icon={<PlusOutlined />} type={'primary'}>
+          Agregar email/red social
+        </CustomButton>
+      </CustomRow>
       <CustomTable columns={columns} pagination={false} bordered></CustomTable>
     </CustomCol>
   )
