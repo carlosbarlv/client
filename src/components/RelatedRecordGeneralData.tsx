@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react'
 import moment from 'moment'
 import { Select } from 'antd'
+import { QuestionCircleOutlined } from '@ant-design/icons'
 import {
+  CustomButton,
   CustomCol,
   CustomDatePicker,
   CustomDivider,
@@ -14,6 +16,7 @@ import {
   CustomRow,
   CustomSelect,
   CustomTitle,
+  CustomTooltip,
 } from '.'
 import { defaultBreakpoints } from '../themes'
 import { useDispatch, useSelector } from 'react-redux'
@@ -174,7 +177,7 @@ const RelatedRecordGeneralData: React.FunctionComponent = () => {
               <CustomInputNumber
                 placeholder={'Años'}
                 type={'number'}
-                style={{ width: '50%' }}
+                style={{ width: '40%' }}
               />
             </CustomFormItem>
             <CustomFormItem
@@ -190,10 +193,13 @@ const RelatedRecordGeneralData: React.FunctionComponent = () => {
               <CustomInputNumber
                 placeholder={'Meses'}
                 type={'number'}
-                max={12}
-                style={{ width: '50%' }}
+                max={11}
+                style={{ width: '40%' }}
               />
             </CustomFormItem>
+            <CustomTooltip title={'Años y Meses en la empresa'}>
+              <CustomButton icon={<QuestionCircleOutlined />} type={'link'} />
+            </CustomTooltip>
           </CustomInputGroup>
         </CustomFormItem>
       </CustomCol>

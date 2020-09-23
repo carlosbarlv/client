@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Select } from 'antd'
+import { QuestionCircleOutlined } from '@ant-design/icons'
 import {
+  CustomButton,
   CustomCol,
   CustomDivider,
   CustomFormItem,
@@ -11,6 +13,7 @@ import {
   CustomRow,
   CustomSelect,
   CustomTitle,
+  CustomTooltip,
 } from '.'
 import { defaultBreakpoints, labelColFullWidth } from '../themes'
 import { getPartnersCategories } from '../actions/general'
@@ -99,7 +102,7 @@ const GeneralData: React.FunctionComponent = () => {
               <CustomInputNumber
                 placeholder={'Años'}
                 type={'number'}
-                style={{ width: '50%' }}
+                style={{ width: '40%' }}
               />
             </CustomFormItem>
             <CustomFormItem
@@ -115,10 +118,13 @@ const GeneralData: React.FunctionComponent = () => {
               <CustomInputNumber
                 placeholder={'Meses'}
                 type={'number'}
-                max={12}
-                style={{ width: '50%' }}
+                max={11}
+                style={{ width: '40%' }}
               />
             </CustomFormItem>
+            <CustomTooltip title={'Años y Meses en la empresa'}>
+              <CustomButton icon={<QuestionCircleOutlined />} type={'link'} />
+            </CustomTooltip>
           </CustomInputGroup>
         </CustomFormItem>
       </CustomCol>
@@ -132,7 +138,7 @@ const GeneralData: React.FunctionComponent = () => {
           <CustomInputNumber
             placeholder={'Cantidad colaboradores'}
             type={'number'}
-            style={{ width: '50%' }}
+            style={{ width: '40%' }}
           />
         </CustomFormItem>
       </CustomCol>

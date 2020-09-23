@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import moment from 'moment'
 import { Select } from 'antd'
 import { RadioChangeEvent } from 'antd/lib/radio'
+import { QuestionCircleOutlined } from '@ant-design/icons'
 import {
   defaultBreakpoints,
   defaultBreakpointsForInputGroupLeft,
@@ -10,6 +11,7 @@ import {
 } from '../themes'
 import { getEconomicActivity } from '../actions/economicActivities'
 import {
+  CustomButton,
   CustomCol,
   CustomDatePicker,
   CustomDivider,
@@ -23,6 +25,7 @@ import {
   CustomSelect,
   CustomTextArea,
   CustomTitle,
+  CustomTooltip,
 } from '.'
 import { useDispatch, useSelector } from 'react-redux'
 import { StoreState } from '../reducers'
@@ -223,7 +226,7 @@ const IncomeInformation = (props: {
               <CustomInputNumber
                 placeholder={'Años'}
                 type={'number'}
-                style={{ width: '50%' }}
+                style={{ width: '40%' }}
               />
             </CustomFormItem>
             <CustomFormItem
@@ -239,10 +242,13 @@ const IncomeInformation = (props: {
               <CustomInputNumber
                 placeholder={'Meses'}
                 type={'number'}
-                max={12}
-                style={{ width: '50%' }}
+                max={11}
+                style={{ width: '40%' }}
               />
             </CustomFormItem>
+            <CustomTooltip title={'Años y Meses en la empresa'}>
+              <CustomButton icon={<QuestionCircleOutlined />} type={'link'} />
+            </CustomTooltip>
           </CustomInputGroup>
         </CustomFormItem>
       </CustomCol>
