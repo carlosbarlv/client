@@ -41,7 +41,7 @@ const SocialNetworks: React.FunctionComponent = () => {
       <CustomDivider orientation={'left'}>
         <CustomTitle level={4}> Emails / Redes sociales </CustomTitle>
       </CustomDivider>
-      <CustomRow justify={'end'}>
+      <CustomRow justify={'end'} style={{ marginBottom: 10 }}>
         <CustomButton icon={<PlusOutlined />} type={'primary'}>
           Agregar email/red social
         </CustomButton>

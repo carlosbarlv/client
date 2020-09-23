@@ -65,6 +65,7 @@ const IncomeInformation = (props: {
         <CustomFormItem
           label={'Ocupación'}
           name={'OCUPACION'}
+          onlyLetters
           rules={[
             {
               required: true,
@@ -115,6 +116,7 @@ const IncomeInformation = (props: {
         <CustomFormItem
           label={'Posición en la empresa'}
           name={'POSICION_EMPRESA'}
+          onlyLetters
           rules={[
             {
               required: true,
@@ -199,6 +201,7 @@ const IncomeInformation = (props: {
         <CustomFormItem
           label={'Supervisor'}
           name={'NOMBRE_SUPERVISOR'}
+          onlyLetters
           rules={[
             {
               required: true,

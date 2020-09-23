@@ -46,7 +46,7 @@ const Phone: React.FunctionComponent = () => {
       <CustomDivider orientation={'left'}>
         <CustomTitle level={4}> Teléfonos </CustomTitle>
       </CustomDivider>
-      <CustomRow justify={'end'}>
+      <CustomRow justify={'end'} style={{ marginBottom: 10 }}>
         <CustomButton icon={<PlusOutlined />} type={'primary'}>
           Agregar teléfono
         </CustomButton>
