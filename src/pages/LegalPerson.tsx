@@ -24,7 +24,6 @@ import {
   SaveOutlined,
 } from '@ant-design/icons'
 
-
 type Steps = {
   title: string
   description: string
@@ -93,7 +92,7 @@ const LegalPerson = (): React.ReactElement => {
           <CustomForm
             {...formItemLayout}
             validateMessages={validateMessages}
-            form={form}
+            // form={form}
           >
             <CustomFormContainer>
               <CustomSteps current={stepPositionState}>

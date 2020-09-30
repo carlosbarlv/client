@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import moment from 'moment'
 import { Select } from 'antd'
+import { RadioChangeEvent } from 'antd/lib/radio'
 import { QuestionCircleOutlined } from '@ant-design/icons'
 import {
   CustomButton,
@@ -23,11 +24,63 @@ import { useDispatch, useSelector } from 'react-redux'
 import { StoreState } from '../reducers'
 import { getNationalities } from '../actions/general'
 
+type IdType = {
+  [key: string]: {
+    placeholder: string
+    name: string
+    rules: {
+      len?: number
+      transform?: ((value: string) => string | number) | undefined
+      type?:
+        | 'string'
+        | 'number'
+        | 'boolean'
+        | 'object'
+        | 'enum'
+        | 'method'
+        | 'regexp'
+        | 'integer'
+        | 'float'
+        | 'date'
+        | 'url'
+        | 'hex'
+        | 'email'
+        | undefined
+    }
+  }
+}
+
 const RelatedRecordGeneralData: React.FunctionComponent = () => {
   const { Option } = Select
 
   const dispatch = useDispatch()
   const { nationalities } = useSelector((state: StoreState) => state.general)
+  const [entryIdTypeState, setEntryIdTypeState] = React.useState('')
+  const idType: IdType = {
+    C: {
+      placeholder: '00000000000',
+      name: 'DOCUMENTO_IDENTIDAD',
+      rules: {
+        len: 11,
+        transform: (value: string) => (Number(value) ? value.length : value),
+        type: 'number',
+      },
+    },
+    P: {
+      placeholder: 'SC0785877',
+      name: 'NO_PASAPORTE',
+      rules: {
+        type: 'string',
+      },
+    },
+    '': {
+      placeholder: 'Elige el tipo de documento (Cédula o pasaporte)',
+      name: '',
+      rules: {
+        type: 'string',
+      },
+    },
+  }
 
   useEffect(() => {
     dispatch(getNationalities())
@@ -67,32 +120,31 @@ const RelatedRecordGeneralData: React.FunctionComponent = () => {
       </CustomCol>
       <CustomCol {...defaultBreakpoints}></CustomCol>
       <CustomCol {...defaultBreakpoints}>
-        <CustomFormItem
-          label={'Doc. Identidad'}
-          name={'documentoIdentidad'}
-          rules={[
-            {
-              required: true,
-              type: 'number',
-              len: 11,
-              transform: (value: string) =>
-                Number(value) ? value.length : value,
-            },
-          ]}
-        >
-          <CustomInput
-            placeholder={'Documento de identidad'}
-            autoComplete={'off'}
-          />
+        <CustomFormItem label={'Tipo documento'}>
+          <CustomRadioGroup
+            onChange={(e: RadioChangeEvent) => {
+              setEntryIdTypeState(e.target.value)
+            }}
+            value={entryIdTypeState}
+          >
+            <CustomRadio value={'C'}>Cédula</CustomRadio>
+            <CustomRadio value={'P'}>Pasaporte</CustomRadio>
+          </CustomRadioGroup>
         </CustomFormItem>
       </CustomCol>
       <CustomCol {...defaultBreakpoints}>
         <CustomFormItem
-          label={'No. Pasaporte'}
-          name={'numeroPasaporte'}
-          rules={[{ required: true }]}
+          label={'Doc. Identidad'}
+          name={idType[entryIdTypeState].name}
+          normalize={(value: string) => value.toUpperCase()}
+          rules={[
+            Object.assign({ required: true }, idType[entryIdTypeState].rules),
+          ]}
         >
-          <CustomInput placeholder={'No. Pasaporte'} />
+          <CustomInput
+            disabled={entryIdTypeState === ''}
+            placeholder={idType[entryIdTypeState].placeholder}
+          />
         </CustomFormItem>
       </CustomCol>
       <CustomCol {...defaultBreakpoints}>
