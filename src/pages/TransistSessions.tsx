@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   CustomButton,
   CustomCol,
@@ -11,6 +11,7 @@ import {
 import { Square } from '../components/CustomForms'
 import { PlusOutlined, RedoOutlined } from '@ant-design/icons'
 import { ColumnType } from 'antd/lib/table'
+import SelectPartnerModal from '../components/SelectPartnerModal'
 
 type TransistSessionsTable = {
   aplicar: React.ReactNode
@@ -25,6 +26,8 @@ type TransistSessionsTable = {
 }
 
 const TransistSessions = (): React.ReactElement => {
+  const [showSelectPartnersModal, setShowSelectPartnersModal] = useState(false)
+
   const columns: ColumnType<TransistSessionsTable>[] = [
     {
       title: 'Emisor',
@@ -115,6 +118,10 @@ const TransistSessions = (): React.ReactElement => {
     },
   ]
 
+  const handleOnClickAddSession = (): void => {
+    setShowSelectPartnersModal(!showSelectPartnersModal)
+  }
+
   return (
     <CustomLayout
       style={{
@@ -139,9 +146,15 @@ const TransistSessions = (): React.ReactElement => {
             shape={'circle'}
             size="large"
             icon={<PlusOutlined />}
+            onClick={handleOnClickAddSession}
           />
         </CustomCol>
         <CustomCol span={23}>
+          <SelectPartnerModal
+            visible={showSelectPartnersModal}
+            width={800}
+            hideModal={handleOnClickAddSession}
+          />
           <CustomTable columns={columns} dataSource={data} bordered />
         </CustomCol>
       </CustomRow>

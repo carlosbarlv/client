@@ -57,6 +57,7 @@ import {
 import CustomStep from './CustomStep'
 import CustomSteps from './CustomSteps'
 import CustomFormProvider from './CustomFormProvider'
+import SelectPartnerModal from './SelectPartnerModal'
 
 export {
   Copyright,
@@ -116,4 +117,5 @@ export {
   CustomCheckBox,
   RelatedRecord,
   AddressesAndPhone,
+  SelectPartnerModal,
 }
