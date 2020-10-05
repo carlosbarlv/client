@@ -98,6 +98,7 @@ const getPaginatedUrl = (url: string, page = 1, size = 1): string => {
 
 export type GetPersonaListPayload = {
   status?: string
+  bussinesId?: number
 }
 
 const getPersonaList = (
@@ -105,9 +106,10 @@ const getPersonaList = (
   pageNumber = 1,
   pageSize = 10
 ): Promise<AxiosResponse<GetPersonaListPayload>> => {
+  const { businessId } = getSessionInfo()
   return postRequest(
     getPaginatedUrl(WEB_SERVICE_API_GET_PERSONAS, pageNumber, pageSize),
-    data
+    Object.assign(data, { businessId })
   )
 }
 
