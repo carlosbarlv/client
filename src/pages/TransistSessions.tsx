@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   CustomButton,
   CustomCol,
@@ -12,6 +12,9 @@ import { Square } from '../components/CustomForms'
 import { PlusOutlined, RedoOutlined } from '@ant-design/icons'
 import { ColumnType } from 'antd/lib/table'
 import SelectPartnerModal from '../components/SelectPartnerModal'
+import { useDispatch, useSelector } from 'react-redux'
+import { StoreState } from '../reducers'
+import { getTransistSessions } from '../actions/transistSections'
 
 type TransistSessionsTable = {
   aplicar: React.ReactNode
@@ -19,7 +22,6 @@ type TransistSessionsTable = {
   emisor: string
   fechaHora: string
   idSession: number
-  key: string
   moneda: string
   monto: string
   titular: string
@@ -28,26 +30,33 @@ type TransistSessionsTable = {
 const TransistSessions = (): React.ReactElement => {
   const [showSelectPartnersModal, setShowSelectPartnersModal] = useState(false)
 
+  const dispatch = useDispatch()
+  const { sessions } = useSelector((state: StoreState) => state.sessions)
+
+  useEffect(() => {
+    dispatch(getTransistSessions())
+  }, [dispatch])
+
   const columns: ColumnType<TransistSessionsTable>[] = [
     {
       title: 'Emisor',
-      dataIndex: 'emisor',
+      dataIndex: 'USUARIO_INSERCION',
     },
     {
       title: 'Fecha-Hora',
-      dataIndex: 'fechaHora',
+      dataIndex: 'FECHA_SESION',
     },
     {
       title: 'Concepto',
-      dataIndex: 'concepto',
+      dataIndex: 'NOTA',
     },
     {
       title: 'ID session',
-      dataIndex: 'idSession',
+      dataIndex: 'ID_APERTURA_TURNO',
     },
     {
       title: 'Titular',
-      dataIndex: 'titular',
+      dataIndex: 'NOMBRE_CLIENTE',
     },
     {
       title: 'Moneda',
@@ -67,54 +76,13 @@ const TransistSessions = (): React.ReactElement => {
         />
       ),
       dataIndex: 'aplicar',
-    },
-  ]
-
-  const data: TransistSessionsTable[] = [
-    {
-      key: '1',
-      emisor: 'Servicio al Cliente',
-      fechaHora: '24/08/2020 09:30 am',
-      concepto: 'Nomina Empleado Vegamovil',
-      idSession: 10222,
-      titular: 'Vegamovil',
-      moneda: 'RD$',
-      monto: '1,250,000.00',
-      aplicar: (
-        <CustomButton style={{ backgroundColor: '#41D9FA', color: 'white' }}>
-          Aplicar
-        </CustomButton>
-      ),
-    },
-    {
-      key: '2',
-      emisor: 'Legal',
-      fechaHora: '24/08/2020 09:30 am',
-      concepto: 'Pago Préstamo Corriente',
-      idSession: 0o224333,
-      titular: 'Jose Rodriguez',
-      moneda: 'RD$',
-      monto: '20,370.00',
-      aplicar: (
-        <CustomButton style={{ backgroundColor: '#41D9FA', color: 'white' }}>
-          Aplicar
-        </CustomButton>
-      ),
-    },
-    {
-      key: '3',
-      emisor: 'Negocios',
-      fechaHora: '24/08/2020 09:30 am',
-      concepto: 'CREDIUATO',
-      idSession: 102438,
-      titular: 'Vegamovil',
-      moneda: 'RD$',
-      monto: '4,500,000.00',
-      aplicar: (
-        <CustomButton style={{ backgroundColor: '#41D9FA', color: 'white' }}>
-          Aplicar
-        </CustomButton>
-      ),
+      render: () => {
+        return (
+          <CustomButton style={{ backgroundColor: '#41D9FA', color: 'white' }}>
+            Aplicar
+          </CustomButton>
+        )
+      },
     },
   ]
 
@@ -155,7 +123,12 @@ const TransistSessions = (): React.ReactElement => {
             width={800}
             hideModal={handleOnClickAddSession}
           />
-          <CustomTable columns={columns} dataSource={data} bordered />
+          <CustomTable
+            columns={columns}
+            dataSource={sessions}
+            rowKey={(row) => row.ID_APERTURA_TURNO}
+            bordered
+          />
         </CustomCol>
       </CustomRow>
       <CustomRow justify={'start'}>

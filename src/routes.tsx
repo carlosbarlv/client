@@ -3,6 +3,7 @@ import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
 import { Login, RegisterPerson } from './pages'
 import ProtectedRoutesWrapper from './components/ProtectedRoutesWrapper'
 import {
+  PATH_CASH_TRANSACTIONS,
   PATH_LOGIN,
   PATH_MAIN,
   PATH_PRODUCT_RANGE,
@@ -11,6 +12,7 @@ import {
 } from './constants/routes'
 import ProductRange from './pages/ProductRange'
 import TransistSessions from './pages/TransistSessions'
+import CashTransactions from './pages/CashTransactions'
 
 const Routes = (): ReactElement => {
   return (
@@ -29,6 +31,11 @@ const Routes = (): ReactElement => {
             exact
             path={PATH_TRANSIST_SESSIONS}
             component={TransistSessions}
+          />
+          <Route
+            exact
+            path={PATH_CASH_TRANSACTIONS}
+            component={CashTransactions}
           />
         </ProtectedRoutesWrapper>
       </Switch>

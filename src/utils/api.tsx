@@ -10,6 +10,7 @@ import {
   WEB_SERVICE_API_GET_ECONOMIC_ACTIVITY,
   WEB_SERVICE_API_GET_PERSONAS,
   WEB_SERVICE_API_GET_PRODUCT_RANGES,
+  WEB_SERVICE_API_GET_TRANSIST_SESSIONS,
   WEB_SERVICE_API_LOGIN,
   WEB_SERVICE_API_PERSONAL_MENU,
 } from '../constants/routes'
@@ -204,4 +205,18 @@ const createPerson = (person: PhysicalPersonType) =>
 
 export const personApiHelper = {
   createPerson,
+}
+
+const getTransistSessions = (): Promise<AxiosResponse> => {
+  const { businessId } = getSessionInfo()
+
+  return postRequest(WEB_SERVICE_API_GET_TRANSIST_SESSIONS, {
+    condition: {
+      ID_EMPRESA: businessId,
+    },
+  })
+}
+
+export const transistSessionsApiHelper = {
+  getTransistSessions,
 }
