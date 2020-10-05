@@ -82,6 +82,7 @@ const CashTransactions = (): React.ReactElement => {
     },
   ]
 
+  const date = new Date()
   return (
     <CustomLayout
       style={{
@@ -111,25 +112,26 @@ const CashTransactions = (): React.ReactElement => {
             Transacciones de Caja
           </CustomTitle>
           <CustomText type="secondary" strong>
-            24/08/2020 10:25 am
+            {`${date.getDate() < 10 ? '0' + date.getDate() : date.getDate()}/${
+              date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth
+            }/${date.getFullYear()} 
+              ${
+                date.getHours() > 12 ? date.getHours() - 12 : date.getHours()
+              }:${
+              date.getMinutes() < 10 ? '0' + date.getMinutes : date.getMinutes()
+            } ${date.getHours() - 12 > 0 ? 'pm' : 'am'}`}
           </CustomText>
         </CustomCol>
       </CustomRow>
 
-      <CustomRow gutter={[32, 0]}>
-        <CustomCol span={12}>
-          <CustomTitle type="secondary" level={3}>
-            Captaciones
-          </CustomTitle>
-        </CustomCol>
-        <CustomCol span={12}>
-          <CustomTitle type="secondary" level={3}>
-            Colocaciones
-          </CustomTitle>
-        </CustomCol>
-
+      <CustomRow gutter={[32, 0]} align="top">
         <CustomCol span={12}>
           <CustomTable
+            title={() => (
+              <CustomTitle type="secondary" level={3}>
+                Captaciones
+              </CustomTitle>
+            )}
             columns={columnsCatchments}
             dataSource={dataCatchments}
             expandable={{
@@ -143,6 +145,11 @@ const CashTransactions = (): React.ReactElement => {
         </CustomCol>
         <CustomCol span={12}>
           <CustomTable
+            title={() => (
+              <CustomTitle type="secondary" level={3}>
+                Colocaciones
+              </CustomTitle>
+            )}
             columns={columnsPlacement}
             dataSource={dataPlacements}
             expandable={{
