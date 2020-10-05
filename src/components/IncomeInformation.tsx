@@ -9,7 +9,7 @@ import {
   defaultBreakpointsForInputGroupRight,
   labelColFullWidth,
 } from '../themes'
-import { getEconomicActivity } from '../actions/economicActivities'
+import { postEconomicActivity } from '../actions/economicActivities'
 import {
   CustomButton,
   CustomCol,
@@ -53,8 +53,20 @@ const IncomeInformation = (props: {
 
   const { coins } = useSelector((state: StoreState) => state.general)
 
+  const handleSearch = (value: string) => {
+    if (value) {
+      dispatch(postEconomicActivity(value))
+    }
+  }
+
+  const handleChangeSearch = (value: string | number) => {
+    props.form.setFieldsValue({
+      ID_ACTIVIDAD_ECONOMICA: value.toString(),
+    })
+  }
+
   useEffect(() => {
-    dispatch(getEconomicActivity())
+    dispatch(postEconomicActivity(''))
     dispatch(getCoins())
   }, [dispatch])
 
@@ -166,21 +178,13 @@ const IncomeInformation = (props: {
             </CustomCol>
 
             <CustomCol {...defaultBreakpointsForInputGroupRight}>
-              <CustomFormItem
-                label={'Descripción actividad'}
-                // name={'DACTIVIDAD_ECONOMICA'}
-                noStyle
-                // rules={[{ required: true }]}
-              >
+              <CustomFormItem label={'Descripción actividad'} noStyle>
                 <CustomSelect
-                  onChange={(value: string | number) => {
-                    props.form.setFieldsValue({
-                      ID_ACTIVIDAD_ECONOMICA: value.toString(),
-                    })
-                  }}
+                  filterOption={false}
+                  onChange={handleChangeSearch}
+                  onSearch={handleSearch}
                   placeholder={'Descripción actividad económica'}
                   showSearch
-                  allowClear
                 >
                   {economicActivities.map(
                     (economicActivity: EconomicActivity) => (

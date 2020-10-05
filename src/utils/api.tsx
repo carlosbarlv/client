@@ -173,8 +173,20 @@ const getEconomicActivities = (): Promise<AxiosResponse> => {
   return getRequest(`${WEB_SERVICE_API_GET_ECONOMIC_ACTIVITY}`)
 }
 
+const postGetEconomicActivities = (keyword: string): Promise<AxiosResponse> => {
+  return postRequest(`${WEB_SERVICE_API_GET_ECONOMIC_ACTIVITY}?size=8`, [
+    {
+      field: 'CONCEPTO',
+      dataType: 'VARCHAR2',
+      operator: 'LIKE',
+      condition: `${keyword}`,
+    },
+  ])
+}
+
 export const economicActivitiesApiHelpers = {
   getEconomicActivities,
+  postGetEconomicActivities,
 }
 
 const getCoins = (): Promise<AxiosResponse> => {

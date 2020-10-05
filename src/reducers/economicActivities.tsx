@@ -3,6 +3,9 @@ import {
   PERSON_GET_ECONOMIC_ACTIVITY,
   PERSON_GET_ECONOMIC_ACTIVITY_FAILURE,
   PERSON_GET_ECONOMIC_ACTIVITY_SUCCESS,
+  PERSON_POST_ECONOMIC_ACTIVITY,
+  PERSON_POST_ECONOMIC_ACTIVITY_FAILURE,
+  PERSON_POST_ECONOMIC_ACTIVITY_SUCCESS,
 } from '../constants/actions'
 import { EconomicActivitiesActions } from '../actions/economicActivities'
 
@@ -60,6 +63,26 @@ const economicActivities = (
       }
     }
     case PERSON_GET_ECONOMIC_ACTIVITY_FAILURE: {
+      return {
+        ...state,
+        isFetching: false,
+      }
+    }
+    case PERSON_POST_ECONOMIC_ACTIVITY: {
+      return {
+        ...state,
+        isFetching: true,
+      }
+    }
+    case PERSON_POST_ECONOMIC_ACTIVITY_SUCCESS: {
+      return {
+        ...state,
+        economicActivities: action.economicActivities,
+        economicActivityMetadata: action.economicActivityMeta,
+        isFetching: false,
+      }
+    }
+    case PERSON_POST_ECONOMIC_ACTIVITY_FAILURE: {
       return {
         ...state,
         isFetching: false,
