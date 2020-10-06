@@ -41,3 +41,13 @@ export const showNotification = (
     onClick,
   })
 }
+
+const date = new Date()
+export const currentDate = `${
+  date.getDate() < 10 ? '0' + date.getDate() : date.getDate()
+}/${
+  date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth()
+}/${date.getFullYear()} 
+    ${date.getHours() > 12 ? date.getHours() - 12 : date.getHours()}:${
+  date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()
+} ${date.getHours() - 12 > 0 ? 'pm' : 'am'}`

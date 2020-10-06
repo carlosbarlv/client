@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   CustomButton,
   CustomCol,
@@ -10,6 +10,8 @@ import {
   CustomTitle,
 } from '../components'
 import { ColumnType } from 'antd/lib/table'
+import ContribuitonsDepositModal from './ContributionsDepositModal'
+import { currentDate } from '../utils/general'
 
 type CatCatchmentsTable = {
   key: string
@@ -24,6 +26,15 @@ type PlacementsTable = {
 }
 
 const CashTransactions = (): React.ReactElement => {
+  const [
+    depositoAportacionesIsVisible,
+    setDepositoAportacionesIsVisible,
+  ] = useState(false)
+
+  const showDepositoAportacionesModal = () => {
+    setDepositoAportacionesIsVisible(!depositoAportacionesIsVisible)
+  }
+
   const columnsCatchments: ColumnType<CatCatchmentsTable>[] = [
     {
       title: 'Producto',
@@ -82,7 +93,6 @@ const CashTransactions = (): React.ReactElement => {
     },
   ]
 
-  const date = new Date()
   return (
     <CustomLayout
       style={{
@@ -112,20 +122,19 @@ const CashTransactions = (): React.ReactElement => {
             Transacciones de Caja
           </CustomTitle>
           <CustomText type="secondary" strong>
-            {`${date.getDate() < 10 ? '0' + date.getDate() : date.getDate()}/${
-              date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth
-            }/${date.getFullYear()} 
-              ${
-                date.getHours() > 12 ? date.getHours() - 12 : date.getHours()
-              }:${
-              date.getMinutes() < 10 ? '0' + date.getMinutes : date.getMinutes()
-            } ${date.getHours() - 12 > 0 ? 'pm' : 'am'}`}
+            {currentDate}
           </CustomText>
         </CustomCol>
       </CustomRow>
 
-      <CustomRow gutter={[32, 0]} align="top">
+      <CustomRow gutter={[32, 32]} align="top">
         <CustomCol span={12}>
+          <ContribuitonsDepositModal
+            width={800}
+            onCancelClick={showDepositoAportacionesModal}
+            onOkClick={showDepositoAportacionesModal}
+            visible={depositoAportacionesIsVisible}
+          />
           <CustomTable
             title={() => (
               <CustomTitle type="secondary" level={3}>
@@ -136,7 +145,12 @@ const CashTransactions = (): React.ReactElement => {
             dataSource={dataCatchments}
             expandable={{
               expandedRowRender: () => (
-                <CustomButton type="primary">Depósito</CustomButton>
+                <CustomButton
+                  type="primary"
+                  onClick={showDepositoAportacionesModal}
+                >
+                  Depósito
+                </CustomButton>
               ),
             }}
             pagination={false}
@@ -154,7 +168,12 @@ const CashTransactions = (): React.ReactElement => {
             dataSource={dataPlacements}
             expandable={{
               expandedRowRender: () => (
-                <CustomButton type="primary">Depósito</CustomButton>
+                <CustomButton
+                  type="primary"
+                  onClick={showDepositoAportacionesModal}
+                >
+                  Depósito
+                </CustomButton>
               ),
             }}
             pagination={false}
