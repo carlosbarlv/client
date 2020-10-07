@@ -1,9 +1,11 @@
 import React from 'react'
 import { PlusOutlined } from '@ant-design/icons'
 import { ColumnType } from 'antd/lib/table'
+import { PersonType } from '../reducers/Person'
 import {
   CustomButton,
   CustomDivider,
+  CustomFormItem,
   CustomModal,
   CustomRow,
   CustomTable,
@@ -11,36 +13,48 @@ import {
   RelatedRecord,
 } from '.'
 
-type Representatives = {
-  codigo: string | number
-  nombre: string
-  doc_identida: string
-  key: string
-}
-
-const columns: ColumnType<Representatives>[] = [
+const columns: ColumnType<PersonType>[] = [
   {
     key: 'codigo',
     title: 'Código',
-    dataIndex: 'CODIGO',
+    dataIndex: 'codigo',
   },
   {
     key: 'nombre',
     title: 'Nombre representante',
-    dataIndex: 'NOMBRE',
+    dataIndex: 'nombre',
   },
   {
     key: 'doc_identidad',
     title: 'Doc. Identidad',
-    dataIndex: 'DOCUMENTOIDENTIDAD',
+    dataIndex: 'doc_identidad',
   },
 ]
 
-const LegalRepresentatives = (): React.ReactElement => {
-  const [
-    relatedRecordModalVisibilityState,
-    setRelatedRecordModalVisibilityState,
-  ] = React.useState(false)
+type RelatedPersonType = {
+  ANIO_TIEMPO_EMPRESA?: string
+  APELLIDOS?: string
+  APODO?: string
+  DOCUMENTO_IDENTIDAD?: string
+  ESTADO_CIVIL?: string
+  FECHA_NAC?: string
+  MESES_TIEMPO_EMPRESA?: string
+  NACIONALIDAD?: string
+  NOMBRES?: string
+  NO_PASAPORTE?: string
+  POSICION?: string
+  SEXO?: string
+}
+
+const LegalRepresentatives = (props: {
+  onModalFormChange: Function
+}): React.ReactElement => {
+  const { onModalFormChange } = props
+  const [modalVisibilityState, setModalVisibilityState] = React.useState(false)
+
+  const handleOnFinish = () => {
+    setModalVisibilityState(false)
+  }
 
   return (
     <>
@@ -52,27 +66,57 @@ const LegalRepresentatives = (): React.ReactElement => {
         <CustomButton
           icon={<PlusOutlined />}
           type={'primary'}
-          onClick={() => setRelatedRecordModalVisibilityState(true)}
+          onClick={() => setModalVisibilityState(true)}
         >
           Agregar representante
         </CustomButton>
       </CustomRow>
 
-      <CustomTable columns={columns} pagination={false} bordered />
+      <CustomFormItem
+        shouldUpdate={(prevValues, curValues) =>
+          prevValues.relacionados !== curValues.relacionados
+        }
+      >
+        {({ getFieldValue }) => {
+          const relacionados = getFieldValue('relacionados') || []
+
+          if (relacionados.length !== 0) {
+            onModalFormChange(relacionados)
+          }
+
+          return relacionados.length ? (
+            <ul>
+              {relacionados.map(
+                (
+                  user: RelatedPersonType,
+                  index: string | number | undefined
+                ) => (
+                  <li key={index}>
+                    <span>{user.NOMBRES}</span>
+                    <span>{user.DOCUMENTO_IDENTIDAD}</span>
+                  </li>
+                )
+              )}
+            </ul>
+          ) : (
+            <CustomTable bordered columns={columns} pagination={false} />
+          )
+        }}
+      </CustomFormItem>
 
       <CustomModal
         centered
         title={<CustomTitle level={4}>Registro de relacionados</CustomTitle>}
-        visible={relatedRecordModalVisibilityState}
-        width={'85%'}
+        visible={modalVisibilityState}
+        width={'50%'}
         footer={null}
         closable={true}
-        onCancel={() => setRelatedRecordModalVisibilityState(false)}
+        onCancel={() => setModalVisibilityState(false)}
         style={{
           marginTop: 20,
         }}
       >
-        <RelatedRecord />
+        <RelatedRecord onFinish={handleOnFinish} />
       </CustomModal>
     </>
   )

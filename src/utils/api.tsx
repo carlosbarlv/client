@@ -15,7 +15,7 @@ import {
   WEB_SERVICE_API_PERSONAL_MENU,
 } from '../constants/routes'
 import { ProductRange } from '../reducers/catchements'
-import { PhysicalPersonType } from '../reducers/physicalPerson'
+import { PersonType } from '../reducers/Person'
 
 type RequestHeaders = {
   headers: {
@@ -214,11 +214,18 @@ export const activityParametersApiHelpers = {
   getActivityParameters,
 }
 
-const createPerson = (person: PhysicalPersonType) =>
+const createPhysicalPerson = (person: PersonType) =>
   postRequest(`${WEB_SERVICE_API_CREATE_UPDATE_PERSON}`, person)
 
-export const personApiHelper = {
-  createPerson,
+export const physicalPersonApiHelper = {
+  createPhysicalPerson,
+}
+
+const createLegalPerson = (person: PersonType) =>
+  postRequest(`${WEB_SERVICE_API_CREATE_UPDATE_PERSON}/juridica`, person)
+
+export const legalPersonApiHelper = {
+  createLegalPerson,
 }
 
 const getTransistSessions = (): Promise<AxiosResponse> => {

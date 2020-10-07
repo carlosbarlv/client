@@ -94,7 +94,7 @@ const RelatedRecordGeneralData: React.FunctionComponent = () => {
       <CustomCol {...defaultBreakpoints}>
         <CustomFormItem
           label={'Nombres'}
-          name={'nombres'}
+          name={'NOMBRES'}
           rules={[{ required: true }]}
         >
           <CustomInput placeholder={'Nombres'} />
@@ -103,18 +103,14 @@ const RelatedRecordGeneralData: React.FunctionComponent = () => {
       <CustomCol {...defaultBreakpoints}>
         <CustomFormItem
           label={'Apellidos'}
-          name={'apellidos'}
+          name={'APELLILDOS'}
           rules={[{ required: true }]}
         >
           <CustomInput placeholder={'Apellidos'} />
         </CustomFormItem>
       </CustomCol>
       <CustomCol {...defaultBreakpoints}>
-        <CustomFormItem
-          label={'Apodo'}
-          name={'apodo'}
-          rules={[{ required: true }]}
-        >
+        <CustomFormItem label={'Apodo'} name={'APODO'}>
           <CustomInput placeholder={'Apodo'} />
         </CustomFormItem>
       </CustomCol>
@@ -150,7 +146,7 @@ const RelatedRecordGeneralData: React.FunctionComponent = () => {
       <CustomCol {...defaultBreakpoints}>
         <CustomFormItem
           label={'Fecha nac.'}
-          name={'fechaNacimeinto'}
+          name={'FECHA_NAC'}
           rules={[{ required: true }]}
         >
           <CustomDatePicker
@@ -165,7 +161,7 @@ const RelatedRecordGeneralData: React.FunctionComponent = () => {
       <CustomCol {...defaultBreakpoints}>
         <CustomFormItem
           label={'Sexo'}
-          name={'sexo'}
+          name={'SEXO'}
           rules={[{ required: true }]}
         >
           <CustomRadioGroup>
@@ -177,13 +173,13 @@ const RelatedRecordGeneralData: React.FunctionComponent = () => {
       <CustomCol {...defaultBreakpoints}>
         <CustomFormItem
           label={'Estado civil'}
-          name={'estadoCivil'}
+          name={'ESTADO_CIVIL'}
           rules={[{ required: true }]}
         >
           <CustomRadioGroup>
             <CustomRadio value={'S'}>Soltero(a)</CustomRadio>
             <CustomRadio value={'C'}>Casado(a)</CustomRadio>
-            <CustomRadio value={'UL'}>Unión libre</CustomRadio>
+            <CustomRadio value={'U'}>Unión libre</CustomRadio>
           </CustomRadioGroup>
         </CustomFormItem>
       </CustomCol>
@@ -191,8 +187,8 @@ const RelatedRecordGeneralData: React.FunctionComponent = () => {
       <CustomCol {...defaultBreakpoints}>
         <CustomFormItem
           label={'Nacionalidadd'}
-          name={'naccionalidad'}
-          rules={[{ required: true }]}
+          name={'NACIONALIDAD'}
+          // rules={[{ required: true }]}
         >
           <CustomSelect placeholder={'Nacionalidad'} allowClear showSearch>
             {nationalities.map((nationality: string, index: number) => (
@@ -207,7 +203,7 @@ const RelatedRecordGeneralData: React.FunctionComponent = () => {
       <CustomCol {...defaultBreakpoints}>
         <CustomFormItem
           label={'Posición'}
-          name={'posicion'}
+          name={'POSICION'}
           rules={[{ required: true }]}
         >
           <CustomInput placeholder={'Posición'} />
@@ -218,13 +214,9 @@ const RelatedRecordGeneralData: React.FunctionComponent = () => {
           <CustomInputGroup>
             <CustomFormItem
               label={'Años'}
-              name={'años'}
+              name={'ANIO_TIEMPO_EMPRESA'}
               noStyle
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
+              rules={[{ required: true }]}
             >
               <CustomInputNumber
                 placeholder={'Años'}
@@ -234,13 +226,9 @@ const RelatedRecordGeneralData: React.FunctionComponent = () => {
             </CustomFormItem>
             <CustomFormItem
               label={'Meses'}
-              name={'meses'}
+              name={'MESES_TIEMPO_EMPRES'}
               noStyle
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
+              rules={[{ required: true }]}
             >
               <CustomInputNumber
                 placeholder={'Meses'}

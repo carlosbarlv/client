@@ -19,8 +19,8 @@ import { formItemLayout } from '../themes'
 import { Form } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { validateMessages } from '../constants/general'
-import { createPhysicalPerson } from '../actions/physicalPerson'
-import { PhysicalPersonType } from '../reducers/physicalPerson'
+import { createPhysicalPerson } from '../actions/Person'
+import { PersonType } from '../reducers/Person'
 import { showNotification } from '../utils/general'
 import { StoreState } from '../reducers'
 import { getSessionInfo } from '../utils/session'
@@ -97,7 +97,7 @@ const PhysicalPerson = (): React.ReactElement => {
   }
 
   const handleOnFinish = () => {
-    const person = personData as PhysicalPersonType & {
+    const person = personData as PersonType & {
       descCargo?: ''
       descEntidad?: ''
       entidadPep?: ''

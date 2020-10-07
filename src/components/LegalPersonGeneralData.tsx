@@ -41,14 +41,14 @@ const GeneralData: React.FunctionComponent = () => {
         <CustomTitle level={4}>Datos Generales</CustomTitle>
       </CustomDivider>
       <CustomCol {...defaultBreakpoints}>
-        <CustomFormItem label={'Código'} name={'codigo'}>
+        <CustomFormItem label={'Código'} name={'CODIGO'}>
           <CustomInput disabled placeholder={'Código persona'} />
         </CustomFormItem>
       </CustomCol>
       <CustomCol xs={24}>
         <CustomFormItem
           label={'Nombre empresa'}
-          name={'nombreEmpresa'}
+          name={'NOMBRE_EMPRESA'}
           {...labelColFullWidth}
           rules={[
             {
@@ -62,7 +62,7 @@ const GeneralData: React.FunctionComponent = () => {
       <CustomCol {...defaultBreakpoints}>
         <CustomFormItem
           label={'Rnc'}
-          name={'rnc'}
+          name={'RNC'}
           rules={[
             {
               required: true,
@@ -76,7 +76,7 @@ const GeneralData: React.FunctionComponent = () => {
       <CustomCol {...defaultBreakpoints}>
         <CustomFormItem
           label={'Servicios ofrecidos'}
-          name={'serviciosOfrecidos'}
+          name={'SERVICIOS_OFRECIDOS'}
           rules={[
             {
               required: true,
@@ -91,7 +91,7 @@ const GeneralData: React.FunctionComponent = () => {
           <CustomInputGroup>
             <CustomFormItem
               label={'Años'}
-              name={'años'}
+              name={'ANIO_TIEMPO_EMPRESA'}
               noStyle
               rules={[
                 {
@@ -107,7 +107,7 @@ const GeneralData: React.FunctionComponent = () => {
             </CustomFormItem>
             <CustomFormItem
               label={'Meses'}
-              name={'meses'}
+              name={'MESES_TIEMPO_EMPRESA'}
               noStyle
               rules={[
                 {
@@ -132,7 +132,7 @@ const GeneralData: React.FunctionComponent = () => {
       <CustomCol {...defaultBreakpoints}>
         <CustomFormItem
           label={'Cant. Colaboradores'}
-          name={'cantidadColaboradores'}
+          name={'CANT_COLABORADORES'}
           rules={[{ required: true }]}
         >
           <CustomInputNumber
@@ -145,10 +145,10 @@ const GeneralData: React.FunctionComponent = () => {
       <CustomCol {...defaultBreakpoints}>
         <CustomFormItem
           label={'Categoría socios'}
-          name={'categoriaSocio'}
+          name={'ID_CATEGORIA_SOCIO'}
           rules={[
             {
-              required: true,
+              required: false,
             },
           ]}
         >

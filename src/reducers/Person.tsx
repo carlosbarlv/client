@@ -1,11 +1,14 @@
-import { PhysicalPersonAction } from '../actions/physicalPerson'
+import { PersonAction } from '../actions/Person'
 import {
+  LEGAL_PERSON_CREATE_PERSON,
+  LEGAL_PERSON_CREATE_PERSON_FAILURE,
+  LEGAL_PERSON_CREATE_PERSON_SUCCESS,
   PHYSICAL_PERSON_CREATE_PERSON,
   PHYSICAL_PERSON_CREATE_PERSON_FAILURE,
   PHYSICAL_PERSON_CREATE_PERSON_SUCCESS,
 } from '../constants/actions'
 
-export type PhysicalPersonType = {
+export type PersonType = {
   ALERGIAS_MEDICAMENTOS?: string
   ANIO_TIEMPO_EMPRESA?: number
   ANIO_TIEMPO_MERCADO?: number
@@ -231,25 +234,33 @@ export type PhysicalPersonType = {
   WEB_EMPRESA?: string
 }
 
-export type PhysicalPersonState = {
-  physicalPerson: PhysicalPersonType
+export type PersonState = {
+  Person: PersonType
 }
 
 const initialState = {
-  physicalPerson: {},
+  Person: {},
 }
 
-const physicalPerson = (
-  state: PhysicalPersonState = initialState,
-  action: PhysicalPersonAction
-): PhysicalPersonState => {
+const person = (
+  state: PersonState = initialState,
+  action: PersonAction
+): PersonState => {
   switch (action.type) {
     case PHYSICAL_PERSON_CREATE_PERSON_SUCCESS: {
       return {
         ...state,
-        physicalPerson: action.newPhysicalPerson,
+        Person: action.newPerson,
       }
     }
+    case LEGAL_PERSON_CREATE_PERSON_SUCCESS: {
+      return {
+        ...state,
+        Person: action.newPerson,
+      }
+    }
+    case LEGAL_PERSON_CREATE_PERSON_FAILURE:
+    case LEGAL_PERSON_CREATE_PERSON:
     case PHYSICAL_PERSON_CREATE_PERSON_FAILURE:
     case PHYSICAL_PERSON_CREATE_PERSON:
     default:
@@ -257,4 +268,4 @@ const physicalPerson = (
   }
 }
 
-export default physicalPerson
+export default person

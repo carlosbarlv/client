@@ -44,8 +44,8 @@ const Addresses: React.FunctionComponent = () => {
       <CustomCol {...defaultBreakpoints}>
         <CustomFormItem
           label={'Tipo dirección'}
-          name={'tipoDireccion'}
-          rules={[{ required: true }]}
+          name={'TIPO_DIRECCION'}
+          rules={[{ required: false }]}
         >
           <CustomSelect placeholder={'Tipo dirección'}>
             <Option value={1}>Tipo direccion</Option>
@@ -53,15 +53,15 @@ const Addresses: React.FunctionComponent = () => {
         </CustomFormItem>
       </CustomCol>
       <CustomCol {...defaultBreakpoints} flex={4}>
-        <CustomFormItem label={'Principal?'} name={'principal'}>
+        <CustomFormItem label={'Principal?'} name={'PRINCIPAL'}>
           <CustomCheckBox />
         </CustomFormItem>
       </CustomCol>
       <CustomCol {...defaultBreakpoints} flex={2}>
         <CustomFormItem
           label={'Estado'}
-          name={'estado'}
-          rules={[{ required: true }]}
+          name={'ESTADO'}
+          rules={[{ required: false }]}
         >
           <CustomSelect placeholder={'Estado'}></CustomSelect>
         </CustomFormItem>
@@ -69,8 +69,8 @@ const Addresses: React.FunctionComponent = () => {
       <CustomCol xs={24}>
         <CustomFormItem
           label={'País'}
-          name={'pais'}
-          rules={[{ required: true }]}
+          name={'PAIS'}
+          rules={[{ required: false }]}
           {...labelColFullWidth}
         >
           <CustomRow>
@@ -93,8 +93,8 @@ const Addresses: React.FunctionComponent = () => {
       <CustomCol xs={24}>
         <CustomFormItem
           label={'Provincia'}
-          name={'provincia'}
-          rules={[{ required: true }]}
+          name={'PROVINCIA'}
+          rules={[{ required: false }]}
           {...labelColFullWidth}
         >
           <CustomRow>
@@ -118,8 +118,8 @@ const Addresses: React.FunctionComponent = () => {
       <CustomCol xs={24}>
         <CustomFormItem
           label={'Municipio'}
-          name={'municipio'}
-          rules={[{ required: true }]}
+          name={'MUNICIPIO'}
+          rules={[{ required: false }]}
           {...labelColFullWidth}
         >
           <CustomRow>
@@ -143,14 +143,14 @@ const Addresses: React.FunctionComponent = () => {
       <CustomCol xs={24}>
         <CustomFormItem
           label={'Sector'}
-          name={'sector'}
-          rules={[{ required: true }]}
+          name={'SECTOR'}
+          rules={[{ required: false }]}
           {...labelColFullWidth}
         >
           <CustomRow>
             <CustomCol xs={8}>
               <CustomFormItem noStyle>
-                <CustomInput disabled placeholder={'ID Sector'} />
+                <CustomInput disabled placeholder={'ID SECTOR'} />
               </CustomFormItem>
             </CustomCol>
             <CustomCol xs={16}>
@@ -168,32 +168,32 @@ const Addresses: React.FunctionComponent = () => {
       <CustomCol {...defaultBreakpoints}>
         <CustomFormItem
           label={'Calle'}
-          name={'calle'}
-          rules={[{ required: true }]}
+          name={'CALLE'}
+          rules={[{ required: false }]}
         >
           <CustomInput placeholder={'Calle'} />
         </CustomFormItem>
       </CustomCol>
       <CustomCol {...defaultBreakpoints}>
-        <CustomFormItem label={'Casa'} name={'casa'}>
+        <CustomFormItem label={'Casa'} name={'CASA'}>
           <CustomInput placeholder={'Casa'} />
         </CustomFormItem>
       </CustomCol>
       <CustomCol {...defaultBreakpoints}>
-        <CustomFormItem label={'Edificio'} name={'edificio'}>
+        <CustomFormItem label={'Edificio'} name={'EDIFICIO'}>
           <CustomInput placeholder={'Edificio'} />
         </CustomFormItem>
       </CustomCol>
       <CustomCol {...defaultBreakpoints}>
-        <CustomFormItem label={'Apartamento'} name={'Apartamento'}>
+        <CustomFormItem label={'Apartamento'} name={'APARTAMENTO'}>
           <CustomInput placeholder={'Apartamento'} />
         </CustomFormItem>
       </CustomCol>
       <CustomCol xs={24}>
         <CustomFormItem
           label={'Próximo a'}
-          name={'proximoA'}
-          rules={[{ required: true }]}
+          name={'PROXIMO_A'}
+          rules={[{ required: false }]}
           {...labelColFullWidth}
         >
           <CustomTextArea placeholder={'Próximo a...'} />

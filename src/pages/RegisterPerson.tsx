@@ -79,7 +79,7 @@ const RegisterPerson: React.FunctionComponent<
   }, [dispatch, activityId])
 
   return (
-    <CustomTabs type={'card'} defaultActiveKey={'1'}>
+    <CustomTabs type={'card'} defaultActiveKey={'2'}>
       {tabOptions.map((value: TabConfig, index: number) => (
         <CustomTabPane tab={value.title} key={`${index}`}>
           {value.node}
