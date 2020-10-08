@@ -12,6 +12,8 @@ import {
 import { ColumnType } from 'antd/lib/table'
 import ContribuitonsDepositModal from './ContributionsDepositModal'
 import { currentDate } from '../utils/general'
+import TransitActions from '../components/TransitActions'
+
 
 type CatCatchmentsTable = {
   key: string
@@ -96,6 +98,7 @@ const CashTransactions = (): React.ReactElement => {
   return (
     <CustomLayout
       style={{
+        height: 'auto !important',
         background: 'white',
         padding: '35px 20px',
         boxShadow:
@@ -122,12 +125,13 @@ const CashTransactions = (): React.ReactElement => {
             Transacciones de Caja
           </CustomTitle>
           <CustomText type="secondary" strong>
-            {currentDate}
+            {currentDate} 
           </CustomText>
         </CustomCol>
       </CustomRow>
 
       <CustomRow gutter={[32, 32]} align="top">
+
         <CustomCol span={12}>
           <ContribuitonsDepositModal
             width={800}
@@ -157,7 +161,7 @@ const CashTransactions = (): React.ReactElement => {
             bordered
           />
         </CustomCol>
-        <CustomCol span={12}>
+        <CustomCol span={11} pull={2}>
           <CustomTable
             title={() => (
               <CustomTitle type="secondary" level={3}>
@@ -180,6 +184,9 @@ const CashTransactions = (): React.ReactElement => {
             bordered
           />
         </CustomCol>
+      </CustomRow>
+      <CustomRow gutter={[0, 32]} align="bottom">
+        <TransitActions />
       </CustomRow>
     </CustomLayout>
   )
