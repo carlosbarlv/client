@@ -13,6 +13,8 @@ import {
 import { ColumnType } from 'antd/lib/table'
 import ContribuitonsDepositModal from './ContributionsDepositModal'
 import { currentDate } from '../utils/general'
+import TransitIncome from '../components/TransitIncome'
+import TransitEgress from '../components/TransitEgress'
 import AccountWithdrawalModal from './AccountWithdrawalModal'
 
 type CatCatchmentsTable = {
@@ -209,8 +211,9 @@ const CashTransactions = (): React.ReactElement => {
           />
         </CustomCol>
       </CustomRow>
-      <CustomRow gutter={[0, 32]} align="bottom">
-        <TransitActions />
+      <CustomRow gutter={[0, 32]} >
+        <TransitIncome />
+        <TransitEgress />
       </CustomRow>
     </CustomLayout>
   )
