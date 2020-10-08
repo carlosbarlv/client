@@ -5,6 +5,7 @@ import {
   CustomInput,
   CustomLayout,
   CustomRow,
+  CustomSpace,
   CustomTable,
   CustomText,
   CustomTitle,
@@ -12,8 +13,7 @@ import {
 import { ColumnType } from 'antd/lib/table'
 import ContribuitonsDepositModal from './ContributionsDepositModal'
 import { currentDate } from '../utils/general'
-import TransitActions from '../components/TransitActions'
-
+import AccountWithdrawalModal from './AccountWithdrawalModal'
 
 type CatCatchmentsTable = {
   key: string
@@ -33,8 +33,16 @@ const CashTransactions = (): React.ReactElement => {
     setDepositoAportacionesIsVisible,
   ] = useState(false)
 
+  const [
+    accountWithdrawalIsVisible,
+    setAccountWithdrawalIsVisible,
+  ] = useState(false)
+
   const showDepositoAportacionesModal = () => {
     setDepositoAportacionesIsVisible(!depositoAportacionesIsVisible)
+  }
+  const showAccountWithdrawalModal = () => {
+    setAccountWithdrawalIsVisible(!accountWithdrawalIsVisible)
   }
 
   const columnsCatchments: ColumnType<CatCatchmentsTable>[] = [
@@ -95,6 +103,23 @@ const CashTransactions = (): React.ReactElement => {
     },
   ]
 
+  const actionsButtons =  (
+        <CustomSpace>
+          <CustomButton
+            style={{backgroundColor: '#2DC8F7', color: 'white'}}
+            onClick={showDepositoAportacionesModal}
+          >
+            Depósito
+          </CustomButton>
+          <CustomButton
+            style={{backgroundColor: '#F54738', color: 'white'}}
+            onClick={showAccountWithdrawalModal}
+          >
+            Retiro
+          </CustomButton>
+        </CustomSpace>
+  )
+
   return (
     <CustomLayout
       style={{
@@ -139,6 +164,12 @@ const CashTransactions = (): React.ReactElement => {
             onOkClick={showDepositoAportacionesModal}
             visible={depositoAportacionesIsVisible}
           />
+          <AccountWithdrawalModal
+            width={800}
+            onCancelClick={showAccountWithdrawalModal}
+            onOkClick={showAccountWithdrawalModal}
+            visible={accountWithdrawalIsVisible}
+          />
           <CustomTable
             title={() => (
               <CustomTitle type="secondary" level={3}>
@@ -148,14 +179,7 @@ const CashTransactions = (): React.ReactElement => {
             columns={columnsCatchments}
             dataSource={dataCatchments}
             expandable={{
-              expandedRowRender: () => (
-                <CustomButton
-                  type="primary"
-                  onClick={showDepositoAportacionesModal}
-                >
-                  Depósito
-                </CustomButton>
-              ),
+              expandedRowRender: () => actionsButtons
             }}
             pagination={false}
             bordered
@@ -173,7 +197,7 @@ const CashTransactions = (): React.ReactElement => {
             expandable={{
               expandedRowRender: () => (
                 <CustomButton
-                  type="primary"
+                  style={{backgroundColor: '#2DC8F7', color: 'white'}}
                   onClick={showDepositoAportacionesModal}
                 >
                   Depósito
