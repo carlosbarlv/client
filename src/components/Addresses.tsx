@@ -1,8 +1,6 @@
 import React from 'react'
 import { Select } from 'antd'
-import { EyeOutlined, PlusOutlined } from '@ant-design/icons'
 import {
-  CustomButton,
   CustomCheckBox,
   CustomCol,
   CustomDivider,
@@ -10,7 +8,6 @@ import {
   CustomInput,
   CustomRow,
   CustomSelect,
-  CustomSpace,
   CustomTextArea,
   CustomTitle,
 } from '.'
@@ -24,23 +21,6 @@ const Addresses: React.FunctionComponent = () => {
       <CustomDivider orientation={'left'}>
         <CustomTitle level={4}>Direcciones</CustomTitle>
       </CustomDivider>
-      <CustomCol {...defaultBreakpoints}></CustomCol>
-      <CustomCol {...defaultBreakpoints}>
-        <CustomRow justify={'end'}>
-          <CustomSpace>
-            <CustomFormItem>
-              <CustomButton icon={<EyeOutlined />}>
-                Ver direcciones
-              </CustomButton>
-            </CustomFormItem>
-            <CustomFormItem>
-              <CustomButton icon={<PlusOutlined />} type={'primary'}>
-                Agregar direcciones
-              </CustomButton>
-            </CustomFormItem>
-          </CustomSpace>
-        </CustomRow>
-      </CustomCol>
       <CustomCol {...defaultBreakpoints}>
         <CustomFormItem
           label={'Tipo dirección'}

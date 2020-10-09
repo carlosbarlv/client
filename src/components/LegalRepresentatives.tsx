@@ -31,7 +31,7 @@ const columns: ColumnType<PersonType>[] = [
   },
 ]
 
-type RelatedPersonType = {
+export type RelatedPersonType = {
   ANIO_TIEMPO_EMPRESA?: string
   APELLIDOS?: string
   APODO?: string
@@ -106,9 +106,9 @@ const LegalRepresentatives = (props: {
 
       <CustomModal
         centered
-        title={<CustomTitle level={4}>Registro de relacionados</CustomTitle>}
+        title={<CustomTitle level={3}>Registro de relacionados</CustomTitle>}
         visible={modalVisibilityState}
-        width={'50%'}
+        width={'85%'}
         footer={null}
         closable={true}
         onCancel={() => setModalVisibilityState(false)}

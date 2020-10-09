@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Form } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import {
-  AddressesAndPhone,
+  AddressesForm,
   CustomButton,
   CustomCol,
   CustomForm,
@@ -39,7 +39,7 @@ type Steps = {
 const LegalPerson = (): React.ReactElement => {
   const [form] = Form.useForm()
   const dispatch = useDispatch()
-  const [stepPositionState, setStepPositionState] = useState(1)
+  const [stepPositionState, setStepPositionState] = useState(2)
   const [personData, setPersonData] = useState({
     direcciones: [],
     general: {},
@@ -53,6 +53,12 @@ const LegalPerson = (): React.ReactElement => {
     setPersonData(Object.assign(personData, { relacionados: data }))
     // eslint-disable-next-line no-console
     console.log(personData.relacionados)
+  }
+
+  const handleSaveData = (data: []) => {
+    setPersonData(Object.assign(personData, { direcciones: data }))
+    // eslint-disable-next-line no-console
+    console.log(personData.direcciones)
   }
 
   const steps: Steps[] = [
@@ -71,7 +77,7 @@ const LegalPerson = (): React.ReactElement => {
     {
       title: 'Direciones y Teléfonos',
       description: 'Información de dirección',
-      node: <AddressesAndPhone />,
+      node: <AddressesForm saveData={handleSaveData} />,
     },
   ]
 
@@ -156,11 +162,20 @@ const LegalPerson = (): React.ReactElement => {
                   relacionados: [...relacionados, values],
                 })
               }
+
+              if (name === 'addressesForm') {
+                const { addressesForm } = forms
+                const direcciones =
+                  addressesForm.getFieldValue('direcciones') || []
+                addressesForm.setFieldsValue({
+                  direcciones: [...direcciones, values],
+                })
+              }
             }}
           >
             <CustomForm
               {...formItemLayout}
-              // form={form}
+              form={form}
               name={'legalPerson'}
               onFinish={handleOnFinish}
               validateMessages={validateMessages}

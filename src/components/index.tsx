@@ -46,6 +46,7 @@ import PoliticallyExposedPerson from './PoliticallyExposedPerson'
 import SocialNetworks from './SocialNetworks'
 import CustomCheckBox from './CustomCheckBox'
 import AddressesAndPhone from './AddressesAndPhone'
+import AddressesForm from './AddressesForm'
 import {
   Heading1,
   Heading2,
@@ -118,4 +119,5 @@ export {
   RelatedRecord,
   AddressesAndPhone,
   SelectPartnerModal,
+  AddressesForm,
 }
