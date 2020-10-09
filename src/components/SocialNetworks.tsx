@@ -12,9 +12,7 @@ import { PlusOutlined } from '@ant-design/icons'
 
 type Emails = {
   tipo: 'string'
-  email_social: 'string'
-  email_web: 'string'
-  key: 'string'
+  descripcion: 'string'
 }
 
 const columns: ColumnType<Emails>[] = [
@@ -24,20 +22,15 @@ const columns: ColumnType<Emails>[] = [
     dataIndex: 'TIPO',
   },
   {
-    key: 'email_social',
-    title: 'Email / Redes sociales',
-    dataIndex: 'EMAILSOCIAL',
-  },
-  {
-    key: 'email_web',
-    title: 'Email / Dirección web',
-    dataIndex: 'EMAILWEB',
+    key: 'descripcion',
+    title: 'Descripción',
+    dataIndex: 'DESCRIPCION',
   },
 ]
 
 const SocialNetworks: React.FunctionComponent = () => {
   return (
-    <CustomCol xs={24} xl={12}>
+    <CustomCol xs={24} xl={11}>
       <CustomDivider orientation={'left'}>
         <CustomTitle level={4}> Emails / Redes sociales </CustomTitle>
       </CustomDivider>

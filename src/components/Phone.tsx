@@ -12,7 +12,6 @@ import { PlusOutlined } from '@ant-design/icons'
 
 type NumberPhone = {
   tipo: 'string'
-  telefono: 'string | number'
   numero: 'string | number'
   extencion: 'number'
 }
@@ -22,11 +21,6 @@ const columns: ColumnType<NumberPhone>[] = [
     key: 'tipo',
     title: 'Tipo',
     dataIndex: 'TIPO',
-  },
-  {
-    key: 'telefono',
-    title: 'Teléfono',
-    dataIndex: 'TELEFONO',
   },
   {
     key: 'numero',
@@ -42,7 +36,7 @@ const columns: ColumnType<NumberPhone>[] = [
 
 const Phone: React.FunctionComponent = () => {
   return (
-    <CustomCol xs={24} xl={11}>
+    <CustomCol xs={24} xl={12}>
       <CustomDivider orientation={'left'}>
         <CustomTitle level={4}> Teléfonos </CustomTitle>
       </CustomDivider>
