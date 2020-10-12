@@ -5,11 +5,6 @@ import {
   CustomTitle,
 } from '.'
 import { ColumnType } from 'antd/lib/table'
-// import CustomInputNumber from '../components/CustomInputNumber'
-import CustomSelect from './CustomSelect'
-import CustomOption from './CustomOption'
-// import CustomInputNumber from './CustomInputNumber'
-
 
 type DeliveredTable = {
     key: string
@@ -21,15 +16,16 @@ type DeliveredTable = {
 const dataDelivered: DeliveredTable[] = [
     {
       key: '0',
-      moneda: 'RD$10',
-      cant: '4',
-      monto: '40'
+      moneda: '10',
+      cant: '0',
+      monto: '0'
     },
     {
       key: '1',
-      moneda: 'RD$5',
-      cant: '1',
-      monto: '5'
+      moneda: '5',
+      cant: '0',
+      monto: '0'
+
     },
 ]
 
@@ -69,19 +65,14 @@ const EditableDeliveredTable = (): React.ReactElement => {
           </>
         )
     }
-
   
   const columsDelivered: ColumnType<DeliveredTable>[] = [
     {
       title: 'Moneda',
       dataIndex: 'moneda',
-      render: (text, record) => {
-        return (
-          <CustomSelect placeholder="Moneda" onChange={e => handleChange('moneda', e, parseInt(record.key))} >
-            <CustomOption value="10">RD$10</CustomOption>
-            <CustomOption value="5">RD$5</CustomOption>
-          </CustomSelect>
-        )
+      render: (text) => {
+        return `RD$${text}`
+
       },
     },
     {
@@ -100,7 +91,8 @@ const EditableDeliveredTable = (): React.ReactElement => {
   return (
     <>
       <CustomTable 
-        title={() => <CustomTitle level={3}>Recibido</CustomTitle>}
+        title={() => <CustomTitle level={3}>Entregado</CustomTitle>}
+
         columns={columsDelivered} 
         dataSource={data} 
         pagination={false} 

@@ -31,7 +31,6 @@ const TransitIncome = (): React.ReactElement => {
         setIncomeDistributionIsVisible(!incomeDistributionIsVisible)
     }
 
-
   const columsIncome: ColumnType<TransitIncomeTable>[] = [
     {
       title: 'Emisor',
@@ -140,3 +139,4 @@ const TransitIncome = (): React.ReactElement => {
 }
 
 export default TransitIncome
+

@@ -5,10 +5,6 @@ import {
   CustomTitle,
 } from '../components'
 import { ColumnType } from 'antd/lib/table'
-// import CustomInputNumber from '../components/CustomInputNumber'
-import CustomSelect from '../components/CustomSelect'
-import CustomOption from '../components/CustomOption'
-
 
 type ReceivedTable = {
   key: string
@@ -22,30 +18,32 @@ type ReceivedTable = {
 const dataReceived: ReceivedTable[] = [
   {
     key: '0',
-    moneda: '100',
-    cant: '5',
-    monto: '500.00',
+    moneda: 'Cheque',
+    cant: '0',
+    monto: '0',
+
     referencia: 'grgrt',
     noReferencia: ''
   },
   {
     key: '1',
     moneda: '100',
-    cant: '1',
-    monto: '15,000.00',
+    cant: '0',
+    monto: '0',
+
     referencia: 'rergtr',
     noReferencia: '468484-84'
   },
   {
     key: '2',
     moneda: '200',
-    cant: '1',
-    monto: '',
+    cant: '0',
+    monto: '0',
+
     referencia: '545555',
     noReferencia: '456484-415'
   },
 ]
-
 
 const EditableReceivedTable = (): React.ReactElement => {
   const [isEditing, setIsEditing] = useState(false)
@@ -56,10 +54,10 @@ const EditableReceivedTable = (): React.ReactElement => {
     newData[index] = {...newData[index], [name]: value }
     setData(newData)
 
-    if(name === 'cant' || name === 'moneda'){
-      const monto = parseInt(newData[index].moneda.toString()) * parseInt(newData[index].cant)
-      newData[index] = {...newData[index], [name]: value, monto }
-      setData(newData)
+    if(newData[index].moneda !== 'Cheque'){
+        const monto = parseInt(newData[index].moneda.toString()) * parseInt(newData[index].cant)
+        newData[index] = {...newData[index], [name]: value, monto }
+        setData(newData)
     }
   }
 
@@ -69,12 +67,12 @@ const EditableReceivedTable = (): React.ReactElement => {
       <CustomInput type={type}
         style={{display: `${isEditing ? 'block': 'none'}`}}
         value={text}
+        min="0"
         onBlur={() => {
             setIsEditing(false)
         }}
         onChange={e => handleChange(name ,e.target.value, parseInt(record.key))}
        />
-
         <div style={{display: `${isEditing ? 'none': 'block'}`}} 
         onClick={() => {
           setIsEditing(true)
@@ -87,13 +85,8 @@ const EditableReceivedTable = (): React.ReactElement => {
       {
       title: 'Moneda',
       dataIndex: 'moneda',
-      render: (text, record) => {
-        return (
-          <CustomSelect placeholder="Moneda" onChange={e => handleChange('moneda', e, parseInt(record.key))} >
-            <CustomOption value="100">RD$100</CustomOption>
-            <CustomOption value="200">RD$200</CustomOption>
-          </CustomSelect>
-        )
+      render: (text) => {
+        return text !== 'Cheque' ? `RD$${text}` : text
       },
     },
     {
@@ -106,6 +99,13 @@ const EditableReceivedTable = (): React.ReactElement => {
     {
       title: 'Monto',
       dataIndex: 'monto',
+      render: (text, record) => {
+        if(record.moneda === 'Cheque'){
+          return inputEditContent('monto', 'number', text, record)
+        }else{
+          return text
+        }
+      }
     },
     {
       title: 'Referencia',
