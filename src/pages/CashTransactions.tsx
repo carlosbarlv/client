@@ -187,7 +187,7 @@ const CashTransactions = (): React.ReactElement => {
             bordered
           />
         </CustomCol>
-        <CustomCol span={11} pull={2}>
+        <CustomCol span={12} >
           <CustomTable
             title={() => (
               <CustomTitle type="secondary" level={3}>
@@ -211,7 +211,8 @@ const CashTransactions = (): React.ReactElement => {
           />
         </CustomCol>
       </CustomRow>
-      <CustomRow gutter={[0, 32]} >
+      <CustomRow gutter={[0, 32]} align="bottom">
+
         <TransitIncome />
         <TransitEgress />
       </CustomRow>
