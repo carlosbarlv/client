@@ -58,6 +58,7 @@ const dataIncome: TransitIncomeTable[] = [
 ]
 
 const TransitIncome = (): React.ReactElement => {
+
   const [data, setData] = useState(dataIncome)
   const [checkedAll, setCheckedAll] = useState(false)
 
