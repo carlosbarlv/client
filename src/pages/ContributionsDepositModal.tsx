@@ -32,20 +32,14 @@ const ContribuitonsDepositModal = ({visible, width, onOkClick, onCancelClick}: P
         <CustomRow gutter={[32, 0]}>
           <CustomCol span={24}>
             <CustomFormItem label={'Cuenta'}>
-              <CustomInput value={'001-0023443'} contentEditable={false} />
+              <CustomInput value={'001-0023443'} readOnly />
             </CustomFormItem>
-          </CustomCol>
-          <CustomCol span={24}>
             <CustomFormItem label={'Título'}>
-              <CustomInput value={'Alejandro Genao'} contentEditable={false} />
+              <CustomInput value={'Alejandro Genao'} readOnly />
             </CustomFormItem>
-          </CustomCol>
-          <CustomCol span={24}>
             <CustomFormItem label={'Monto'}>
               <CustomInputNumber />
             </CustomFormItem>
-          </CustomCol>
-          <CustomCol span={24}>
             <CustomFormItem label={'Comentario'}>
               <CustomTextArea />
             </CustomFormItem>

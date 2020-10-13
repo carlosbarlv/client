@@ -33,26 +33,18 @@ const AccountWithdrawalModal = ({visible, width, onOkClick, onCancelClick}: Prop
       <CustomForm {...labelColFullWidth}>
         <CustomRow gutter={[24, 8]} align={'top'}>
           <CustomCol span={17}>
-            <CustomCol span={24}>
               <CustomFormItem label={'Cuenta'}>
-                <CustomInput value={'001-0023443'} contentEditable={false} />
+                <CustomInput value={'001-0023443'} readOnly />
               </CustomFormItem>
-            </CustomCol>
-            <CustomCol span={24}>
               <CustomFormItem label={'Título'}>
-                <CustomInput value={'Alejandro Genao'} contentEditable={false} />
+                <CustomInput value={'Alejandro Genao'} readOnly />
               </CustomFormItem>
-            </CustomCol>
-            <CustomCol span={24}>
               <CustomFormItem label={'Monto'}>
                 <CustomInputNumber />
               </CustomFormItem>
-            </CustomCol>
-            <CustomCol span={24}>
               <CustomFormItem label={'Comentario'}>
                 <CustomTextArea />
               </CustomFormItem>
-            </CustomCol>
             <CustomCol style={{paddingTop: '30px'}} span={10} offset={14} >
               <CustomSpace >
                 <CustomButton size="large" onClick={onCancelClick} >Cancelar</CustomButton>
