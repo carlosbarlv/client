@@ -18,6 +18,7 @@ import TransitEgress from '../components/TransitEgress'
 
 
 import AccountWithdrawalModal from './AccountWithdrawalModal'
+import { PlusOutlined } from '@ant-design/icons'
 
 type CatCatchmentsTable = {
   key: string
@@ -124,13 +125,44 @@ const CashTransactions = (): React.ReactElement => {
         </CustomSpace>
   )
 
-  const colocationsButton = () => (
-    <CustomButton
-      style={{backgroundColor: '#2DC8F7', color: 'white'}}
-      onClick={showDepositoAportacionesModal}
-    >
-      Depósito
-    </CustomButton>
+  const captacionesTitle = () => (
+    <CustomRow>
+      <CustomCol span={12}>
+        <CustomTitle type="secondary" level={3}>
+          Captaciones
+        </CustomTitle>
+      </CustomCol>
+      <CustomCol span={12}>
+        <CustomRow align={'bottom'}>
+          <CustomButton 
+            type="primary"
+            shape={'circle'}
+            size={'large'}
+            icon={<PlusOutlined />}
+          />
+        </CustomRow>
+      </CustomCol>
+    </CustomRow>
+  )
+
+  const colocacionesTitle = () => (
+    <CustomRow>
+      <CustomCol span={12}>
+        <CustomTitle type="secondary" level={3}>
+          Colocaciones
+        </CustomTitle>
+      </CustomCol>
+        <CustomCol span={12}>
+          <CustomRow align={'bottom'}>
+            <CustomButton 
+              type="primary"
+              shape={'circle'}
+              size={'large'}
+              icon={<PlusOutlined />}
+            />
+          </CustomRow>
+        </CustomCol>
+    </CustomRow>
   )
 
   return (
@@ -183,11 +215,8 @@ const CashTransactions = (): React.ReactElement => {
             visible={accountWithdrawalIsVisible}
           />
           <CustomTable
-            title={() => (
-              <CustomTitle type={'secondary'} level={3}>
-                Captaciones
-              </CustomTitle>
-            )}
+            title={captacionesTitle}
+
             columns={columnsCatchments}
             dataSource={dataCatchments}
             expandable={{
@@ -199,11 +228,8 @@ const CashTransactions = (): React.ReactElement => {
         </CustomCol>
         <CustomCol span={12} >
           <CustomTable
-            title={() => (
-              <CustomTitle type={'secondary'} level={3}>
-                Colocaciones
-              </CustomTitle>
-            )}
+            title={colocacionesTitle}
+
             columns={columnsPlacement}
             dataSource={dataPlacements}
             expandable={{
