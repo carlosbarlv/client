@@ -35,12 +35,12 @@ const AccountWithdrawalModal = (props: PropsType): React.ReactElement => {
           <CustomCol span={17}>
             <CustomCol span={24}>
               <CustomFormItem label="Cuenta">
-                <CustomInput value="001-0023443" contentEditable={false} />
+                <CustomInput value="001-0023443" readOnly />
               </CustomFormItem>
             </CustomCol>
             <CustomCol span={24}>
               <CustomFormItem label="Título">
-                <CustomInput value="Alejandro Genao" contentEditable={false} />
+                <CustomInput value="Alejandro Genao" readOnly />
               </CustomFormItem>
             </CustomCol>
             <CustomCol span={24}>
