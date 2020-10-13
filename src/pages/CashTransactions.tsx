@@ -233,7 +233,7 @@ const CashTransactions = (): React.ReactElement => {
             columns={columnsPlacement}
             dataSource={dataPlacements}
             expandable={{
-              expandedRowRender: colocationsButton
+              expandedRowRender: actionsButtons
             }}
             pagination={false}
             bordered

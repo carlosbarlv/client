@@ -29,57 +29,40 @@ const dataDelivered: DeliveredTable[] = [
     },
 ]
 
-
 const EditableDeliveredTable = (): React.ReactElement => {
-    const [isEditing, setIsEditing] = useState(false)
-    const [data, setData] = useState(dataDelivered)
+  const [data, setData] = useState(dataDelivered)
 
-    const handleChange = (name: string ,value: string | ReactText | undefined, index: number) => {
-        const newData = [...data]
-        newData[index] = {...newData[index], [name]: value }
-        setData(newData)
+  const handleChange = (name: string ,value: string | ReactText | undefined, index: number) => {
+    const newData = [...data]
+    newData[index] = {...newData[index], [name]: value }
+    setData(newData)
     
-        if(name === 'cant' || name === 'moneda'){
-          const monto = parseInt(newData[index].moneda.toString()) * parseInt(newData[index].cant)
-          newData[index] = {...newData[index], [name]: value, monto }
-          setData(newData)
-        }
+    if(name === 'cant' || name === 'moneda'){
+      const monto = parseInt(newData[index].moneda.toString()) * parseInt(newData[index].cant)
+      newData[index] = {...newData[index], [name]: value, monto }
+      setData(newData)
     }
+  }
 
-    const inputEditContent = (name: string , text: number, record: DeliveredTable) => {
-        return (
-          <>
-          <CustomInputNumber 
-            style={{display: `${isEditing ? 'block': 'none'}`}}
-            value={text}
-            onBlur={() => {
-                setIsEditing(false)
-            }}
-            onChange={e => handleChange(name ,e, parseInt(record.key))}
-           />
     
-            <div style={{display: `${isEditing ? 'none': 'block'}`}} 
-            onClick={() => {
-              setIsEditing(true)
-            }}>{text}</div>
-          </>
-        )
-    }
-  
   const columsDelivered: ColumnType<DeliveredTable>[] = [
     {
       title: 'Moneda',
       dataIndex: 'moneda',
       render: (text) => {
         return `RD$${text}`
-
       },
     },
     {
       title: 'Cant',
       dataIndex: 'cant',
       render: (text, record ) =>  {
-        return inputEditContent('cant', text, record)
+        return (
+          <CustomInputNumber 
+            value={text}
+            onChange={e => handleChange('cant' ,e, parseInt(record.key))}
+          />
+        )
       }
     },
     {
