@@ -21,14 +21,76 @@ type TransitIncomeTable = {
   operacion: string
   moneda: string
   monto: string
+  checked: boolean
 }
 
+const dataIncome: TransitIncomeTable[] = [
+  {
+    key: '0',
+    emisor: 'Legal',
+    concepto: 'Prestamo Corriente',
+    idCuenta: '0024991',
+    operacion: 'Pago a Cuotas',
+    moneda: 'RD$',
+    monto: '22,000.00',
+    checked: false
+  },
+  {
+    key: '1',
+    emisor: 'Caja',
+    concepto: 'Aportacionese',
+    idCuenta: '001-0023443',
+    operacion: 'Deposito',
+    moneda: 'RD$',
+    monto: '1,000.00',
+    checked: false
+  },
+  {
+    key: '2',
+    emisor: '',
+    concepto: '',
+    idCuenta: '',
+    operacion: '',
+    moneda: '',
+    monto: '',
+    checked: false
+  },
+]
 
 const TransitIncome = (): React.ReactElement => {
-    const [ incomeDistributionIsVisible, setIncomeDistributionIsVisible, ] = useState(true)
-    const showIncomeDistributionIsVisible = () => {
-        setIncomeDistributionIsVisible(!incomeDistributionIsVisible)
+  const [data, setData] = useState(dataIncome)
+  const [checkedAll, setCheckedAll] = useState(false)
+
+  const [ incomeDistributionIsVisible, setIncomeDistributionIsVisible, ] = useState(false)
+  const showIncomeDistributionIsVisible = () => {
+    setIncomeDistributionIsVisible(!incomeDistributionIsVisible)
+  }
+
+  const handleChange = (index: number) => {
+    const newData = [...data]
+    newData[index].checked = !newData[index].checked
+    const isCheckeedAll = newData.some(elem => elem.checked === false)
+    setCheckedAll(!isCheckeedAll)
+    setData(newData)
+  }
+
+  const checkAll = () => {
+    const newData = data     
+    const isCheckeedAllFirst = newData.some(elem => elem.checked === false)
+
+    if(isCheckeedAllFirst){
+      for (let i = 0; i < newData.length; i++) {
+        newData[i].checked = true
+      }
+    }else{
+      for (let i = 0; i < newData.length; i++) {
+        newData[i].checked = !newData[i].checked
+      }
     }
+    const isCheckeedAllBefore = newData.some(elem => elem.checked === false)
+    setCheckedAll(!isCheckeedAllBefore)
+    setData(newData)
+  }
 
   const columsIncome: ColumnType<TransitIncomeTable>[] = [
     {
@@ -56,41 +118,11 @@ const TransitIncome = (): React.ReactElement => {
       dataIndex: 'monto',
     },
     {
-      title: <CustomCheckBox />,
+      title: <CustomCheckBox checked={checkedAll} onChange={() => checkAll()} />,
       dataIndex: 'checkbox',
-      render: () => {
-        return <CustomCheckBox />
+      render: (text, record) => {
+        return <CustomCheckBox checked={record.checked} onChange={() => handleChange( parseInt(record.key))} />
       },
-    },
-  ]
-
-  const dataIncome: TransitIncomeTable[] = [
-    {
-      key: '1',
-      emisor: 'Legal',
-      concepto: 'Prestamo Corriente',
-      idCuenta: '0024991',
-      operacion: 'Pago a Cuotas',
-      moneda: 'RD$',
-      monto: '22,000.00',
-    },
-    {
-      key: '2',
-      emisor: 'Caja',
-      concepto: 'Aportacionese',
-      idCuenta: '001-0023443',
-      operacion: 'Deposito',
-      moneda: 'RD$',
-      monto: '1,000.00',
-    },
-    {
-      key: '3',
-      emisor: '',
-      concepto: '',
-      idCuenta: '',
-      operacion: '',
-      moneda: '',
-      monto: '',
     },
   ]
 
@@ -99,7 +131,6 @@ const TransitIncome = (): React.ReactElement => {
       <CustomCol span={18}>
           <CustomSpace align="center" style={{backgroundColor: "#2DC8F7", width: "100%", padding: 10, }}>
               <Heading4 style={{color: 'white', fontWeight: 'bold'}} >
-
                 Ingresos en Tránsito
               </Heading4>
           </CustomSpace>
@@ -116,7 +147,6 @@ const TransitIncome = (): React.ReactElement => {
                         style={{backgroundColor: '#2DC8F7', color: 'white'}}
                         onClick={showIncomeDistributionIsVisible}
                       >Aplicar</CustomButton>
-
                     </CustomSpace>
                 </CustomSpace>
             </CustomRow>
