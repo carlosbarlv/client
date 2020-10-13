@@ -107,7 +107,7 @@ const CashTransactions = (): React.ReactElement => {
     },
   ]
 
-  const actionsButtons =  (
+  const actionsButtons = () => (
         <CustomSpace>
           <CustomButton
             style={{backgroundColor: '#2DC8F7', color: 'white'}}
@@ -122,6 +122,15 @@ const CashTransactions = (): React.ReactElement => {
             Retiro
           </CustomButton>
         </CustomSpace>
+  )
+
+  const colocationsButton = () => (
+    <CustomButton
+      style={{backgroundColor: '#2DC8F7', color: 'white'}}
+      onClick={showDepositoAportacionesModal}
+    >
+      Depósito
+    </CustomButton>
   )
 
   return (
@@ -182,7 +191,7 @@ const CashTransactions = (): React.ReactElement => {
             columns={columnsCatchments}
             dataSource={dataCatchments}
             expandable={{
-              expandedRowRender: () => actionsButtons
+              expandedRowRender: actionsButtons
             }}
             pagination={false}
             bordered
@@ -198,14 +207,7 @@ const CashTransactions = (): React.ReactElement => {
             columns={columnsPlacement}
             dataSource={dataPlacements}
             expandable={{
-              expandedRowRender: () => (
-                <CustomButton
-                  style={{backgroundColor: '#2DC8F7', color: 'white'}}
-                  onClick={showDepositoAportacionesModal}
-                >
-                  Depósito
-                </CustomButton>
-              ),
+              expandedRowRender: colocationsButton
             }}
             pagination={false}
             bordered
