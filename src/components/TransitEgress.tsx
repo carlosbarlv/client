@@ -3,7 +3,7 @@ import {
   CustomButton,
   CustomCol,
   CustomTable,
-  CustomTitle,
+  Heading4
 } from '.'
 import { ColumnType } from 'antd/lib/table'
 import CustomSpace from './CustomSpace'
@@ -86,14 +86,12 @@ const TransitEgress = (): React.ReactElement => {
     <>
       <CustomCol span={6}></CustomCol>
         <CustomCol span={22} pull={2}>
-            <CustomTable
-            title={() => (
-                <CustomSpace style={{backgroundColor: "#F24B4B", width: "100%", padding: 10 }}>
-                <CustomTitle level={4}>
-                    Egresos en Tránsito
-                </CustomTitle>
-                </CustomSpace>
-            )}
+          <CustomSpace style={{backgroundColor: "#F24B4B", width: "100%", padding: 10 }}>
+            <Heading4 style={{color: 'white', fontWeight: 'bold'}}>
+              Egresos en Tránsito
+            </Heading4>
+          </CustomSpace>
+          <CustomTable
             columns={columsEgress}
             dataSource={dataEgress}
             pagination={false}

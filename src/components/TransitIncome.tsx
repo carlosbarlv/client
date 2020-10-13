@@ -6,13 +6,12 @@ import {
   CustomCol,
   CustomInputNumber,
   CustomTable,
-  CustomTitle,
+  Heading4,
 } from '.'
 import { ColumnType } from 'antd/lib/table'
 import CustomRow from './CustomRow'
 import CustomSpace from './CustomSpace'
 import IncomeDistributionModal from './IncomeDistributionModal'
-
 
 type TransitIncomeTable = {
   key: string
@@ -95,18 +94,16 @@ const TransitIncome = (): React.ReactElement => {
     },
   ]
 
- 
   return (
     <>
       <CustomCol span={18}>
-        <CustomTable
-          title={() => (
-            <CustomSpace align={'center'} style={{backgroundColor: "#2DC8F7", width: "100%", padding: 10 }}>
-              <CustomTitle  level={4}>
+          <CustomSpace align="center" style={{backgroundColor: "#2DC8F7", width: "100%", padding: 10, }}>
+              <Heading4 style={{color: 'white', fontWeight: 'bold'}} >
+
                 Ingresos en Tránsito
-              </CustomTitle>
-            </CustomSpace>
-          )}
+              </Heading4>
+          </CustomSpace>
+        <CustomTable
           columns={columsIncome}
           dataSource={dataIncome}
           pagination={false}
