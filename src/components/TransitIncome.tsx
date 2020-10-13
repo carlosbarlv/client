@@ -26,7 +26,7 @@ type TransitIncomeTable = {
 
 
 const TransitIncome = (): React.ReactElement => {
-    const [ incomeDistributionIsVisible, setIncomeDistributionIsVisible, ] = useState(false)
+    const [ incomeDistributionIsVisible, setIncomeDistributionIsVisible, ] = useState(true)
     const showIncomeDistributionIsVisible = () => {
         setIncomeDistributionIsVisible(!incomeDistributionIsVisible)
     }
@@ -130,7 +130,7 @@ const TransitIncome = (): React.ReactElement => {
       <CustomCol span={6}>
         <IncomeDistributionModal 
           visible={incomeDistributionIsVisible} 
-          width={1000}
+          width={'80%'}
           hideModal={showIncomeDistributionIsVisible}
         />
       </CustomCol>

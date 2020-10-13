@@ -19,11 +19,11 @@ import EditableDeliveredTable from './EditableDeliveredTable'
 
 type PropsType = {
   visible: boolean
-  width?: number
+  width?: string | number
   hideModal: () => void
 }
 
-const IncomeDistributionModal = (props: PropsType): React.ReactElement => {
+const IncomeDistributionModal = ({visible, width, hideModal}: PropsType): React.ReactElement => {
 
   type MainInfoTable = {
     key: string
@@ -35,18 +35,11 @@ const IncomeDistributionModal = (props: PropsType): React.ReactElement => {
     monto: string
   }
 
-
   type DetailsDocTable = {
     key: string
     detalleDoc: React.ReactElement
   }
-  type DeliveredTable = {
-    key: string
-    moneda: React.ReactElement
-    cant: string
-    monto: string
-  }
-
+ 
   const columnsInfo: ColumnType<MainInfoTable>[] = [
     {
       title: 'Emisor',
@@ -128,10 +121,10 @@ const IncomeDistributionModal = (props: PropsType): React.ReactElement => {
       centered
       closable={true}
       title={<CustomTitle level={3}>Distribución Ingresos</CustomTitle>}
-      visible={props.visible}
-      width={props.width}
-      onCancel={() => props.hideModal()}
-      onOk={() => props.hideModal()}
+      visible={visible}
+      width={width}
+      onCancel={() => hideModal()}
+      onOk={() => hideModal()}
     >
       <CustomRow gutter={[16, 32]} align={'top'}>
         <CustomCol span={20}>
@@ -141,20 +134,20 @@ const IncomeDistributionModal = (props: PropsType): React.ReactElement => {
           {currentDate}
         </CustomCol>
 
-        <CustomCol span={16}>
+        <CustomCol span={14}>
           <EditableReceivedTable />
         </CustomCol>
-        <CustomCol span={8}>
-        <CustomTable 
-          columns={columsDetail} 
-          dataSource={dataDetail} 
-          pagination={false} 
-          bordered
-        />
+        <CustomCol span={10}>
+          <EditableDeliveredTable />
         </CustomCol>
 
-        <CustomCol span={12}>
-        <EditableDeliveredTable />
+        <CustomCol span={8} pull={4}>
+          <CustomTable 
+            columns={columsDetail} 
+            dataSource={dataDetail} 
+            pagination={false} 
+            bordered
+          />
         </CustomCol>
         <CustomCol span={12}>
           <CustomForm labelCol={{sm: 8}}>

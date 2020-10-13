@@ -36,7 +36,7 @@ const CashTransactions = (): React.ReactElement => {
   const [
     depositoAportacionesIsVisible,
     setDepositoAportacionesIsVisible,
-  ] = useState(false)
+  ] = useState(true)
 
   const [
     accountWithdrawalIsVisible,
