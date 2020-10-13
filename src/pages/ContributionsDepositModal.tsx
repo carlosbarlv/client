@@ -19,14 +19,14 @@ type PropsType = {
   onCancelClick: () => void
 }
 
-const ContribuitonsDepositModal = (props: PropsType): React.ReactElement => {
+const ContribuitonsDepositModal = ({visible, width, onOkClick, onCancelClick}: PropsType): React.ReactElement => {
   return (
     <CustomModal
       title={<CustomTitle level={4}>Depósito de Aportaciones</CustomTitle>}
-      visible={props.visible}
-      width={props.width}
-      onCancel={props.onCancelClick}
-      onOk={props.onOkClick}
+      visible={visible}
+      width={width}
+      onCancel={onCancelClick}
+      onOk={onOkClick}
     >
       <CustomForm {...labelColFullWidth}>
         <CustomRow gutter={[32, 0]}>

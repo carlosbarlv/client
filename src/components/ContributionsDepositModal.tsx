@@ -17,14 +17,14 @@ type PropsType = {
   hideModal: () => void
 }
 
-const ContribuitonsDepositModal = (props: PropsType): React.ReactElement => {
+const ContribuitonsDepositModal = ({visible, width, hideModal}: PropsType): React.ReactElement => {
   return (
     <CustomModal
       title={<CustomTitle level={4}>Depósito de Aportaciones</CustomTitle>}
-      visible={props.visible}
-      width={800}
-      onCancel={props.hideModal}
-      onOk={props.hideModal}
+      visible={visible}
+      width={width}
+      onCancel={hideModal}
+      onOk={hideModal}
     >
       <CustomForm labelCol={{ md: 4 }}>
         <CustomRow gutter={[32, 0]}>

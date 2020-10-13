@@ -15,7 +15,7 @@ type PropsType = {
   hideModal: () => void
 }
 
-const SelectPartnerModal = (props: PropsType): React.ReactElement => {
+const SelectPartnerModal = ({visible, width, hideModal}: PropsType): React.ReactElement => {
   type SelectPartnerTable = {
     key: string
     nombre: string
@@ -63,10 +63,10 @@ const SelectPartnerModal = (props: PropsType): React.ReactElement => {
   return (
     <CustomModal
       title={<CustomTitle level={3}>Seleccionar Socio</CustomTitle>}
-      visible={props.visible}
-      width={props.width}
-      onCancel={() => props.hideModal()}
-      onOk={() => props.hideModal()}
+      visible={visible}
+      width={width}
+      onCancel={() => hideModal()}
+      onOk={() => hideModal()}
     >
       <CustomRow gutter={[16, 8]}>
         <CustomCol span={10} offset={14}>

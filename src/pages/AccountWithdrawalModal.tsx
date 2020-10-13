@@ -22,12 +22,12 @@ type PropsType = {
   onCancelClick: () => void
 }
 
-const AccountWithdrawalModal = (props: PropsType): React.ReactElement => {
+const AccountWithdrawalModal = ({visible, width, onOkClick, onCancelClick}: PropsType): React.ReactElement => {
   return (
     <CustomModal
       title={<CustomTitle level={4}>Retiro Cuentas de Ahorros</CustomTitle>}
-      visible={props.visible}
-      width={props.width}
+      visible={visible}
+      width={width}
       footer={false}
     >
       <CustomForm {...labelColFullWidth}>
@@ -55,11 +55,11 @@ const AccountWithdrawalModal = (props: PropsType): React.ReactElement => {
             </CustomCol>
             <CustomCol style={{paddingTop: '30px'}} span={10} offset={14} >
               <CustomSpace >
-                <CustomButton size="large" onClick={props.onCancelClick} >Cancelar</CustomButton>
+                <CustomButton size="large" onClick={onCancelClick} >Cancelar</CustomButton>
                 <CustomButton 
                   style={{backgroundColor: '#2DC8F7', color: 'white'}} 
                   size="large"
-                  onClick={props.onOkClick}
+                  onClick={onOkClick}
                 >Ok</CustomButton>
               </CustomSpace>
             </CustomCol>
