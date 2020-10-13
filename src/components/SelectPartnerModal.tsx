@@ -70,7 +70,7 @@ const SelectPartnerModal = (props: PropsType): React.ReactElement => {
     >
       <CustomRow gutter={[16, 8]}>
         <CustomCol span={10} offset={14}>
-          <CustomSearch size="large" />
+          <CustomSearch size={'large'} />
         </CustomCol>
         <CustomCol span={24}>
           <CustomTable columns={columns} dataSource={data} bordered />

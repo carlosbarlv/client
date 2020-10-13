@@ -109,14 +109,14 @@ const IncomeDistributionModal = (props: PropsType): React.ReactElement => {
       key: '1',
       detalleDoc: (
         <CustomForm labelCol={{sm: 7}}>
-          <CustomFormItem label="Fecha">
-            <CustomInput placeholder="10/08/2020" />
+          <CustomFormItem label={'Fecha'}>
+            <CustomInput placeholder={'10/08/2020'} />
           </CustomFormItem>
-          <CustomFormItem label="Emisor">
-            <CustomInput size="large" placeholder="Yusepiz Rosario" />
+          <CustomFormItem label={'Emisor'}>
+            <CustomInput size={'large'} placeholder={'Yusepiz Rosario'} />
           </CustomFormItem>
-          <CustomFormItem label="Beneficiario">
-            <CustomInput size={"large"} placeholder="Alejandro Genao" />
+          <CustomFormItem label={'Beneficiario'}>
+            <CustomInput size={"large"} placeholder={'Alejandro Genao'} />
           </CustomFormItem>
         </CustomForm>
       )
@@ -133,7 +133,7 @@ const IncomeDistributionModal = (props: PropsType): React.ReactElement => {
       onCancel={() => props.hideModal()}
       onOk={() => props.hideModal()}
     >
-      <CustomRow gutter={[16, 32]} align="top">
+      <CustomRow gutter={[16, 32]} align={'top'}>
         <CustomCol span={20}>
           <CustomTable columns={columnsInfo} dataSource={dataInfo} pagination={false} bordered />
         </CustomCol>
@@ -158,31 +158,30 @@ const IncomeDistributionModal = (props: PropsType): React.ReactElement => {
         </CustomCol>
         <CustomCol span={12}>
           <CustomForm labelCol={{sm: 8}}>
-            <CustomFormItem label="Total Operaciones" >
+            <CustomFormItem label={'Total Operaciones'} >
               <CustomSpace>
-                <CustomInputNumber placeholder="RD$" disabled/>
-                <CustomInput value="15,500.00" disabled/>
+                <CustomInputNumber placeholder={'RD$'} disabled/>
+                <CustomInput value={'15,500.00'} disabled/>
               </CustomSpace>
             </CustomFormItem>
-            <CustomFormItem label="Recibido" >
+            <CustomFormItem label={'Recibido'} >
               <CustomSpace>
-                <CustomInputNumber placeholder="RD$" disabled/>
-                <CustomInput value="15,500.00" disabled/>
+                <CustomInputNumber placeholder={'RD$'} disabled/>
+                <CustomInput value={'15,500.00'} disabled/>
               </CustomSpace>
             </CustomFormItem>
-            <CustomFormItem label="Entregado" >
+            <CustomFormItem label={'Entregado'} >
               <CustomSpace>
-                <CustomInputNumber placeholder="RD$" disabled/>
-                <CustomInput value="15,500.00" disabled/>
+                <CustomInputNumber placeholder={'RD$'} disabled/>
+                <CustomInput value={'15,500.00'} disabled/>
               </CustomSpace>
             </CustomFormItem>
-            <CustomFormItem label="Pendiente" >
+            <CustomFormItem label={'Pendiente'} >
               <CustomSpace>
-                <CustomInputNumber placeholder="RD$" disabled/>
-                <CustomInput value="15,500.00" disabled/>
+                <CustomInputNumber placeholder={'RD$'} disabled/>
+                <CustomInput value={'15,500.00'} disabled/>
               </CustomSpace>
             </CustomFormItem>
-
           </CustomForm>
         </CustomCol>
         <CustomCol span={6} pull={18}>

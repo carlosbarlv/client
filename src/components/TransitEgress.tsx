@@ -8,16 +8,6 @@ import {
 import { ColumnType } from 'antd/lib/table'
 import CustomSpace from './CustomSpace'
 
-type TransitIncomeTable = {
-  key: string
-  emisor: string
-  concepto: string
-  idCuenta: string
-  operacion: string
-  moneda: string
-  monto: string
-}
-
 type TransitEgressTable = {
   key: string
   emisor: string

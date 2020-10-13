@@ -101,7 +101,7 @@ const TransistSessions = (): React.ReactElement => {
         marginRight: 20,
       }}
     >
-      <CustomRow gutter={[16, 8]} justify="start">
+      <CustomRow gutter={[16, 8]} justify={'start'}>
         <CustomCol span={12}>
           <CustomTitle level={3}>Sesiones en Tránsito</CustomTitle>
         </CustomCol>
@@ -110,9 +110,9 @@ const TransistSessions = (): React.ReactElement => {
         </CustomCol>
         <CustomCol span={2}>
           <CustomButton
-            type="primary"
+            type={'primary'}
             shape={'circle'}
-            size="large"
+            size={'large'}
             icon={<PlusOutlined />}
             onClick={handleOnClickAddSession}
           />

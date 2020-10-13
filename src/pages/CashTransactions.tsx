@@ -138,29 +138,28 @@ const CashTransactions = (): React.ReactElement => {
     >
       <CustomRow gutter={[32, 16]}>
         <CustomCol span={6}>
-          <CustomTitle type="secondary" level={4}>
+          <CustomTitle type={'secondary'} level={4}>
             Identificación del Socio
           </CustomTitle>
-          <CustomInput placeholder="047-0091273-1" />
+          <CustomInput placeholder={'047-0091273-1'} />
         </CustomCol>
         <CustomCol span={12}>
-          <CustomTitle type="secondary" level={4}>
+          <CustomTitle type={'secondary'} level={4}>
             Nombre
           </CustomTitle>
-          <CustomInput placeholder="Alejandro Genao" />
+          <CustomInput placeholder={'Alejandro Genao'} />
         </CustomCol>
         <CustomCol span={6}>
-          <CustomTitle type="secondary" level={4}>
+          <CustomTitle type={'secondary'} level={4}>
             Transacciones de Caja
           </CustomTitle>
-          <CustomText type="secondary" strong>
+          <CustomText type={'secondary'} strong>
             {currentDate} 
           </CustomText>
         </CustomCol>
       </CustomRow>
 
-      <CustomRow gutter={[32, 32]} align="top">
-
+      <CustomRow gutter={[32, 32]} align={'top'}>
         <CustomCol span={12}>
           <ContribuitonsDepositModal
             width={800}
@@ -176,7 +175,7 @@ const CashTransactions = (): React.ReactElement => {
           />
           <CustomTable
             title={() => (
-              <CustomTitle type="secondary" level={3}>
+              <CustomTitle type={'secondary'} level={3}>
                 Captaciones
               </CustomTitle>
             )}
@@ -192,7 +191,7 @@ const CashTransactions = (): React.ReactElement => {
         <CustomCol span={12} >
           <CustomTable
             title={() => (
-              <CustomTitle type="secondary" level={3}>
+              <CustomTitle type={'secondary'} level={3}>
                 Colocaciones
               </CustomTitle>
             )}
@@ -213,8 +212,7 @@ const CashTransactions = (): React.ReactElement => {
           />
         </CustomCol>
       </CustomRow>
-      <CustomRow gutter={[0, 32]} align="bottom">
-
+      <CustomRow gutter={[0, 32]} align={'bottom'}>
         <TransitIncome />
         <TransitEgress />
       </CustomRow>

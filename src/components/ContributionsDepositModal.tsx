@@ -29,22 +29,22 @@ const ContribuitonsDepositModal = (props: PropsType): React.ReactElement => {
       <CustomForm labelCol={{ md: 4 }}>
         <CustomRow gutter={[32, 0]}>
           <CustomCol span={24}>
-            <CustomFormItem label="Cuenta">
-              <CustomInput value="001-0023443" readOnly={false} />
+            <CustomFormItem label={'Cuenta'}>
+              <CustomInput value={'001-0023443'} contentEditable={false} />
             </CustomFormItem>
           </CustomCol>
           <CustomCol span={24}>
-            <CustomFormItem label="Título">
-              <CustomInput value="Alejandro Genao" readOnly={false} />
+            <CustomFormItem label={'Título'}>
+              <CustomInput value={'Alejandro Genao'} contentEditable={false} />
             </CustomFormItem>
           </CustomCol>
           <CustomCol span={24}>
-            <CustomFormItem label="Monto">
+            <CustomFormItem label={'Monto'}>
               <CustomInputNumber />
             </CustomFormItem>
           </CustomCol>
           <CustomCol span={24}>
-            <CustomFormItem label="Comentario">
+            <CustomFormItem label={'Comentario'}>
               <CustomTextArea />
             </CustomFormItem>
           </CustomCol>
