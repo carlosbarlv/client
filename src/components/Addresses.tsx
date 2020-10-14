@@ -33,8 +33,8 @@ const Addresses: React.FunctionComponent = () => {
         </CustomFormItem>
       </CustomCol>
       <CustomCol {...defaultBreakpoints} flex={4}>
-        <CustomFormItem label={'Principal?'} name={'PRINCIPAL'}>
-          <CustomCheckBox />
+        <CustomFormItem name={'PRINCIPAL'}>
+          <CustomCheckBox>¿Principal?</CustomCheckBox>
         </CustomFormItem>
       </CustomCol>
       <CustomCol {...defaultBreakpoints} flex={2}>
@@ -61,10 +61,11 @@ const Addresses: React.FunctionComponent = () => {
             </CustomCol>
             <CustomCol xs={16}>
               <CustomFormItem noStyle>
-                {/* TODO: no busca :/ */}
-                <CustomSelect showSearch allowClear placeholder={'País'}>
-                  {/* <Option value={1}>1</Option> */}
-                </CustomSelect>
+                <CustomSelect
+                  showSearch
+                  allowClear
+                  placeholder={'País'}
+                ></CustomSelect>
               </CustomFormItem>
             </CustomCol>
           </CustomRow>

@@ -216,7 +216,6 @@ const CashTransactions = (): React.ReactElement => {
           />
           <CustomTable
             title={captacionesTitle}
-
             columns={columnsCatchments}
             dataSource={dataCatchments}
             expandable={{
@@ -229,7 +228,6 @@ const CashTransactions = (): React.ReactElement => {
         <CustomCol span={12} >
           <CustomTable
             title={colocacionesTitle}
-
             columns={columnsPlacement}
             dataSource={dataPlacements}
             expandable={{

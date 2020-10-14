@@ -70,12 +70,13 @@ const EditableDeliveredTable = (): React.ReactElement => {
       dataIndex: 'monto',
     },
   ]
+  
+  const deliveredTitle = () => <CustomTitle level={3}>Entregado</CustomTitle>
 
   return (
     <>
       <CustomTable 
-        title={() => <CustomTitle level={3}>Entregado</CustomTitle>}
-
+        title={deliveredTitle}
         columns={columsDelivered} 
         dataSource={data} 
         pagination={false} 

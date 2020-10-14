@@ -122,10 +122,12 @@ const EditableReceivedTable = (): React.ReactElement => {
     },
   ]
 
+  const receivedTitle = () => <CustomTitle level={3}>Recibido</CustomTitle>
+
   return (
     <>
       <CustomTable 
-        title={() => <CustomTitle level={3}>Recibido</CustomTitle>}
+        title={receivedTitle}
         columns={columsReceived} 
         dataSource={data} 
         pagination={false} 

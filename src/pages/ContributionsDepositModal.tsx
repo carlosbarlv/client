@@ -38,10 +38,10 @@ const ContribuitonsDepositModal = ({visible, width, onOkClick, onCancelClick}: P
               <CustomInput value={'Alejandro Genao'} readOnly />
             </CustomFormItem>
             <CustomFormItem label={'Monto'}>
-              <CustomInputNumber />
+              <CustomInputNumber placeholder={'0.00'} />
             </CustomFormItem>
             <CustomFormItem label={'Comentario'}>
-              <CustomTextArea />
+              <CustomTextArea rows={7} placeholder={'Deja algún comentario...'} />
             </CustomFormItem>
           </CustomCol>
         </CustomRow>
