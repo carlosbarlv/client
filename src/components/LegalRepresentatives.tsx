@@ -1,7 +1,10 @@
 import React from 'react'
 import { PlusOutlined } from '@ant-design/icons'
 import { ColumnType } from 'antd/lib/table'
+// import { FormInstance } from 'antd/lib/form'
+import { Form } from 'antd'
 import { PersonType } from '../reducers/Person'
+import { AddressesType } from './AddressesForm'
 import {
   CustomButton,
   CustomDivider,
@@ -22,7 +25,7 @@ const columns: ColumnType<PersonType>[] = [
   {
     key: 'nombre',
     title: 'Nombre representante',
-    dataIndex: 'nombre',
+    dataIndex: 'nombres',
   },
   {
     key: 'doc_identidad',
@@ -31,10 +34,22 @@ const columns: ColumnType<PersonType>[] = [
   },
 ]
 
+export type PepsType = {
+  desCargo?: string
+  descEntidad?: string
+  entidadPep?: string
+  ENTIDAD_PEP?: string
+  fechaFinal?: string
+  fechaInicio?: string
+  ID_CARGO?: string
+  PEP?: string
+}
+
 export type RelatedPersonType = {
   ANIO_TIEMPO_EMPRESA?: string
   APELLIDOS?: string
   APODO?: string
+  DIRECCIONES?: AddressesType[]
   DOCUMENTO_IDENTIDAD?: string
   ESTADO_CIVIL?: string
   FECHA_NAC?: string
@@ -42,14 +57,17 @@ export type RelatedPersonType = {
   NACIONALIDAD?: string
   NOMBRES?: string
   NO_PASAPORTE?: string
+  PEP: PepsType
   POSICION?: string
   SEXO?: string
+  TIPO_DOCUMENTO?: string
 }
 
 const LegalRepresentatives = (props: {
   onModalFormChange: Function
 }): React.ReactElement => {
   const { onModalFormChange } = props
+  const [form] = Form.useForm()
   const [modalVisibilityState, setModalVisibilityState] = React.useState(false)
 
   const handleOnFinish = () => {
@@ -79,27 +97,31 @@ const LegalRepresentatives = (props: {
       >
         {({ getFieldValue }) => {
           const relacionados = getFieldValue('relacionados') || []
+          const originData = relacionados.map(
+            (values: RelatedPersonType, index: number) => {
+              return {
+                key: index,
+                codigo: index,
+                nombres: values.NOMBRES,
+                doc_identidad:
+                  values.DOCUMENTO_IDENTIDAD !== undefined
+                    ? values.DOCUMENTO_IDENTIDAD
+                    : values.NO_PASAPORTE,
+              }
+            }
+          )
 
           if (relacionados.length !== 0) {
-            onModalFormChange(relacionados)
+            onModalFormChange(relacionados, 'relacionados')
           }
 
-          return relacionados.length ? (
-            <ul>
-              {relacionados.map(
-                (
-                  user: RelatedPersonType,
-                  index: string | number | undefined
-                ) => (
-                  <li key={index}>
-                    <span>{user.NOMBRES}</span>
-                    <span>{user.DOCUMENTO_IDENTIDAD}</span>
-                  </li>
-                )
-              )}
-            </ul>
-          ) : (
-            <CustomTable bordered columns={columns} pagination={false} />
+          return (
+            <CustomTable
+              bordered
+              columns={columns}
+              dataSource={relacionados.length ? originData : undefined}
+              pagination={false}
+            />
           )
         }}
       </CustomFormItem>
@@ -110,13 +132,13 @@ const LegalRepresentatives = (props: {
         visible={modalVisibilityState}
         width={'85%'}
         footer={null}
-        closable={true}
+        closable
         onCancel={() => setModalVisibilityState(false)}
         style={{
           marginTop: 20,
         }}
       >
-        <RelatedRecord onFinish={handleOnFinish} />
+        <RelatedRecord form={form} onFinish={handleOnFinish} />
       </CustomModal>
     </>
   )

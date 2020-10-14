@@ -39,26 +39,22 @@ type Steps = {
 const LegalPerson = (): React.ReactElement => {
   const [form] = Form.useForm()
   const dispatch = useDispatch()
-  const [stepPositionState, setStepPositionState] = useState(2)
+  const [stepPositionState, setStepPositionState] = useState(1)
   const [personData, setPersonData] = useState({
     direcciones: [],
-    general: {},
+    general: [],
     relacionados: [],
   })
   const { activityParameters } = useSelector(
     (state: StoreState) => state.general
   )
 
-  const handleOnRelatedFormChange = (data: []) => {
-    setPersonData(Object.assign(personData, { relacionados: data }))
-    // eslint-disable-next-line no-console
-    console.log(personData.relacionados)
-  }
-
-  const handleSaveData = (data: []) => {
-    setPersonData(Object.assign(personData, { direcciones: data }))
-    // eslint-disable-next-line no-console
-    console.log(personData.direcciones)
+  const handleFormChange = (data: [], name: string) => {
+    if (name === 'relacionados') {
+      setPersonData(Object.assign(personData, { relacionados: data }))
+    } else if (name === 'direcciones') {
+      setPersonData(Object.assign(personData, { direcciones: data }))
+    }
   }
 
   const steps: Steps[] = [
@@ -70,27 +66,25 @@ const LegalPerson = (): React.ReactElement => {
     {
       title: 'Representantes legales',
       description: 'Agregar representantes legales',
-      node: (
-        <LegalRepresentatives onModalFormChange={handleOnRelatedFormChange} />
-      ),
+      node: <LegalRepresentatives onModalFormChange={handleFormChange} />,
     },
     {
       title: 'Direciones y Teléfonos',
       description: 'Información de dirección',
-      node: <AddressesForm saveData={handleSaveData} />,
+      node: <AddressesForm saveData={handleFormChange} />,
     },
   ]
 
   const handleNextButtonOnClick = async (
     event: React.MouseEvent<HTMLElement, MouseEvent>
   ) => {
-    const data = form.getFieldsValue()
+    const data = [form.getFieldsValue()]
     if (stepPositionState < steps.length - 1) {
       event.preventDefault()
     }
     try {
       await form.validateFields()
-      setPersonData(Object.assign(personData, data))
+      setPersonData(Object.assign([...personData.general, ...data]))
       if (stepPositionState < steps.length - 1) {
         setStepPositionState(stepPositionState + 1)
       }

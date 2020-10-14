@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Form } from 'antd'
 import { ColumnType } from 'antd/lib/table'
+import { FormInstance } from 'antd/lib/form'
 import { PlusOutlined, SaveOutlined } from '@ant-design/icons'
 import {
   Addresses,
@@ -23,7 +24,7 @@ import { showNotification } from '../utils/general'
 
 export type AddressesType = {
   APARTAMENTO?: string
-  CALE?: string
+  CALLE?: string
   CASA?: string
   EDIFICIO?: string
   ESTADO?: string
@@ -63,17 +64,36 @@ const Columns: ColumnType<AddressesType>[] = [
   },
 ]
 
+const useResetFormOnCloseModal = (
+  form: FormInstance,
+  modalVisivilityState: boolean
+) => {
+  const prevVisibleRef = useRef<boolean>()
+
+  useEffect(() => {
+    prevVisibleRef.current = modalVisivilityState
+  }, [modalVisivilityState])
+
+  const prevVisible = prevVisibleRef.current
+
+  useEffect(() => {
+    if (!modalVisivilityState && prevVisible) {
+      form.resetFields()
+    }
+  }, [modalVisivilityState, form, prevVisible])
+}
+
 const AddressesForm = (props: { saveData: Function }): React.ReactElement => {
   const { saveData } = props
   const [form] = Form.useForm()
   const [modalVisivilityState, setModalVisivilityState] = React.useState(false)
 
-  const handleOnClick = async (
-    event: React.MouseEvent<HTMLElement, MouseEvent>
-  ) => {
-    event.preventDefault()
+  useResetFormOnCloseModal(form, modalVisivilityState)
+
+  const handleOnClick = async () => {
     try {
       await form.validateFields()
+      setModalVisivilityState(false)
     } catch (error) {
       showNotification(
         'Faltan datos',
@@ -107,26 +127,29 @@ const AddressesForm = (props: { saveData: Function }): React.ReactElement => {
           >
             {({ getFieldValue }) => {
               const direcciones = getFieldValue('direcciones') || []
+              const originData = direcciones.map(
+                (values: AddressesType, index: number) => {
+                  return {
+                    key: index,
+                    tipo_direccion: values.TIPO_DIRECCION,
+                    pais: values.PAIS,
+                    calle: values.CALLE,
+                    casa: values.CASA,
+                  }
+                }
+              )
 
               if (direcciones.length !== 0) {
-                saveData(direcciones)
+                saveData(direcciones, 'direcciones')
               }
 
-              return direcciones.length ? (
-                <ul>
-                  {direcciones.map(
-                    (
-                      dir: AddressesType,
-                      index: string | undefined | number
-                    ) => (
-                      <li key={index}>
-                        {dir.TIPO_DIRECCION} -- {dir.PAIS}
-                      </li>
-                    )
-                  )}
-                </ul>
-              ) : (
-                <CustomTable bordered columns={Columns} pagination={false} />
+              return (
+                <CustomTable
+                  bordered
+                  columns={Columns}
+                  dataSource={direcciones.length ? originData : undefined}
+                  pagination={false}
+                />
               )
             }}
           </CustomFormItem>
@@ -139,8 +162,8 @@ const AddressesForm = (props: { saveData: Function }): React.ReactElement => {
       </CustomRow>
 
       <CustomModal
-        centered={true}
-        closable={true}
+        centered
+        closable
         footer={null}
         onCancel={() => setModalVisivilityState(false)}
         style={{ marginTop: '20px' }}

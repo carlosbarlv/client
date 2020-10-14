@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form } from 'antd/lib'
+import { FormInstance } from 'antd/lib/form'
 import {
   AddressesAndPhone,
   CustomButton,
@@ -14,9 +14,11 @@ import { formItemLayout } from '../themes'
 import { validateMessages } from '../constants/general'
 import { showNotification } from '../utils/general'
 
-const RelatedRecord = (props: { onFinish: () => void }): React.ReactElement => {
-  const [form] = Form.useForm()
-  const { onFinish } = props
+const RelatedRecord = (props: {
+  onFinish: () => void
+  form: FormInstance
+}): React.ReactElement => {
+  const { form, onFinish } = props
 
   const handleOnFinish = async () => {
     try {
