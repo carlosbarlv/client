@@ -20,27 +20,9 @@ import {
 import { formItemLayout } from '../themes'
 import { validateMessages } from '../constants/general'
 import { showNotification } from '../utils/general'
+import { AddressType } from '../reducers/addresses'
 
-export type AddressesType = {
-  APARTAMENTO?: string
-  CALE?: string
-  CASA?: string
-  EDIFICIO?: string
-  ESTADO?: string
-  ID_MUNICIPIO?: string
-  ID_PAIS?: string
-  ID_PROVINCIA?: string
-  ID_SECTOR?: string
-  MUNICIPIO?: string
-  PAIS?: string
-  PRINCIPAL?: boolean
-  PROVINCIA?: string
-  PROXIMO_A?: string
-  SECTOR?: string
-  TIPO_DIRECCION?: string
-}
-
-const Columns: ColumnType<AddressesType>[] = [
+const Columns: ColumnType<AddressType>[] = [
   {
     key: 'TIPO_DIRECCION',
     title: 'Tipo Dirección',
@@ -115,10 +97,7 @@ const AddressesForm = (props: { saveData: Function }): React.ReactElement => {
               return direcciones.length ? (
                 <ul>
                   {direcciones.map(
-                    (
-                      dir: AddressesType,
-                      index: string | undefined | number
-                    ) => (
+                    (dir: AddressType, index: string | undefined | number) => (
                       <li key={index}>
                         {dir.TIPO_DIRECCION} -- {dir.PAIS}
                       </li>

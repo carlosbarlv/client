@@ -39,7 +39,7 @@ type Steps = {
 const LegalPerson = (): React.ReactElement => {
   const [form] = Form.useForm()
   const dispatch = useDispatch()
-  const [stepPositionState, setStepPositionState] = useState(2)
+  const [stepPositionState, setStepPositionState] = useState(0)
   const [personData, setPersonData] = useState({
     direcciones: [],
     general: {},
@@ -110,7 +110,7 @@ const LegalPerson = (): React.ReactElement => {
   }
 
   const handleOnFinish = () => {
-    const person = personData.general as PersonType
+    const person = personData as PersonType
     person.ID_EMPRESA = getSessionInfo().businessId
     person.RAZON_SOCIAL = `${person.NOMBRE_EMPRESA}`
     person.TIPO_ENTIDAD = 'E'
@@ -121,22 +121,13 @@ const LegalPerson = (): React.ReactElement => {
     person.ID_LIST_TIPO_PERSONA = Number(
       activityParameters.ID_LIST_TIPO_PERSONA
     )
-    // person.ID_LIST_TIPO_ENTIDAD = Number(
-    //   activityParameters.ID_LIST_TIPO_ENTIDAD
-    // )
-
-    // Por alguna razon el activityParameters.ID_LIST_TIPO_ENTIDADI
-    // no debuelve un valor valido para person.ID_LIST_TIPO_ENTIDAD la cual es requerida
-    // y para fines de pruebas les asigne este valor generico.
-    person.ID_LIST_TIPO_PERSONA = Number(1)
-    person.ID_LIST_TIPO_ENTIDAD = Number(1)
+    person.ID_LIST_TIPO_ENTIDAD = Number(
+      activityParameters.ID_LIST_TIPO_ENTIDAD
+    )
 
     //eliminar los campos no requeridos antes de mandar al api
     delete person.ID_PERSONA
     delete person.USUARIO_INSERCION
-
-    // eslint-disable-next-line no-console
-    console.log(personData)
 
     dispatch(createLegalPerson(person))
   }
