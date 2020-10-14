@@ -40,10 +40,10 @@ const AccountWithdrawalModal = ({visible, width, onOkClick, onCancelClick}: Prop
                 <CustomInput value={'Alejandro Genao'} readOnly />
               </CustomFormItem>
               <CustomFormItem label={'Monto'}>
-                <CustomInputNumber />
+                <CustomInputNumber placeholder={'0.00'} />
               </CustomFormItem>
               <CustomFormItem label={'Comentario'}>
-                <CustomTextArea rows={7} />
+                <CustomTextArea placeholder={'Deja algún comentario...'} rows={7} />
               </CustomFormItem>
           </CustomCol>
 
