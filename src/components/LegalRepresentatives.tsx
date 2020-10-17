@@ -1,10 +1,9 @@
 import React from 'react'
 import { PlusOutlined } from '@ant-design/icons'
 import { ColumnType } from 'antd/lib/table'
-// import { FormInstance } from 'antd/lib/form'
 import { Form } from 'antd'
 import { PersonType } from '../reducers/Person'
-import { AddressesType } from './AddressesForm'
+import { AddressType } from '../reducers/addresses'
 import {
   CustomButton,
   CustomDivider,
@@ -49,7 +48,7 @@ export type RelatedPersonType = {
   ANIO_TIEMPO_EMPRESA?: string
   APELLIDOS?: string
   APODO?: string
-  DIRECCIONES?: AddressesType[]
+  DIRECCIONES?: AddressType[]
   DOCUMENTO_IDENTIDAD?: string
   ESTADO_CIVIL?: string
   FECHA_NAC?: string
@@ -119,7 +118,7 @@ const LegalRepresentatives = (props: {
             <CustomTable
               bordered
               columns={columns}
-              dataSource={relacionados.length ? originData : undefined}
+              dataSource={originData}
               pagination={false}
             />
           )
