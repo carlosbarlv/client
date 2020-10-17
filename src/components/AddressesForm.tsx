@@ -110,7 +110,7 @@ const AddressesForm = (props: { saveData: Function }): React.ReactElement => {
             {({ getFieldValue }) => {
               const direcciones = getFieldValue('direcciones') || []
               const originData = direcciones.map(
-                (values: AddressesType, index: number) => {
+                (values: AddressType, index: number) => {
                   return {
                     key: index,
                     tipo_direccion: values.TIPO_DIRECCION,
@@ -129,7 +129,7 @@ const AddressesForm = (props: { saveData: Function }): React.ReactElement => {
                 <CustomTable
                   bordered
                   columns={Columns}
-                  dataSource={direcciones.length ? originData : undefined}
+                  dataSource={originData}
                   pagination={false}
                 />
               )

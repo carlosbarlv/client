@@ -7,7 +7,7 @@ import { AddressAction } from '../actions/addresses'
 
 export type AddressType = {
   APARTAMENTO?: string
-  CALE?: string
+  CALLE?: string
   CASA?: string
   EDIFICIO?: string
   ESTADO?: string
