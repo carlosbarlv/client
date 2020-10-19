@@ -17,17 +17,20 @@ import TransitIncome from '../components/TransitIncome'
 import TransitEgress from '../components/TransitEgress'
 import AccountWithdrawalModal from './AccountWithdrawalModal'
 import { PlusOutlined } from '@ant-design/icons'
+import LoanPaymentModal from './LoanPaymentModal'
 
 type CatCatchmentsTable = {
   key: string
   producto: string
   idCuenta: string
+  actions: React.ReactElement
 }
 
 type PlacementsTable = {
   key: string
   producto: string
   idCuenta: string
+  actions: React.ReactElement
 }
 
 const CashTransactions = (): React.ReactElement => {
@@ -41,11 +44,19 @@ const CashTransactions = (): React.ReactElement => {
     setAccountWithdrawalIsVisible,
   ] = useState(false)
 
+  const [
+    loanPaymentIsVisible,
+    setLoanPaymentIsVisible,
+  ] = useState(false)
+
   const showDepositoAportacionesModal = () => {
     setDepositoAportacionesIsVisible(!depositoAportacionesIsVisible)
   }
   const showAccountWithdrawalModal = () => {
     setAccountWithdrawalIsVisible(!accountWithdrawalIsVisible)
+  }
+  const showLoanPaymentModal = () => {
+    setLoanPaymentIsVisible(!loanPaymentIsVisible)
   }
 
   const columnsCatchments: ColumnType<CatCatchmentsTable>[] = [
@@ -64,16 +75,52 @@ const CashTransactions = (): React.ReactElement => {
       key: '1',
       producto: 'Aportaciones',
       idCuenta: '001-0023443',
+      actions: (
+        <CustomSpace>
+          <CustomButton
+            style={{backgroundColor: '#2DC8F7', color: 'white'}}
+            onClick={showDepositoAportacionesModal}
+          >
+            Depósito
+          </CustomButton>
+        </CustomSpace>
+      )
     },
     {
       key: '2',
       producto: 'Cuenta Ahorros',
       idCuenta: '002-0067233',
+      actions: (
+        <CustomSpace>
+          <CustomButton
+            style={{backgroundColor: '#2DC8F7', color: 'white'}}
+            onClick={showDepositoAportacionesModal}
+          >
+            Depósito
+          </CustomButton>
+          <CustomButton
+            style={{backgroundColor: '#F54738', color: 'white'}}
+            onClick={showAccountWithdrawalModal}
+          >
+            Retiro
+          </CustomButton>
+        </CustomSpace>
+      )
     },
     {
       key: '3',
       producto: 'Orden de pago',
       idCuenta: '003-0031441',
+      actions: (
+        <CustomSpace>
+          <CustomButton
+            style={{backgroundColor: '#2DC8F7', color: 'white'}}
+            onClick={showDepositoAportacionesModal}
+          >
+            Depósito
+          </CustomButton>
+        </CustomSpace>
+      )
     },
   ]
 
@@ -93,35 +140,30 @@ const CashTransactions = (): React.ReactElement => {
       key: '1',
       producto: 'Préstamo Corriente',
       idCuenta: '0024991',
+      actions: (
+        <CustomSpace>
+          <CustomButton
+            style={{backgroundColor: '#2DC8F7', color: 'white'}}
+            onClick={showLoanPaymentModal}
+          >
+            Pagos
+          </CustomButton>
+        </CustomSpace>
+      )
     },
     {
       key: '2',
       producto: '',
       idCuenta: '',
+      actions: <></>
     },
     {
       key: '3',
       producto: '',
       idCuenta: '',
+      actions: <></>
     },
   ]
-
-  const actionsButtons = () => (
-        <CustomSpace>
-          <CustomButton
-            style={{backgroundColor: '#2DC8F7', color: 'white'}}
-            onClick={showDepositoAportacionesModal}
-          >
-            Depósito
-          </CustomButton>
-          <CustomButton
-            style={{backgroundColor: '#F54738', color: 'white'}}
-            onClick={showAccountWithdrawalModal}
-          >
-            Retiro
-          </CustomButton>
-        </CustomSpace>
-  )
 
   const captacionesTitle = () => (
     <CustomRow>
@@ -212,12 +254,18 @@ const CashTransactions = (): React.ReactElement => {
             onOkClick={showAccountWithdrawalModal}
             visible={accountWithdrawalIsVisible}
           />
+          <LoanPaymentModal 
+            width={800}
+            onCancelClick={showLoanPaymentModal}
+            onOkClick={showLoanPaymentModal}
+            visible={loanPaymentIsVisible}
+          />
           <CustomTable
             title={captacionesTitle}
             columns={columnsCatchments}
             dataSource={dataCatchments}
             expandable={{
-              expandedRowRender: actionsButtons
+              expandedRowRender: record => record.actions
             }}
             pagination={false}
             bordered
@@ -229,7 +277,7 @@ const CashTransactions = (): React.ReactElement => {
             columns={columnsPlacement}
             dataSource={dataPlacements}
             expandable={{
-              expandedRowRender: actionsButtons
+              expandedRowRender: record => record.actions
             }}
             pagination={false}
             bordered
