@@ -1,38 +1,39 @@
-import React, { ReactText, useState } from 'react'
+import React, { ReactText, useEffect, useState } from 'react'
 import {
   CustomInputNumber,
   CustomTable,
   CustomTitle,
 } from '.'
 import { ColumnType } from 'antd/lib/table'
-import { Denominations } from '../reducers/general'
+import { useDispatch, useSelector } from 'react-redux'
+import { StoreState } from '../reducers'
+import { getDenominations } from '../actions/general'
 
 type DeliveredTable = {
     key: string
-    moneda:  React.ReactElement | string
+    moneda:  string
     cant: string 
     monto: string | undefined | ReactText | number
 }
 
-type PropsType = {
-  denominations: Denominations[]
-}
+const EditableDeliveredTable = (): React.ReactElement => {
+  const dispatch = useDispatch()
+  const denominations  = useSelector((state: StoreState) => state.general.denominations)
 
-const dataDelivered: DeliveredTable[] = [
-    {
-      key: '0',
-      moneda: '10',
-      cant: '0',
-      monto: '0'
-    },
-    {
-      key: '1',
-      moneda: '5',
-      cant: '0',
-      monto: '0'
+  useEffect(() => {
+    dispatch(getDenominations())
+  }, [dispatch])
 
-    },
-]
+  const dataDelivered = denominations.map((obj, i) => {
+    return({
+      key: `${i}`,
+      moneda: obj.DENOMINACION,
+      cant: '0',
+      monto: '0',
+      referencia: '',
+      noReferencia: ''
+    })
+  })
 
 const EditableDeliveredTable = ({denominations}: PropsType): React.ReactElement => {
   const [data, setData] = useState(dataDelivered)
@@ -42,9 +43,9 @@ const EditableDeliveredTable = ({denominations}: PropsType): React.ReactElement 
     newData[index] = {...newData[index], [name]: value }
     setData(newData)
     
-    if(name === 'cant' || name === 'moneda'){
+    if(parseInt(newData[index].moneda) > 0){
       const monto = parseInt(newData[index].moneda.toString()) * parseInt(newData[index].cant)
-      newData[index] = {...newData[index], [name]: value, monto }
+      newData[index] = {...newData[index], [name]: value, monto: `${monto}` }
       setData(newData)
     }
   }
@@ -54,7 +55,7 @@ const EditableDeliveredTable = ({denominations}: PropsType): React.ReactElement 
       title: 'Moneda',
       dataIndex: 'moneda',
       render: (text) => {
-        return `RD$${text}`
+        return parseInt(text) > 0 ? `RD$${text}` : text
       },
     },
     {
@@ -72,6 +73,17 @@ const EditableDeliveredTable = ({denominations}: PropsType): React.ReactElement 
     {
       title: 'Monto',
       dataIndex: 'monto',
+      render: (text, record) => {
+        if(parseInt(record.moneda) > 0){
+          return text
+        }
+        return (
+          <CustomInputNumber
+          value={text}
+          onChange={e => handleChange('monto' ,e , parseInt(record.key))}
+        />
+        )
+      }
     },
   ]
   
@@ -83,7 +95,6 @@ const EditableDeliveredTable = ({denominations}: PropsType): React.ReactElement 
         title={deliveredTitle}
         columns={columsDelivered} 
         dataSource={data} 
-        pagination={false} 
         bordered 
       />
     </>

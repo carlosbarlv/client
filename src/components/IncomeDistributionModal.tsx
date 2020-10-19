@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import {
   CustomCol,
   CustomModal,
@@ -16,9 +16,6 @@ import CustomSpace from './CustomSpace'
 import CustomCheckBox from './CustomCheckBox'
 import EditableReceivedTable from './EditableReceivedTable'
 import EditableDeliveredTable from './EditableDeliveredTable'
-import { useDispatch, useSelector } from 'react-redux'
-import { StoreState } from '../reducers'
-import { getDenominations } from '../actions/general'
 
 type PropsType = {
   visible: boolean
@@ -40,18 +37,6 @@ type DetailsDocTable = {
 }
 
 const IncomeDistributionModal = ({visible, width, hideModal}: PropsType): React.ReactElement => {
-
-  const dispatch = useDispatch()
-  const denominations  = useSelector((state: StoreState) => state.general.denominations)
-
-  useEffect(() => {
-    dispatch(getDenominations())
-  }, [dispatch])
-
-
-
-
- 
   const columnsInfo: ColumnType<MainInfoTable>[] = [
     {
       title: 'Emisor',
@@ -98,8 +83,6 @@ const IncomeDistributionModal = ({visible, width, hideModal}: PropsType): React.
     },
   ]
 
-  
-
   const columsDetail: ColumnType<DetailsDocTable>[] = [
     {
       title: <CustomTitle level={4}>Detalle de Documento</CustomTitle>,
@@ -143,10 +126,10 @@ const IncomeDistributionModal = ({visible, width, hideModal}: PropsType): React.
           {currentDate}
         </CustomCol>
         <CustomCol span={14}>
-          <EditableReceivedTable  denominations={denominations} />
+          <EditableReceivedTable />
         </CustomCol>
         <CustomCol span={10}>
-          <EditableDeliveredTable denominations={denominations} />
+          <EditableDeliveredTable />
         </CustomCol>
 
         <CustomCol span={8} pull={4}>

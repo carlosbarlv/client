@@ -1,4 +1,4 @@
-import React, { ReactText, useState } from 'react'
+import React, { ReactText, useEffect, useState } from 'react'
 import {
   CustomInput,
   CustomTable,
@@ -6,51 +6,38 @@ import {
 } from '../components'
 import { ColumnType } from 'antd/lib/table'
 import CustomInputNumber from './CustomInputNumber'
-import { Denominations } from '../reducers/general'
+import { useDispatch, useSelector } from 'react-redux'
+import { StoreState } from '../reducers'
+import { getDenominations } from '../actions/general'
 
 type ReceivedTable = {
   key: string
-  moneda: React.ReactElement | string
+  moneda:  string
   cant: string
   monto: string | undefined | ReactText | number
   referencia: string
   noReferencia: string
 }
 
-type PropaType = {
-  denominations: Denominations[]
-}
+const EditableReceivedTable = (): React.ReactElement => {
+  const dispatch = useDispatch()
+  const denominations  = useSelector((state: StoreState) => state.general.denominations)
 
-const dataReceived: ReceivedTable[] = [
-  {
-    key: '0',
-    moneda: 'Cheque',
-    cant: '0',
-    monto: '0',
-    referencia: 'grgrt',
-    noReferencia: ''
-  },
-  {
-    key: '1',
-    moneda: '100',
-    cant: '0',
-    monto: '0',
+  useEffect(() => {
+    dispatch(getDenominations())
+  }, [dispatch])
+  
+  const dataReceived = denominations.map((obj, i) => {
+    return({
+      key: `${i}`,
+      moneda: obj.DENOMINACION,
+      cant: '0',
+      monto: '0',
+      referencia: '',
+      noReferencia: ''
+    })
+  })
 
-    referencia: 'rergtr',
-    noReferencia: '468484-84'
-  },
-  {
-    key: '2',
-    moneda: '200',
-    cant: '0',
-    monto: '0',
-
-    referencia: '545555',
-    noReferencia: '456484-415'
-  },
-]
-
-const EditableReceivedTable = ({denominations}: PropaType): React.ReactElement => {
   const [data, setData] = useState(dataReceived)
   
   const handleChange = (name: string ,value: string | ReactText | undefined, index: number) => {
@@ -58,9 +45,9 @@ const EditableReceivedTable = ({denominations}: PropaType): React.ReactElement =
     newData[index] = {...newData[index], [name]: value }
     setData(newData)
 
-    if(newData[index].moneda !== 'Cheque'){
+    if(parseInt(newData[index].moneda) > 0){
       const monto = parseInt(newData[index].moneda.toString()) * parseInt(newData[index].cant)
-      newData[index] = {...newData[index], [name]: value, monto }
+      newData[index] = {...newData[index], [name]: value, monto: `${monto}` }
       setData(newData)
     }
   }
@@ -70,7 +57,7 @@ const EditableReceivedTable = ({denominations}: PropaType): React.ReactElement =
       title: 'Moneda',
       dataIndex: 'moneda',
       render: (text) => {
-        return text !== 'Cheque' ? `RD$${text}` : text
+        return parseInt(text) > 0 ? `RD$${text}` : text
       },
     },
     {
@@ -89,15 +76,15 @@ const EditableReceivedTable = ({denominations}: PropaType): React.ReactElement =
       title: 'Monto',
       dataIndex: 'monto',
       render: (text, record) => {
-        if(record.moneda === 'Cheque'){
-          return (
-            <CustomInputNumber
-            value={text}
-            onChange={e => handleChange('monto' ,e , parseInt(record.key))}
-          />
-          )
+        if(parseInt(record.moneda) > 0){
+          return text
         }
-        return text
+        return (
+          <CustomInputNumber
+          value={text}
+          onChange={e => handleChange('monto' ,e , parseInt(record.key))}
+        />
+        )
       }
     },
     {
@@ -134,7 +121,6 @@ const EditableReceivedTable = ({denominations}: PropaType): React.ReactElement =
         title={receivedTitle}
         columns={columsReceived} 
         dataSource={data} 
-        pagination={false} 
         bordered 
       />
     </>
