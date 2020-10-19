@@ -5,6 +5,9 @@ import {
   GENERAL_GET_COINS,
   GENERAL_GET_COINS_FAILURE,
   GENERAL_GET_COINS_SUCCESS,
+  GENERAL_GET_DENOMINATIONS,
+  GENERAL_GET_DENOMINATIONS_FAILURE,
+  GENERAL_GET_DENOMINATIONS_SUCCESS,
   GENERAL_GET_NATIONALITIES,
   GENERAL_GET_NATIONALITIES_FAILURE,
   GENERAL_GET_NATIONALITIES_SUCCESS,
@@ -15,6 +18,7 @@ import {
 import {
   ActivityParameters,
   Coins,
+  Denominations,
   PartnersCategories,
 } from '../reducers/general'
 
@@ -36,6 +40,15 @@ export type GeneralGetActivityParametersAction = {
   activityId: string
 }
 
+export type GeneralGetDenominationsAction = {
+  type: typeof GENERAL_GET_DENOMINATIONS
+}
+
+export const getDenominations = (): GeneralGetDenominationsAction => {
+  return {
+    type: GENERAL_GET_DENOMINATIONS
+  }
+}
 export const getNationalities = (): GeneralGetNationalitiesAction => {
   return {
     type: GENERAL_GET_NATIONALITIES,
@@ -84,6 +97,20 @@ type GeneralGetCoinsSuccessAction = {
 type GeneralGetActivityParametersSuccessAction = {
   type: typeof GENERAL_GET_ACTIVITY_PARAMETERS_SUCCESS
   activityParameters: ActivityParameters
+}
+
+export type GeneralGetDenominationsSuccessAction = {
+  type: typeof GENERAL_GET_DENOMINATIONS_SUCCESS
+  denominations: Denominations[]
+}
+
+export const getDenominationsSuccess = (
+  denominations: Denominations[]
+): GeneralGetDenominationsSuccessAction => {
+  return {
+    type: GENERAL_GET_DENOMINATIONS_SUCCESS,
+    denominations,
+  }
 }
 
 export const getNationalitiesSuccess = (
@@ -138,6 +165,16 @@ type GeneralGetActivityParametersFailureAction = {
   type: typeof GENERAL_GET_ACTIVITY_PARAMETERS_FAILURE
 }
 
+export type GeneralGetDenominationsFailureAction = {
+  type: typeof GENERAL_GET_DENOMINATIONS_FAILURE
+}
+
+export const getDenominationsFailure = (): GeneralGetDenominationsFailureAction => {
+  return {
+    type: GENERAL_GET_DENOMINATIONS_FAILURE
+  }
+}
+
 export const getNationalitiesFailure = (): GeneralGetNationalitiesFailureAction => {
   return {
     type: GENERAL_GET_NATIONALITIES_FAILURE,
@@ -181,3 +218,8 @@ export type GeneralActivityParametersAction =
   | GeneralGetActivityParametersAction
   | GeneralGetActivityParametersFailureAction
   | GeneralGetActivityParametersSuccessAction
+
+export type GeneralDenominationsAction = 
+  | GeneralGetDenominationsAction
+  | GeneralGetDenominationsFailureAction
+  | GeneralGetDenominationsSuccessAction

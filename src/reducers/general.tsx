@@ -5,6 +5,9 @@ import {
   GENERAL_GET_COINS,
   GENERAL_GET_COINS_FAILURE,
   GENERAL_GET_COINS_SUCCESS,
+  GENERAL_GET_DENOMINATIONS,
+  GENERAL_GET_DENOMINATIONS_FAILURE,
+  GENERAL_GET_DENOMINATIONS_SUCCESS,
   GENERAL_GET_NATIONALITIES,
   GENERAL_GET_NATIONALITIES_FAILURE,
   GENERAL_GET_NATIONALITIES_SUCCESS,
@@ -15,6 +18,7 @@ import {
 import {
   GeneralActivityParametersAction,
   GeneralCoinsAction,
+  GeneralDenominationsAction,
   GeneralNationalitiesAction,
   GeneralPartnersCategoriesAction,
 } from '../actions/general'
@@ -46,11 +50,25 @@ export type Coins = {
   DIGITO_MONEDA: string | null
 }
 
+export type Denominations = {
+  DENOMINACION: string
+  CANTIDAD: number
+  DESCRIPCION: string
+  FECHA_INSERCION: null | Date
+  FECHA_ACTUALIZACION: Date
+  USUARIO_INSERCION: null
+  USUARIO_ACTUALIZACION: string
+  ESTADO: string
+  TIPO: string
+  TR_ORIGEN: null
+}
+
 export type GeneralState = {
   nationalities: string[]
   partnersCategories: PartnersCategories[]
   coins: Coins[]
   activityParameters: ActivityParameters
+  denominations: Denominations[]
 }
 
 const initialState = {
@@ -58,6 +76,7 @@ const initialState = {
   partnersCategories: [],
   coins: [],
   activityParameters: { '': '' },
+  denominations: [],
 }
 
 const general = (
@@ -67,6 +86,7 @@ const general = (
     | GeneralPartnersCategoriesAction
     | GeneralCoinsAction
     | GeneralActivityParametersAction
+    | GeneralDenominationsAction
 ): GeneralState => {
   switch (action.type) {
     case GENERAL_GET_NATIONALITIES_SUCCESS: {
@@ -87,6 +107,14 @@ const general = (
         coins: action.coins,
       }
     }
+    //////////////////////////////////////
+    case GENERAL_GET_DENOMINATIONS_SUCCESS: {
+      return {
+        ...state,
+        denominations: action.denominations,
+      }
+    }
+    //////////////////////////////////////////
     case GENERAL_GET_ACTIVITY_PARAMETERS_SUCCESS: {
       return {
         ...state,
@@ -101,6 +129,8 @@ const general = (
     case GENERAL_GET_PARTNERS_CATEGORIES_FAILURE:
     case GENERAL_GET_COINS_FAILURE:
     case GENERAL_GET_ACTIVITY_PARAMETERS_FAILURE:
+    case GENERAL_GET_DENOMINATIONS_FAILURE:
+    case GENERAL_GET_DENOMINATIONS:
     default:
       return state
   }

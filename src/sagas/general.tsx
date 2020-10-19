@@ -2,12 +2,14 @@ import { call, put, takeLatest } from 'redux-saga/effects'
 import {
   activityParametersApiHelpers,
   coinsApiHelpers,
+  denominationsApiHelper,
   nationalitiesApiHelpers,
   partnersCategoriesApiHelpers,
 } from '../utils/api'
 import {
   GENERAL_GET_ACTIVITY_PARAMETERS,
   GENERAL_GET_COINS,
+  GENERAL_GET_DENOMINATIONS,
   GENERAL_GET_NATIONALITIES,
   GENERAL_GET_PARTNERS_CATEGORIES,
 } from '../constants/actions'
@@ -18,6 +20,8 @@ import {
   getActivityParametersSuccess,
   getCoinsFailure,
   getCoinsSuccess,
+  getDenominationsFailure,
+  getDenominationsSuccess,
   getNationalitiesFailure,
   getNationalitiesSuccess,
   getPartnersCategoriesFailure,
@@ -96,9 +100,28 @@ function* watchGetActivityParameters() {
   yield takeLatest(GENERAL_GET_ACTIVITY_PARAMETERS, getActivityParameters)
 }
 
+function* getDenominationsSaga() {
+  try {
+    const { data: response } = yield call(() => {
+      return denominationsApiHelper.getDenominations()
+    })
+    yield put(getDenominationsSuccess(response.data))
+  } catch (error) {
+    yield put(getDenominationsFailure())
+  }
+}
+
+function* watchGetDenominations() {
+  yield takeLatest(
+    GENERAL_GET_DENOMINATIONS,
+    getDenominationsSaga
+  )
+}
+
 export {
   watchGetNationalities,
   watchGetPartnersCategories,
   watchGetCoins,
   watchGetActivityParameters,
+  watchGetDenominations
 }

@@ -14,6 +14,7 @@ export const WEB_SERVICE_API_CREATE_UPDATE_PRODUCT_RANGES = `${WEB_SERVICE_API}/
 export const WEB_SERVICE_API_GET_ACTIVITY_PARAMETERS = `${WEB_SERVICE_API}/actividad_parametro`
 export const WEB_SERVICE_API_GET_TRANSIST_SESSIONS = `${WEB_SERVICE_API}/sesiones_en_transito/sesiones`
 export const WEB_SERVICE_API_CRETAE_ADDRESS = `${WEB_SERVICE_API}/persona/address`
+export const WEB_SERVICE_API_GET_DENOMINATIONS = `${WEB_SERVICE_API}/denominacion/denominaciones`
 // Internal routes
 export const PATH_LOGIN = '/login'
 export const PATH_MAIN = '/'

@@ -6,6 +6,7 @@ import {
 } from '../components'
 import { ColumnType } from 'antd/lib/table'
 import CustomInputNumber from './CustomInputNumber'
+import { Denominations } from '../reducers/general'
 
 type ReceivedTable = {
   key: string
@@ -16,13 +17,16 @@ type ReceivedTable = {
   noReferencia: string
 }
 
+type PropaType = {
+  denominations: Denominations[]
+}
+
 const dataReceived: ReceivedTable[] = [
   {
     key: '0',
     moneda: 'Cheque',
     cant: '0',
     monto: '0',
-
     referencia: 'grgrt',
     noReferencia: ''
   },
@@ -46,7 +50,7 @@ const dataReceived: ReceivedTable[] = [
   },
 ]
 
-const EditableReceivedTable = (): React.ReactElement => {
+const EditableReceivedTable = ({denominations}: PropaType): React.ReactElement => {
   const [data, setData] = useState(dataReceived)
   
   const handleChange = (name: string ,value: string | ReactText | undefined, index: number) => {

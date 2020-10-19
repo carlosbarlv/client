@@ -5,12 +5,17 @@ import {
   CustomTitle,
 } from '.'
 import { ColumnType } from 'antd/lib/table'
+import { Denominations } from '../reducers/general'
 
 type DeliveredTable = {
     key: string
     moneda:  React.ReactElement | string
     cant: string 
     monto: string | undefined | ReactText | number
+}
+
+type PropsType = {
+  denominations: Denominations[]
 }
 
 const dataDelivered: DeliveredTable[] = [
@@ -29,7 +34,7 @@ const dataDelivered: DeliveredTable[] = [
     },
 ]
 
-const EditableDeliveredTable = (): React.ReactElement => {
+const EditableDeliveredTable = ({denominations}: PropsType): React.ReactElement => {
   const [data, setData] = useState(dataDelivered)
 
   const handleChange = (name: string ,value: string | ReactText | undefined, index: number) => {
@@ -44,7 +49,6 @@ const EditableDeliveredTable = (): React.ReactElement => {
     }
   }
 
-    
   const columsDelivered: ColumnType<DeliveredTable>[] = [
     {
       title: 'Moneda',

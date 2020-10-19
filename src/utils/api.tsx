@@ -8,6 +8,7 @@ import {
   WEB_SERVICE_API_GENERAL_GET_NACIONALITIES,
   WEB_SERVICE_API_GET_ACTIVITY_PARAMETERS,
   WEB_SERVICE_API_GET_COINS,
+  WEB_SERVICE_API_GET_DENOMINATIONS,
   WEB_SERVICE_API_GET_ECONOMIC_ACTIVITY,
   WEB_SERVICE_API_GET_PERSONAS,
   WEB_SERVICE_API_GET_PRODUCT_RANGES,
@@ -249,4 +250,17 @@ const createAddress = (Address: AddressType[]) =>
 
 export const addressApiHelper = {
   createAddress,
+}
+const getDenominations = (): Promise<AxiosResponse> => {
+
+  return postRequest(WEB_SERVICE_API_GET_DENOMINATIONS, {
+    order: {
+      CANTIDAD: "ASC",
+      TIPO: "DESC"
+    }
+  })
+}
+
+export const denominationsApiHelper = {
+  getDenominations,
 }
