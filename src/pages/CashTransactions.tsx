@@ -18,6 +18,7 @@ import TransitEgress from '../components/TransitEgress'
 import AccountWithdrawalModal from './AccountWithdrawalModal'
 import { PlusOutlined } from '@ant-design/icons'
 import LoanPaymentModal from './LoanPaymentModal'
+import PaymentOrdersModal from '../components/PaymentOrdersModal'
 
 type CatCatchmentsTable = {
   key: string
@@ -48,15 +49,20 @@ const CashTransactions = (): React.ReactElement => {
     loanPaymentIsVisible,
     setLoanPaymentIsVisible,
   ] = useState(false)
+  const [isPaymentOrders, setIsPaymentOrders] = useState(false)
 
   const showDepositoAportacionesModal = () => {
     setDepositoAportacionesIsVisible(!depositoAportacionesIsVisible)
   }
   const showAccountWithdrawalModal = () => {
     setAccountWithdrawalIsVisible(!accountWithdrawalIsVisible)
+    setIsPaymentOrders(false)
   }
   const showLoanPaymentModal = () => {
     setLoanPaymentIsVisible(!loanPaymentIsVisible)
+  const showPaymentOrdersModal = () => {
+    setAccountWithdrawalIsVisible(!accountWithdrawalIsVisible)
+    setIsPaymentOrders(true)
   }
 
   const columnsCatchments: ColumnType<CatCatchmentsTable>[] = [
@@ -118,6 +124,12 @@ const CashTransactions = (): React.ReactElement => {
             onClick={showDepositoAportacionesModal}
           >
             Depósito
+          </CustomButton>
+          <CustomButton
+            style={{backgroundColor: '#F54738', color: 'white'}}
+            onClick={showPaymentOrdersModal}
+          >
+            Ordenes
           </CustomButton>
         </CustomSpace>
       )
@@ -250,6 +262,7 @@ const CashTransactions = (): React.ReactElement => {
           />
           <AccountWithdrawalModal
             width={800}
+            isPayment={isPaymentOrders}
             onCancelClick={showAccountWithdrawalModal}
             onOkClick={showAccountWithdrawalModal}
             visible={accountWithdrawalIsVisible}
@@ -258,7 +271,12 @@ const CashTransactions = (): React.ReactElement => {
             width={800}
             onCancelClick={showLoanPaymentModal}
             onOkClick={showLoanPaymentModal}
-            visible={loanPaymentIsVisible}
+            visible={loanPaymentIsVisible} />
+          <PaymentOrdersModal
+            width={800}
+            onCancelClick={showPaymentOrdersModal}
+            onOkClick={showPaymentOrdersModal}
+            visible={paymentOrdersIsVisible}
           />
           <CustomTable
             title={captacionesTitle}
