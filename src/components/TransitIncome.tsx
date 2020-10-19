@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
+import React, { ReactText, useState } from 'react'
 
 import {
   CustomButton,
-  CustomCheckBox,
   CustomCol,
   CustomInputNumber,
   CustomTable,
@@ -21,7 +20,6 @@ type TransitIncomeTable = {
   operacion: string
   moneda: string
   monto: string
-  checked: boolean
 }
 
 const dataIncome: TransitIncomeTable[] = [
@@ -33,7 +31,6 @@ const dataIncome: TransitIncomeTable[] = [
     operacion: 'Pago a Cuotas',
     moneda: 'RD$',
     monto: '22,000.00',
-    checked: false
   },
   {
     key: '1',
@@ -43,7 +40,6 @@ const dataIncome: TransitIncomeTable[] = [
     operacion: 'Deposito',
     moneda: 'RD$',
     monto: '1,000.00',
-    checked: false
   },
   {
     key: '2',
@@ -53,45 +49,19 @@ const dataIncome: TransitIncomeTable[] = [
     operacion: '',
     moneda: '',
     monto: '',
-    checked: false
   },
 ]
 
 const TransitIncome = (): React.ReactElement => {
 
   const [data, setData] = useState(dataIncome)
-  const [checkedAll, setCheckedAll] = useState(false)
 
   const [ incomeDistributionIsVisible, setIncomeDistributionIsVisible, ] = useState(false)
   const showIncomeDistributionIsVisible = () => {
     setIncomeDistributionIsVisible(!incomeDistributionIsVisible)
   }
 
-  const handleChange = (index: number) => {
-    const newData = [...data]
-    newData[index].checked = !newData[index].checked
-    const isCheckeedAll = newData.some(elem => elem.checked === false)
-    setCheckedAll(!isCheckeedAll)
-    setData(newData)
-  }
-
-  const checkAll = () => {
-    const newData = data     
-    const isCheckeedAllFirst = newData.some(elem => elem.checked === false)
-
-    if(isCheckeedAllFirst){
-      for (let i = 0; i < newData.length; i++) {
-        newData[i].checked = true
-      }
-    }else{
-      for (let i = 0; i < newData.length; i++) {
-        newData[i].checked = !newData[i].checked
-      }
-    }
-    const isCheckeedAllBefore = newData.some(elem => elem.checked === false)
-    setCheckedAll(!isCheckeedAllBefore)
-    setData(newData)
-  }
+  const handleChange = (selectedRowKeys: ReactText[], selectedRows: TransitIncomeTable[]) => setData(selectedRows)
 
   const columsIncome: ColumnType<TransitIncomeTable>[] = [
     {
@@ -118,13 +88,7 @@ const TransitIncome = (): React.ReactElement => {
       title: 'Monto',
       dataIndex: 'monto',
     },
-    {
-      title: <CustomCheckBox checked={checkedAll} onChange={() => checkAll()} />,
-      dataIndex: 'checkbox',
-      render: (text, record) => {
-        return <CustomCheckBox checked={record.checked} onChange={() => handleChange( parseInt(record.key))} />
-      },
-    },
+
   ]
 
   return (
@@ -138,6 +102,10 @@ const TransitIncome = (): React.ReactElement => {
         <CustomTable
           columns={columsIncome}
           dataSource={dataIncome}
+          rowSelection={{
+            type: 'checkbox',
+            onChange: (selectedRowKeys, selectedRows) => handleChange(selectedRowKeys, selectedRows)
+          }}
           pagination={false}
           footer={() => 
             <CustomRow>
@@ -167,4 +135,3 @@ const TransitIncome = (): React.ReactElement => {
 }
 
 export default TransitIncome
-
