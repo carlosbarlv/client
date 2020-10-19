@@ -120,7 +120,7 @@ const TransistSessions = (): React.ReactElement => {
         <CustomCol span={23}>
           <SelectPartnerModal
             visible={showSelectPartnersModal}
-            width={800}
+            width={'60%'}
             hideModal={handleOnClickAddSession}
           />
           <CustomTable

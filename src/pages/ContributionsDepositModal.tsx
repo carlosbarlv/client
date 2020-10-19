@@ -14,7 +14,7 @@ import { labelColFullWidth } from '../themes'
 
 type PropsType = {
   visible: boolean
-  width?: number
+  width?: number | string
   onOkClick: () => void
   onCancelClick: () => void
 }

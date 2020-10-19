@@ -13,7 +13,7 @@ import {
 
 type PropsType = {
   visible: boolean
-  width?: number
+  width?: number | string
   hideModal: () => void
 }
 

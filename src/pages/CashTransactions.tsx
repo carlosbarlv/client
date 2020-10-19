@@ -18,7 +18,6 @@ import TransitEgress from '../components/TransitEgress'
 import AccountWithdrawalModal from './AccountWithdrawalModal'
 import { PlusOutlined } from '@ant-design/icons'
 import LoanPaymentModal from './LoanPaymentModal'
-import PaymentOrdersModal from '../components/PaymentOrdersModal'
 
 type CatCatchmentsTable = {
   key: string
@@ -255,14 +254,13 @@ const CashTransactions = (): React.ReactElement => {
       <CustomRow gutter={[32, 32]} align={'top'}>
         <CustomCol span={12}>
           <ContribuitonsDepositModal
-            width={800}
+            width={'60%'}
             onCancelClick={showDepositoAportacionesModal}
             onOkClick={showDepositoAportacionesModal}
             visible={depositoAportacionesIsVisible}
           />
           <AccountWithdrawalModal
-            width={800}
-            isPayment={isPaymentOrders}
+            width={600}
             onCancelClick={showAccountWithdrawalModal}
             onOkClick={showAccountWithdrawalModal}
             visible={accountWithdrawalIsVisible}
@@ -272,12 +270,6 @@ const CashTransactions = (): React.ReactElement => {
             onCancelClick={showLoanPaymentModal}
             onOkClick={showLoanPaymentModal}
             visible={loanPaymentIsVisible} />
-          <PaymentOrdersModal
-            width={800}
-            onCancelClick={showPaymentOrdersModal}
-            onOkClick={showPaymentOrdersModal}
-            visible={paymentOrdersIsVisible}
-          />
           <CustomTable
             title={captacionesTitle}
             columns={columnsCatchments}
