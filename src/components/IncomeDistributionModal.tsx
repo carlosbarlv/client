@@ -16,9 +16,11 @@ import CustomSpace from './CustomSpace'
 import CustomCheckBox from './CustomCheckBox'
 import EditableReceivedTable from './EditableReceivedTable'
 import EditableDeliveredTable from './EditableDeliveredTable'
+import { TransitIncomeTable } from './TransitIncome'
 
 type PropsType = {
   visible: boolean
+  dataInfo: TransitIncomeTable[]
   width?: string | number
   hideModal: () => void
 }

@@ -11,8 +11,9 @@ import { ColumnType } from 'antd/lib/table'
 import CustomRow from './CustomRow'
 import CustomSpace from './CustomSpace'
 import IncomeDistributionModal from './IncomeDistributionModal'
+import { showNotification } from '../utils/general'
 
-type TransitIncomeTable = {
+export type TransitIncomeTable = {
   key: string
   emisor: string
   concepto: string
@@ -31,7 +32,6 @@ const dataIncome: TransitIncomeTable[] = [
     operacion: 'Pago newAmount Cuotas',
     moneda: 'RD$',
     monto: '1000.00',
-
   },
   {
     key: '1',
@@ -41,7 +41,6 @@ const dataIncome: TransitIncomeTable[] = [
     operacion: 'Deposito',
     moneda: 'RD$',
     monto: '1000.00',
-
   },
   {
     key: '2',
@@ -51,7 +50,6 @@ const dataIncome: TransitIncomeTable[] = [
     operacion: '',
     moneda: '',
     monto: '500.00',
-
   },
 ]
 
@@ -69,6 +67,14 @@ const TransitIncome = (): React.ReactElement => {
     selectedRows.forEach(elem => newAmount += parseFloat(elem.monto))
     setData(selectedRows)
     setTotalAmount(newAmount)
+  }
+
+  const handleAplicar = () => {
+    totalAmount > 0 ? showIncomeDistributionIsVisible(): showNotification(
+      'Faltan datos',
+      'Seleccionar al menos un ingreso!',
+      'error'
+    )
   }
 
   const columsIncome: ColumnType<TransitIncomeTable>[] = [
@@ -122,7 +128,7 @@ const TransitIncome = (): React.ReactElement => {
                       <CustomInputNumber placeholder={'0.00'} value={totalAmount} readOnly />
                       <CustomButton 
                         style={{backgroundColor: '#2DC8F7', color: 'white'}}
-                        onClick={showIncomeDistributionIsVisible}
+                        onClick={handleAplicar}
                       >Aplicar</CustomButton>
                     </CustomSpace>
                 </CustomSpace>
@@ -134,6 +140,7 @@ const TransitIncome = (): React.ReactElement => {
       <CustomCol span={6}>
         <IncomeDistributionModal 
           visible={incomeDistributionIsVisible} 
+          dataInfo={data}
           width={'80%'}
           hideModal={showIncomeDistributionIsVisible}
         />
