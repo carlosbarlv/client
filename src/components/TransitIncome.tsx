@@ -28,9 +28,10 @@ const dataIncome: TransitIncomeTable[] = [
     emisor: 'Legal',
     concepto: 'Prestamo Corriente',
     idCuenta: '0024991',
-    operacion: 'Pago a Cuotas',
+    operacion: 'Pago newAmount Cuotas',
     moneda: 'RD$',
-    monto: '22,000.00',
+    monto: '1000.00',
+
   },
   {
     key: '1',
@@ -39,7 +40,8 @@ const dataIncome: TransitIncomeTable[] = [
     idCuenta: '001-0023443',
     operacion: 'Deposito',
     moneda: 'RD$',
-    monto: '1,000.00',
+    monto: '1000.00',
+
   },
   {
     key: '2',
@@ -48,20 +50,26 @@ const dataIncome: TransitIncomeTable[] = [
     idCuenta: '',
     operacion: '',
     moneda: '',
-    monto: '',
+    monto: '500.00',
+
   },
 ]
 
 const TransitIncome = (): React.ReactElement => {
 
   const [data, setData] = useState(dataIncome)
-
+  const [totalAmount, setTotalAmount] = useState(0)
   const [ incomeDistributionIsVisible, setIncomeDistributionIsVisible, ] = useState(false)
   const showIncomeDistributionIsVisible = () => {
     setIncomeDistributionIsVisible(!incomeDistributionIsVisible)
   }
 
-  const handleChange = (selectedRowKeys: ReactText[], selectedRows: TransitIncomeTable[]) => setData(selectedRows)
+  const handleChange = async(selectedRowKeys: ReactText[], selectedRows: TransitIncomeTable[]) => {
+    let newAmount = 0
+    selectedRows.forEach(elem => newAmount += parseFloat(elem.monto))
+    setData(selectedRows)
+    setTotalAmount(newAmount)
+  }
 
   const columsIncome: ColumnType<TransitIncomeTable>[] = [
     {
@@ -111,7 +119,7 @@ const TransitIncome = (): React.ReactElement => {
             <CustomRow>
                 <CustomSpace align={'end'} >
                     <CustomSpace>
-                      <CustomInputNumber placeholder={'0.00'} disabled />
+                      <CustomInputNumber placeholder={'0.00'} value={totalAmount} readOnly />
                       <CustomButton 
                         style={{backgroundColor: '#2DC8F7', color: 'white'}}
                         onClick={showIncomeDistributionIsVisible}
