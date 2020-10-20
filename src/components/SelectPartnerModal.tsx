@@ -20,6 +20,7 @@ const SelectPartnerModal = ({visible, width, hideModal}: PropsType): React.React
     key: string
     nombre: string
     cedulaOrRNC: string
+    cuenta: string
     telefono: string
     email: string
   }
@@ -32,6 +33,10 @@ const SelectPartnerModal = ({visible, width, hideModal}: PropsType): React.React
     {
       title: 'Cedula/RNC',
       dataIndex: 'cedulaOrRNC',
+    },
+    {
+      title: 'No. Cuenta',
+      dataIndex: 'cuenta',
     },
     {
       title: 'Teléfono',
@@ -48,6 +53,7 @@ const SelectPartnerModal = ({visible, width, hideModal}: PropsType): React.React
       key: '1',
       nombre: 'Alejandro Genao',
       cedulaOrRNC: '001-0027881-1',
+      cuenta: '00018748748',
       telefono: '809-573-9912',
       email: 'Agenao@gmail.com',
     },
@@ -55,6 +61,7 @@ const SelectPartnerModal = ({visible, width, hideModal}: PropsType): React.React
       key: '2',
       nombre: 'Alberto Rosario',
       cedulaOrRNC: '047-0001789-0',
+      cuenta: '002544541',
       telefono: '829-547-8123',
       email: 'ypolanco@hotmail.com',
     },
@@ -62,7 +69,7 @@ const SelectPartnerModal = ({visible, width, hideModal}: PropsType): React.React
 
   return (
     <CustomModal
-      title={<CustomTitle level={3}>Seleccionar Socio</CustomTitle>}
+      title={<CustomTitle level={4}>Seleccionar Socio</CustomTitle>}
       visible={visible}
       width={width}
       onCancel={() => hideModal()}
