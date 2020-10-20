@@ -22,7 +22,6 @@ export type TransitIncomeTable = {
   moneda: string
   monto: string
 }
-
 const dataIncome: TransitIncomeTable[] = [
   {
     key: '0',
@@ -54,7 +53,6 @@ const dataIncome: TransitIncomeTable[] = [
 ]
 
 const TransitIncome = (): React.ReactElement => {
-
   const [data, setData] = useState(dataIncome)
   const [totalAmount, setTotalAmount] = useState(0)
   const [ incomeDistributionIsVisible, setIncomeDistributionIsVisible, ] = useState(false)
@@ -76,7 +74,6 @@ const TransitIncome = (): React.ReactElement => {
       type: 'warning'
     })
   }
-
   const columsIncome: ColumnType<TransitIncomeTable>[] = [
     {
       title: 'Emisor',
@@ -102,7 +99,6 @@ const TransitIncome = (): React.ReactElement => {
       title: 'Monto',
       dataIndex: 'monto',
     },
-
   ]
 
   return (

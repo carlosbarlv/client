@@ -20,7 +20,6 @@ type TransitEgressTable = {
 }
 
 const TransitEgress = (): React.ReactElement => {
-
   const columsEgress: ColumnType<TransitEgressTable>[] = [
     {
       title: 'Emisor',
@@ -58,7 +57,6 @@ const TransitEgress = (): React.ReactElement => {
       },
     },
   ]
-
   const dataEgress: TransitEgressTable[] = [
     {
       key: '1',

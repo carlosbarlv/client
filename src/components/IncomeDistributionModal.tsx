@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   CustomCol,
   CustomModal,
@@ -17,6 +17,8 @@ import CustomCheckBox from './CustomCheckBox'
 import EditableReceivedTable from './EditableReceivedTable'
 import EditableDeliveredTable from './EditableDeliveredTable'
 import { TransitIncomeTable } from './TransitIncome'
+import { useDispatch } from 'react-redux'
+import { getDenominations } from '../actions/general'
 
 type PropsType = {
   visible: boolean
@@ -24,7 +26,6 @@ type PropsType = {
   width?: string | number
   hideModal: () => void
 }
-
 type MainInfoTable = {
   emisor: string
   concepto: string
@@ -33,12 +34,16 @@ type MainInfoTable = {
   moneda: string
   monto: string
 }
-
 type DetailsDocTable = {
+  key: string
   detalleDoc: React.ReactElement
 }
 
-const IncomeDistributionModal = ({visible, width, hideModal}: PropsType): React.ReactElement => {
+const IncomeDistributionModal = ({visible, width, dataInfo, hideModal}: PropsType): React.ReactElement => {
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getDenominations())
+  }, [dispatch])
   const columnsInfo: ColumnType<MainInfoTable>[] = [
     {
       title: 'Emisor',
@@ -65,35 +70,15 @@ const IncomeDistributionModal = ({visible, width, hideModal}: PropsType): React.
       dataIndex: 'monto',
     },
   ]
-
-  const dataInfo: MainInfoTable[] = [
-    {
-      emisor: 'Caja',
-      concepto: 'Aportaciones',
-      idCuenta: '001-0023443',
-      operacion: 'Depósito',
-      moneda: 'RD$',
-      monto: '1,000.00'
-    },
-    {
-      emisor: 'Caja',
-      concepto: 'Prestamo Corriente',
-      idCuenta: '0023443',
-      operacion: 'Pago a Cuota',
-      moneda: 'RD$',
-      monto: '14,455.00'
-    },
-  ]
-
   const columsDetail: ColumnType<DetailsDocTable>[] = [
     {
       title: <CustomTitle level={4}>Detalle de Documento</CustomTitle>,
       dataIndex: 'detalleDoc',
     },
   ]
-
   const dataDetail: DetailsDocTable[] = [
     {
+      key: '0', 
       detalleDoc: (
         <CustomForm labelCol={{sm: 7}}>
           <CustomFormItem label={'Fecha'}>
@@ -128,7 +113,7 @@ const IncomeDistributionModal = ({visible, width, hideModal}: PropsType): React.
           {currentDate}
         </CustomCol>
         <CustomCol span={14}>
-          <EditableReceivedTable />
+          <EditableReceivedTable  />
         </CustomCol>
         <CustomCol span={10}>
           <EditableDeliveredTable />

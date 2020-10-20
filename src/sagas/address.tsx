@@ -16,10 +16,18 @@ function* createAddressSaga(payload: CreateAddressAction) {
 
     const { message, data } = response
     yield put(createAddressesSuccess(data))
-    showNotification('Operación Exitosa', message, 'success')
+    showNotification({
+      title: 'Operación Exitosa',
+      description: message,
+      type: 'success'
+    })
   } catch ({ response }) {
     const message = response ? response.data.message : 'Intentelo nuevamente'
-    showNotification('Error', message, 'error')
+    showNotification({
+      title: 'Error',
+      description: message,
+      type: 'error'
+    })
     yield put(createAddressesFailure())
   }
 }

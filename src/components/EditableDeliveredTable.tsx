@@ -19,7 +19,6 @@ type DeliveredTable = {
 const EditableDeliveredTable = (): React.ReactElement => {
   const dispatch = useDispatch()
   const denominations  = useSelector((state: StoreState) => state.general.denominations)
-
   useEffect(() => {
     dispatch(getDenominations())
   }, [dispatch])
@@ -34,15 +33,12 @@ const EditableDeliveredTable = (): React.ReactElement => {
       noReferencia: ''
     })
   })
-
-const EditableDeliveredTable = ({denominations}: PropsType): React.ReactElement => {
   const [data, setData] = useState(dataDelivered)
 
   const handleChange = (name: string ,value: string | ReactText | undefined, index: number) => {
     const newData = [...data]
     newData[index] = {...newData[index], [name]: value }
     setData(newData)
-    
     if(parseInt(newData[index].moneda) > 0){
       const monto = parseInt(newData[index].moneda.toString()) * parseInt(newData[index].cant)
       newData[index] = {...newData[index], [name]: value, monto: `${monto}` }
@@ -86,7 +82,6 @@ const EditableDeliveredTable = ({denominations}: PropsType): React.ReactElement 
       }
     },
   ]
-  
   const deliveredTitle = () => <CustomTitle level={3}>Entregado</CustomTitle>
 
   return (

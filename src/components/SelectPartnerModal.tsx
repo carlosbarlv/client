@@ -14,17 +14,16 @@ type PropsType = {
   width?: number | string
   hideModal: () => void
 }
+type SelectPartnerTable = {
+  key: string
+  nombre: string
+  cedulaOrRNC: string
+  cuenta: string
+  telefono: string
+  email: string
+}
 
 const SelectPartnerModal = ({visible, width, hideModal}: PropsType): React.ReactElement => {
-  type SelectPartnerTable = {
-    key: string
-    nombre: string
-    cedulaOrRNC: string
-    cuenta: string
-    telefono: string
-    email: string
-  }
-
   const columns: ColumnType<SelectPartnerTable>[] = [
     {
       title: 'Nombre',
@@ -47,7 +46,6 @@ const SelectPartnerModal = ({visible, width, hideModal}: PropsType): React.React
       dataIndex: 'email',
     },
   ]
-
   const data: SelectPartnerTable[] = [
     {
       key: '1',

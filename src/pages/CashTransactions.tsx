@@ -11,13 +11,13 @@ import {
   CustomTitle,
 } from '../components'
 import { ColumnType } from 'antd/lib/table'
-import ContribuitonsDepositModal from './ContributionsDepositModal'
+import ContribuitonsDepositModal from '../components/ContributionsDepositModal'
 import { currentDate } from '../utils/general'
 import TransitIncome from '../components/TransitIncome'
 import TransitEgress from '../components/TransitEgress'
-import AccountWithdrawalModal from './AccountWithdrawalModal'
+import AccountWithdrawalModal from '../components/AccountWithdrawalModal'
 import { PlusOutlined } from '@ant-design/icons'
-import LoanPaymentModal from './LoanPaymentModal'
+import LoanPaymentModal from '../components/LoanPaymentModal'
 
 type CatCatchmentsTable = {
   key: string
@@ -25,7 +25,6 @@ type CatCatchmentsTable = {
   idCuenta: string
   actions: React.ReactElement
 }
-
 type PlacementsTable = {
   key: string
   producto: string
@@ -59,6 +58,7 @@ const CashTransactions = (): React.ReactElement => {
   }
   const showLoanPaymentModal = () => {
     setLoanPaymentIsVisible(!loanPaymentIsVisible)
+  }
   const showPaymentOrdersModal = () => {
     setAccountWithdrawalIsVisible(!accountWithdrawalIsVisible)
     setIsPaymentOrders(true)
@@ -74,7 +74,6 @@ const CashTransactions = (): React.ReactElement => {
       dataIndex: 'idCuenta',
     },
   ]
-
   const dataCatchments: CatCatchmentsTable[] = [
     {
       key: '1',
@@ -134,7 +133,6 @@ const CashTransactions = (): React.ReactElement => {
       )
     },
   ]
-
   const columnsPlacement: ColumnType<PlacementsTable>[] = [
     {
       title: 'Producto',
@@ -145,7 +143,6 @@ const CashTransactions = (): React.ReactElement => {
       dataIndex: 'idCuenta',
     },
   ]
-
   const dataPlacements: PlacementsTable[] = [
     {
       key: '1',
@@ -175,7 +172,6 @@ const CashTransactions = (): React.ReactElement => {
       actions: <></>
     },
   ]
-
   const captacionesTitle = () => (
     <CustomRow>
       <CustomCol span={12}>
@@ -195,7 +191,6 @@ const CashTransactions = (): React.ReactElement => {
       </CustomCol>
     </CustomRow>
   )
-
   const colocacionesTitle = () => (
     <CustomRow>
       <CustomCol span={12}>
@@ -260,13 +255,14 @@ const CashTransactions = (): React.ReactElement => {
             visible={depositoAportacionesIsVisible}
           />
           <AccountWithdrawalModal
-            width={600}
+            isPayment={isPaymentOrders}
+            width={'60%'}
             onCancelClick={showAccountWithdrawalModal}
             onOkClick={showAccountWithdrawalModal}
             visible={accountWithdrawalIsVisible}
           />
           <LoanPaymentModal 
-            width={800}
+            width={'60%'}
             onCancelClick={showLoanPaymentModal}
             onOkClick={showLoanPaymentModal}
             visible={loanPaymentIsVisible} />

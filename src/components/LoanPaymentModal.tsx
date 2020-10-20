@@ -15,11 +15,11 @@ import {
   CustomText,
   CustomTextArea,
   CustomTitle,
-} from '../components'
+} from '.'
 
 type PropsType = {
   visible: boolean
-  width?: number
+  width?: number | string
   onOkClick: () => void
   onCancelClick: () => void
 }

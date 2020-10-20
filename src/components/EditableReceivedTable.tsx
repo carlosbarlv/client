@@ -22,11 +22,9 @@ type ReceivedTable = {
 const EditableReceivedTable = (): React.ReactElement => {
   const dispatch = useDispatch()
   const denominations  = useSelector((state: StoreState) => state.general.denominations)
-
   useEffect(() => {
     dispatch(getDenominations())
   }, [dispatch])
-  
   const dataReceived = denominations.map((obj, i) => {
     return({
       key: `${i}`,
@@ -37,14 +35,12 @@ const EditableReceivedTable = (): React.ReactElement => {
       noReferencia: ''
     })
   })
-
   const [data, setData] = useState(dataReceived)
   
   const handleChange = (name: string ,value: string | ReactText | undefined, index: number) => {
     const newData = [...data]
     newData[index] = {...newData[index], [name]: value }
     setData(newData)
-
     if(parseInt(newData[index].moneda) > 0){
       const monto = parseInt(newData[index].moneda.toString()) * parseInt(newData[index].cant)
       newData[index] = {...newData[index], [name]: value, monto: `${monto}` }
@@ -112,7 +108,6 @@ const EditableReceivedTable = (): React.ReactElement => {
       }
     },
   ]
-
   const receivedTitle = () => <CustomTitle level={3}>Recibido</CustomTitle>
 
   return (

@@ -12,17 +12,13 @@ import {
   CustomSpace,
   CustomTextArea,
   CustomTitle,
-} from '../components'
+} from '.'
 import { labelColFullWidth } from '../themes'
 
 type PropsType = {
   visible: boolean
-<<<<<<< HEAD
-  width?: number
   isPayment: boolean
-=======
   width?: number | string
->>>>>>> width de modal a tipo string
   onOkClick: () => void
   onCancelClick: () => void
 }
