@@ -29,16 +29,20 @@ export const updateObjectArray = <T, K extends keyof T>(
 
 type NotificationType = 'success' | 'error' | 'info' | 'warning'
 
-export const showNotification = (
+type NotificationParametersType = {
   title: string,
   description: string,
   type: NotificationType,
   onClick?: () => void
+}
+
+export const showNotification = (
+  parameters: NotificationParametersType
 ): void => {
-  notification[type]({
-    message: title,
-    description,
-    onClick,
+  notification[parameters.type]({
+    message: parameters.title,
+    description: parameters.description,
+    onClick: parameters.onClick
   })
 }
 

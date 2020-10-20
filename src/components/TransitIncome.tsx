@@ -70,11 +70,11 @@ const TransitIncome = (): React.ReactElement => {
   }
 
   const handleAplicar = () => {
-    totalAmount > 0 ? showIncomeDistributionIsVisible(): showNotification(
-      'Faltan datos',
-      'Seleccionar al menos un ingreso!',
-      'error'
-    )
+    totalAmount > 0 ? showIncomeDistributionIsVisible(): showNotification({
+      title: 'Faltan Datos',
+      description: 'Seleccionar al menos un ingreso!',
+      type: 'warning'
+    })
   }
 
   const columsIncome: ColumnType<TransitIncomeTable>[] = [

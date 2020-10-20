@@ -89,11 +89,11 @@ const LegalPerson = (): React.ReactElement => {
         setStepPositionState(stepPositionState + 1)
       }
     } catch (error) {
-      showNotification(
-        'Faltan datos',
-        'Por favor llenar los campos requeridos.',
-        'error'
-      )
+      showNotification({
+        title: 'Faltan datos',
+        description: 'Por favor llenar los campos requeridos.',
+        type: 'error'
+      })
     }
   }
 

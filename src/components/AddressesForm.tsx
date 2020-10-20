@@ -77,11 +77,11 @@ const AddressesForm = (props: { saveData: Function }): React.ReactElement => {
       await form.validateFields()
       setModalVisivilityState(false)
     } catch (error) {
-      showNotification(
-        'Faltan datos',
-        'Por favor llenar los campos requeridos.',
-        'error'
-      )
+      showNotification({
+        title: 'Faltan datos',
+        description: 'Por favor llenar los campos requeridos.',
+        type: 'error'
+      })
     }
   }
 

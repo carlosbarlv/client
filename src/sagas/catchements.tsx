@@ -42,11 +42,20 @@ function* createProductRangeSaga(payload: CreateProductRangeAction) {
     const { message, data } = response
 
     yield put(createProductRangeSuccess(data))
-    showNotification('Operación Exitosa', message, 'success')
+    showNotification({
+      title: 'Operación Exitosa',
+      description: message,
+      type: 'success'
+    })
+  
   } catch ({ response }) {
     const message = response ? response.data.message : 'Intentelo nuevamente'
-
-    showNotification('Error', message, 'error')
+    
+    showNotification({
+      title: 'Error',
+      description: message,
+      type: 'error'
+    })
     yield put(createProductRangeFailure())
   }
 }
@@ -64,11 +73,19 @@ function* updateProductRangeSaga(payload: CreateProductRangeAction) {
     const { message, data } = response
 
     yield put(updateProductRangeSuccess(data))
-    showNotification('Operación Exitosa', message, 'success')
+    showNotification({
+      title: 'Operación Exitosa',
+      description: message,
+      type: 'success'
+    })
   } catch ({ response }) {
     const message = response ? response.data.message : 'Intentelo nuevamente'
 
-    showNotification('Error', message, 'error')
+    showNotification({
+      title: 'Error',
+      description: message,
+      type: 'error'
+    })
     yield put(createProductRangeFailure())
   }
 }

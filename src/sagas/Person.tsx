@@ -22,10 +22,18 @@ function* createPhysicalPersonSaga(payload: CreatePhysicalPersonAction) {
 
     const { message, data } = response
     yield put(createPhysicalPersonSuccess(data))
-    showNotification('Operación Exitosa', message, 'success')
+    showNotification({
+      title: 'Operación Exitosa',
+      description: message,
+      type: 'success'
+    })
   } catch ({ response }) {
     const message = response ? response.data.message : 'Intentelo nuevamente'
-    showNotification('Error', message, 'error')
+    showNotification({
+      title: 'Error',
+      description: message,
+      type: 'error'
+    })
     yield put(createPhysicalPersonFailure())
   }
 }
@@ -42,10 +50,18 @@ function* createLegalPersonSaga(payload: CreateLegalPersonAction) {
 
     const { message, data } = response
     yield put(createLegalPersonSuccess(data))
-    showNotification('Operación Exitosa', message, 'success')
+    showNotification({
+      title: 'Operación Exitosa',
+      description: message,
+      type: 'success'
+    })
   } catch ({ response }) {
     const message = response ? response.data.message : 'Intentelo nuevamente'
-    showNotification('Error', message, 'error')
+    showNotification({
+      title: 'Error',
+      description: message,
+      type: 'error'
+    })
     yield put(createLegalPersonFailure())
   }
 }

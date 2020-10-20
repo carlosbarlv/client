@@ -25,11 +25,11 @@ const RelatedRecord = (props: {
       await form.validateFields()
       onFinish()
     } catch (error) {
-      showNotification(
-        'Faltan datos',
-        'Por favor llenar los campos requeridos.',
-        'error'
-      )
+      showNotification({
+        title: 'Faltan datos',
+        description: 'Por favor llenar los campos requeridos.',
+        type: 'error'
+      })
     }
   }
 
