@@ -18,6 +18,7 @@ import TransitEgress from '../components/TransitEgress'
 import AccountWithdrawalModal from '../components/AccountWithdrawalModal'
 import { PlusOutlined } from '@ant-design/icons'
 import LoanPaymentModal from '../components/LoanPaymentModal'
+import PaymentDistributionModal from '../components/PaymentDistributionModal'
 
 type CatCatchmentsTable = {
   key: string
@@ -47,6 +48,9 @@ const CashTransactions = (): React.ReactElement => {
     loanPaymentIsVisible,
     setLoanPaymentIsVisible,
   ] = useState(false)
+
+  const [isPaymentDistributionVisible, setIsPaymentDistributionVisible] = useState(false)
+
   const [isPaymentOrders, setIsPaymentOrders] = useState(false)
 
   const showDepositoAportacionesModal = () => {
@@ -62,6 +66,9 @@ const CashTransactions = (): React.ReactElement => {
   const showPaymentOrdersModal = () => {
     setAccountWithdrawalIsVisible(!accountWithdrawalIsVisible)
     setIsPaymentOrders(true)
+  }
+  const showPaymentDistribution = () => {
+    setIsPaymentDistributionVisible(!isPaymentDistributionVisible)
   }
 
   const columnsCatchments: ColumnType<CatCatchmentsTable>[] = [
@@ -265,7 +272,14 @@ const CashTransactions = (): React.ReactElement => {
             width={'60%'}
             onCancelClick={showLoanPaymentModal}
             onOkClick={showLoanPaymentModal}
-            visible={loanPaymentIsVisible} />
+            visible={loanPaymentIsVisible} 
+            showPaymentDistribution={showPaymentDistribution}
+          />
+            <PaymentDistributionModal 
+              visible={isPaymentDistributionVisible}
+              width={'50%'}
+              hideModal={showPaymentDistribution}
+            />
           <CustomTable
             title={captacionesTitle}
             columns={columnsCatchments}

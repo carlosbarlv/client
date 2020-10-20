@@ -22,9 +22,10 @@ type PropsType = {
   width?: number | string
   onOkClick: () => void
   onCancelClick: () => void
+  showPaymentDistribution: () => void
 }
 
-const LoanPaymentModal = ({visible, width, onOkClick, onCancelClick}: PropsType): React.ReactElement => {
+const LoanPaymentModal = ({visible, width, onOkClick, onCancelClick, showPaymentDistribution}: PropsType): React.ReactElement => {
   return (
     <CustomModal
       title={<CustomTitle level={4}>Pago a Préstamo</CustomTitle>}
@@ -64,6 +65,7 @@ const LoanPaymentModal = ({visible, width, onOkClick, onCancelClick}: PropsType)
                         size={'large'}
                         style={{backgroundColor: '#2DC8F7', color: 'white'}} 
                         icon={<EyeOutlined />} 
+                        onClick={showPaymentDistribution}
                     />
                 </CustomSpace>
                 <CustomSpace style={{marginLeft: '40px', paddingLeft: '60px', paddingRight: '50px'}}>
