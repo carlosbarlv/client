@@ -3,7 +3,7 @@ import React, { ReactText, useState } from 'react'
 import {
   CustomButton,
   CustomCol,
-  CustomInputNumber,
+  CustomInput,
   CustomTable,
   Heading4,
 } from '.'
@@ -11,7 +11,7 @@ import { ColumnType } from 'antd/lib/table'
 import CustomRow from './CustomRow'
 import CustomSpace from './CustomSpace'
 import IncomeDistributionModal from './IncomeDistributionModal'
-import { showNotification } from '../utils/general'
+import { numberFormat, showNotification } from '../utils/general'
 
 export type TransitIncomeTable = {
   key: string
@@ -30,7 +30,7 @@ const dataIncome: TransitIncomeTable[] = [
     idCuenta: '0024991',
     operacion: 'Pago newAmount Cuotas',
     moneda: 'RD$',
-    monto: '1000.00',
+    monto: numberFormat(1000),
   },
   {
     key: '1',
@@ -39,7 +39,7 @@ const dataIncome: TransitIncomeTable[] = [
     idCuenta: '001-0023443',
     operacion: 'Deposito',
     moneda: 'RD$',
-    monto: '1000.00',
+    monto: numberFormat(1000),
   },
   {
     key: '2',
@@ -48,7 +48,7 @@ const dataIncome: TransitIncomeTable[] = [
     idCuenta: '',
     operacion: '',
     moneda: '',
-    monto: '500.00',
+    monto: numberFormat(500),
   },
 ]
 
@@ -62,7 +62,7 @@ const TransitIncome = (): React.ReactElement => {
 
   const handleChange = async(selectedRowKeys: ReactText[], selectedRows: TransitIncomeTable[]) => {
     let newAmount = 0
-    selectedRows.forEach(elem => newAmount += parseFloat(elem.monto))
+    selectedRows.forEach(elem => newAmount += parseFloat(elem.monto.replace(',', '')))
     setData(selectedRows)
     setTotalAmount(newAmount)
   }
@@ -119,15 +119,15 @@ const TransitIncome = (): React.ReactElement => {
           pagination={false}
           footer={() => 
             <CustomRow>
-                <CustomSpace align={'end'} >
+                  <CustomCol xs={24} sm={12} md={8} lg={5}>
                     <CustomSpace>
-                      <CustomInputNumber placeholder={'0.00'} value={totalAmount} readOnly />
+                      <CustomInput value={numberFormat(totalAmount)}  readOnly />
                       <CustomButton 
                         style={{backgroundColor: '#2DC8F7', color: 'white'}}
                         onClick={handleAplicar}
                       >Aplicar</CustomButton>
                     </CustomSpace>
-                </CustomSpace>
+                  </CustomCol>
             </CustomRow>
           }
           bordered

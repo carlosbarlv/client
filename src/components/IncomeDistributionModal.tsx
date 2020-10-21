@@ -7,7 +7,7 @@ import {
   CustomTitle,
 } from '.'
 import { ColumnType } from 'antd/lib/table'
-import { currentDate } from '../utils/general'
+import { currentDate, numberFormat } from '../utils/general'
 import CustomFormItem from './CustomFormItem'
 import CustomInput from './CustomInput'
 import CustomForm from './CustomForm'
@@ -150,25 +150,25 @@ const IncomeDistributionModal = ({visible, width, dataInfo, totalAmount, hideMod
             <CustomFormItem label={'Total Operaciones'} >
               <CustomSpace>
                 <CustomInputNumber placeholder={'RD$'} disabled/>
-                <CustomInput value={totalAmount} readOnly/>
+                <CustomInput value={numberFormat(totalAmount)} readOnly/>
               </CustomSpace>
             </CustomFormItem>
             <CustomFormItem label={'Recibido'} >
               <CustomSpace>
                 <CustomInputNumber placeholder={'RD$'} disabled/>
-                <CustomInput value={totalAmountReceived} readOnly/>
+                <CustomInput value={numberFormat(totalAmountReceived)} readOnly/>
               </CustomSpace>
             </CustomFormItem>
             <CustomFormItem label={'Entregado'} >
               <CustomSpace>
                 <CustomInputNumber placeholder={'RD$'} disabled/>
-                <CustomInput value={totalAmountDelivered} readOnly />
+                <CustomInput value={numberFormat(totalAmountDelivered)} readOnly />
               </CustomSpace>
             </CustomFormItem>
             <CustomFormItem label={'Pendiente'} >
               <CustomSpace>
                 <CustomInputNumber placeholder={'RD$'} disabled/>
-                <CustomInput value={pendingAmount} readOnly/>
+                <CustomInput value={numberFormat(pendingAmount)} readOnly/>
               </CustomSpace>
             </CustomFormItem>
           </CustomForm>

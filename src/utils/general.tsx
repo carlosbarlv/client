@@ -55,3 +55,7 @@ export const currentDate = `${
     ${date.getHours() > 12 ? date.getHours() - 12 : date.getHours()}:${
   date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()
 } ${date.getHours() - 12 > 0 ? 'pm' : 'am'}`
+
+export const numberFormat = (num: number): string => {
+  return num.toLocaleString('en', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+}
