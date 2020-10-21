@@ -1,5 +1,6 @@
 import React from 'react'
 import { Select } from 'antd'
+import { CheckboxChangeEvent } from 'antd/lib/checkbox'
 import {
   CustomCheckBox,
   CustomCol,
@@ -15,6 +16,10 @@ import { defaultBreakpoints, labelColFullWidth } from '../themes'
 
 const Addresses: React.FunctionComponent = () => {
   const { Option } = Select
+  const [checkboxState, setCheckboxState] = React.useState(false)
+
+  const handleOnChangeCheckbox = (e: CheckboxChangeEvent) =>
+    setCheckboxState(e.target.checked)
 
   return (
     <CustomRow justify={'center'}>
@@ -34,7 +39,12 @@ const Addresses: React.FunctionComponent = () => {
       </CustomCol>
       <CustomCol {...defaultBreakpoints} flex={4}>
         <CustomFormItem name={'PRINCIPAL'}>
-          <CustomCheckBox>¿Principal?</CustomCheckBox>
+          <CustomCheckBox
+            checked={checkboxState}
+            onChange={handleOnChangeCheckbox}
+          >
+            ¿Principal?
+          </CustomCheckBox>
         </CustomFormItem>
       </CustomCol>
       <CustomCol {...defaultBreakpoints} flex={2}>
