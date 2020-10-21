@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   CustomCol,
   CustomModal,
@@ -23,6 +23,7 @@ import { getDenominations } from '../actions/general'
 type PropsType = {
   visible: boolean
   dataInfo: TransitIncomeTable[]
+  totalAmount: number
   width?: string | number
   hideModal: () => void
 }
@@ -39,11 +40,28 @@ type DetailsDocTable = {
   detalleDoc: React.ReactElement
 }
 
-const IncomeDistributionModal = ({visible, width, dataInfo, hideModal}: PropsType): React.ReactElement => {
+const IncomeDistributionModal = ({visible, width, dataInfo, totalAmount, hideModal}: PropsType): React.ReactElement => {
+  const [totalAmountDelivered, setTotalAmountDelivered] = useState(0)
+  const [totalAmountReceived, setTotalAmountReceived] = useState(0)
+  const [pendingAmount, setPendingAmount] = useState(0)
+
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getDenominations())
   }, [dispatch])
+  
+  useEffect(() => {
+    const referenceAmount = totalAmountReceived - totalAmountDelivered
+    setPendingAmount(referenceAmount - totalAmount)
+  }, [totalAmountReceived, totalAmountDelivered, totalAmount])
+ 
+  const getTotalDelivered = (monto: number) => {
+    setTotalAmountDelivered(monto)
+  }
+  const getTotalReceived = (monto: number) => {
+    setTotalAmountReceived(monto)
+  }
+
   const columnsInfo: ColumnType<MainInfoTable>[] = [
     {
       title: 'Emisor',
@@ -113,10 +131,10 @@ const IncomeDistributionModal = ({visible, width, dataInfo, hideModal}: PropsTyp
           {currentDate}
         </CustomCol>
         <CustomCol span={14}>
-          <EditableReceivedTable  />
+          <EditableReceivedTable getTotalReceived={getTotalReceived} />
         </CustomCol>
         <CustomCol span={10}>
-          <EditableDeliveredTable />
+          <EditableDeliveredTable getTotalDelivered={getTotalDelivered} />
         </CustomCol>
 
         <CustomCol span={8} pull={4}>
@@ -132,25 +150,25 @@ const IncomeDistributionModal = ({visible, width, dataInfo, hideModal}: PropsTyp
             <CustomFormItem label={'Total Operaciones'} >
               <CustomSpace>
                 <CustomInputNumber placeholder={'RD$'} disabled/>
-                <CustomInput value={'15,500.00'} disabled/>
+                <CustomInput value={totalAmount} readOnly/>
               </CustomSpace>
             </CustomFormItem>
             <CustomFormItem label={'Recibido'} >
               <CustomSpace>
                 <CustomInputNumber placeholder={'RD$'} disabled/>
-                <CustomInput value={'15,500.00'} disabled/>
+                <CustomInput value={totalAmountReceived} readOnly/>
               </CustomSpace>
             </CustomFormItem>
             <CustomFormItem label={'Entregado'} >
               <CustomSpace>
                 <CustomInputNumber placeholder={'RD$'} disabled/>
-                <CustomInput value={'15,500.00'} disabled/>
+                <CustomInput value={totalAmountDelivered} readOnly />
               </CustomSpace>
             </CustomFormItem>
             <CustomFormItem label={'Pendiente'} >
               <CustomSpace>
                 <CustomInputNumber placeholder={'RD$'} disabled/>
-                <CustomInput value={'15,500.00'} disabled/>
+                <CustomInput value={pendingAmount} readOnly/>
               </CustomSpace>
             </CustomFormItem>
           </CustomForm>

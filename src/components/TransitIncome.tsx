@@ -137,6 +137,7 @@ const TransitIncome = (): React.ReactElement => {
         <IncomeDistributionModal 
           visible={incomeDistributionIsVisible} 
           dataInfo={data}
+          totalAmount={totalAmount}
           width={'80%'}
           hideModal={showIncomeDistributionIsVisible}
         />

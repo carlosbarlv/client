@@ -13,12 +13,15 @@ type DeliveredTable = {
     key: string
     moneda:  string
     cant: string 
-    monto: string | undefined | ReactText | number
+    monto: string 
+}
+type PropsType = {
+  getTotalDelivered: (monto: number) => void
 }
 
-const EditableDeliveredTable = (): React.ReactElement => {
+const EditableDeliveredTable = ({getTotalDelivered}: PropsType): React.ReactElement => {
   const dispatch = useDispatch()
-  const denominations  = useSelector((state: StoreState) => state.general.denominations)
+  const { denominations }  = useSelector((state: StoreState) => state.general)
   useEffect(() => {
     dispatch(getDenominations())
   }, [dispatch])
@@ -29,11 +32,17 @@ const EditableDeliveredTable = (): React.ReactElement => {
       moneda: obj.DENOMINACION,
       cant: '0',
       monto: '0',
-      referencia: '',
-      noReferencia: ''
     })
   })
   const [data, setData] = useState(dataDelivered)
+
+  const calculateTotalAmount = (newData: DeliveredTable[]) => {
+    let newAmount = 0
+    newData.forEach((obj) => {
+      if(obj.monto){newAmount += parseInt(obj.monto)}
+    })
+    getTotalDelivered(newAmount)
+  }
 
   const handleChange = (name: string ,value: string | ReactText | undefined, index: number) => {
     const newData = [...data]
@@ -44,6 +53,7 @@ const EditableDeliveredTable = (): React.ReactElement => {
       newData[index] = {...newData[index], [name]: value, monto: `${monto}` }
       setData(newData)
     }
+    calculateTotalAmount(newData)
   }
 
   const columsDelivered: ColumnType<DeliveredTable>[] = [

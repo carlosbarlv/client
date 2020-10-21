@@ -14,14 +14,17 @@ type ReceivedTable = {
   key: string
   moneda:  string
   cant: string
-  monto: string | undefined | ReactText | number
+  monto: string
   referencia: string
   noReferencia: string
 }
+type PropsType = {
+  getTotalReceived: (monto: number) => void
+}
 
-const EditableReceivedTable = (): React.ReactElement => {
+const EditableReceivedTable = ({getTotalReceived}: PropsType): React.ReactElement => {
   const dispatch = useDispatch()
-  const denominations  = useSelector((state: StoreState) => state.general.denominations)
+  const { denominations }  = useSelector((state: StoreState) => state.general)
   useEffect(() => {
     dispatch(getDenominations())
   }, [dispatch])
@@ -36,6 +39,14 @@ const EditableReceivedTable = (): React.ReactElement => {
     })
   })
   const [data, setData] = useState(dataReceived)
+
+  const calculateTotalAmount = (newData: ReceivedTable[]) => {
+    let newAmount = 0
+    newData.forEach((obj) => {
+      if(obj.monto){newAmount += parseInt(obj.monto)}
+    })
+    getTotalReceived(newAmount)
+  }
   
   const handleChange = (name: string ,value: string | ReactText | undefined, index: number) => {
     const newData = [...data]
@@ -46,6 +57,7 @@ const EditableReceivedTable = (): React.ReactElement => {
       newData[index] = {...newData[index], [name]: value, monto: `${monto}` }
       setData(newData)
     }
+    calculateTotalAmount(newData)
   }
 
   const columsReceived: ColumnType<ReceivedTable>[] = [
