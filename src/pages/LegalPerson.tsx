@@ -19,41 +19,84 @@ import {
 } from '../components'
 import {
   ArrowLeftOutlined,
-  ArrowRightOutlined,
-  SaveOutlined,
+  CheckOutlined,
+  DeliveredProcedureOutlined,
 } from '@ant-design/icons'
 import { formItemLayout } from '../themes'
 import { validateMessages } from '../constants/general'
 import { showNotification } from '../utils/general'
 import { StoreState } from '../reducers'
 import { getSessionInfo } from '../utils/session'
-import { createLegalPerson } from '../actions/Person'
+import { createLegalPerson, createPhysicalPerson } from '../actions/Person'
 import { PersonType } from '../reducers/Person'
 
 type Steps = {
-  title: string
   description: string
+  index: string
   node: React.ReactNode
+  title: string
 }
 
 const LegalPerson = (): React.ReactElement => {
   const [form] = Form.useForm()
   const dispatch = useDispatch()
-  const [stepPositionState, setStepPositionState] = useState(0)
-  const [personData, setPersonData] = useState({
-    direcciones: [],
-    general: [],
-    relacionados: [],
-  })
+  const [stepPositionState, setStepPositionState] = useState(1)
+  const [personData, setPersonData] = useState({})
+  const [relatedData, setRelatedData] = useState({})
+  const [addressData, setAddressData] = useState({})
+  const { Person } = useSelector((state: StoreState) => state.Person)
   const { activityParameters } = useSelector(
     (state: StoreState) => state.general
   )
 
-  const handleFormChange = (data: [], name: string) => {
-    if (name === 'relacionados') {
-      setPersonData(Object.assign(personData, { relacionados: data }))
-    } else if (name === 'direcciones') {
-      setPersonData(Object.assign(personData, { direcciones: data }))
+  const handleOnFinishGeneral = async () => {
+    const person = personData as PersonType
+
+    person.ID_EMPRESA = getSessionInfo().businessId
+    person.RAZON_SOCIAL = `${person.NOMBRE_EMPRESA}`
+    person.TIPO_ENTIDAD = 'E'
+    person.ESTADO = 'A'
+    person.ID_CONDICION = '30'
+    person.ID_TIPO_IDENT = 1
+
+    person.ID_LIST_TIPO_PERSONA = Number(
+      activityParameters.ID_LIST_TIPO_PERSONA
+    )
+    person.ID_LIST_TIPO_ENTIDAD = Number(
+      activityParameters.ID_LIST_TIPO_ENTIDAD
+    )
+
+    person.ID_LIST_TIPO_PERSONA = Number(1)
+    person.ID_LIST_TIPO_ENTIDAD = Number(1)
+    //eliminar los campos no requeridos antes de mandar al api
+    delete person.ID_PERSONA
+    delete person.USUARIO_INSERCION
+
+    dispatch(createLegalPerson(person))
+  }
+
+  const handleOnFinishRelated = () => {
+    const related = relatedData as PersonType
+
+    related.ID_PERSONA = Person.ID_PERSONA
+    related.ID_EMPRESA = getSessionInfo().businessId
+    related.RAZON_SOCIAL = `${related.NOMBRES} ${related.APELLIDOS}`
+    related.ESTADO = 'A'
+    related.ID_LIST_TIPO_PERSONA = Number(1)
+    related.ID_LIST_TIPO_ENTIDAD = Number(1)
+    related.TIPO_ENTIDAD = 'C'
+    related.ID_CONDICION = '30'
+    related.ID_TIPO_IDENT = 1
+    related.ID_MONEDA_DEF = '4'
+
+    dispatch(createPhysicalPerson(related))
+  }
+
+  const handleFormChange = (data: {}, index: string) => {
+    if (index === 'RELACIONADOS') {
+      setRelatedData(Object.assign(relatedData, data))
+    } else if (index === 'DIRECCIONES') {
+      setAddressData(Object.assign(addressData, data))
     }
   }
 
@@ -62,29 +105,48 @@ const LegalPerson = (): React.ReactElement => {
       title: 'Datos generales',
       description: 'Información básica',
       node: <GeneralData />,
+      index: 'GENERAL',
     },
     {
       title: 'Representantes legales',
       description: 'Agregar representantes legales',
-      node: <LegalRepresentatives onModalFormChange={handleFormChange} />,
+      node: (
+        <LegalRepresentatives
+          onModalFormChange={handleFormChange}
+          saveData={handleOnFinishRelated}
+        />
+      ),
+      index: 'RELATED',
     },
     {
       title: 'Direciones y Teléfonos',
       description: 'Información de dirección',
       node: <AddressesForm saveData={handleFormChange} />,
+      index: 'ADDRESS',
     },
   ]
 
   const handleNextButtonOnClick = async (
     event: React.MouseEvent<HTMLElement, MouseEvent>
   ) => {
-    const data = [form.getFieldsValue()]
-    if (stepPositionState < steps.length - 1) {
-      event.preventDefault()
-    }
     try {
       await form.validateFields()
-      setPersonData(Object.assign([...personData.general, ...data]))
+
+      switch (steps[stepPositionState].index) {
+        case 'GENERAL': {
+          // eslint-disable-next-line no-console
+          console.log(stepPositionState)
+          const data = form.getFieldsValue()
+          setPersonData(Object.assign(personData, data))
+          handleOnFinishGeneral()
+          form.resetFields()
+          break
+        }
+        case 'RELATED':
+        case 'ADDRESS':
+        default:
+          event.preventDefault()
+      }
       if (stepPositionState < steps.length - 1) {
         setStepPositionState(stepPositionState + 1)
       }
@@ -101,29 +163,6 @@ const LegalPerson = (): React.ReactElement => {
     if (stepPositionState > 0) {
       setStepPositionState(stepPositionState - 1)
     }
-  }
-
-  const handleOnFinish = () => {
-    const person = personData as PersonType
-    person.ID_EMPRESA = getSessionInfo().businessId
-    person.RAZON_SOCIAL = `${person.NOMBRE_EMPRESA}`
-    person.TIPO_ENTIDAD = 'E'
-    person.ESTADO = 'A'
-    person.ID_CONDICION = '30'
-    person.ID_TIPO_IDENT = 1
-
-    person.ID_LIST_TIPO_PERSONA = Number(
-      activityParameters.ID_LIST_TIPO_PERSONA
-    )
-    person.ID_LIST_TIPO_ENTIDAD = Number(
-      activityParameters.ID_LIST_TIPO_ENTIDAD
-    )
-
-    //eliminar los campos no requeridos antes de mandar al api
-    delete person.ID_PERSONA
-    delete person.USUARIO_INSERCION
-
-    dispatch(createLegalPerson(person))
   }
 
   return (
@@ -162,7 +201,7 @@ const LegalPerson = (): React.ReactElement => {
               {...formItemLayout}
               form={form}
               name={'legalPerson'}
-              onFinish={handleOnFinish}
+              // onFinish={handleOnFinish}
               validateMessages={validateMessages}
             >
               <CustomFormContainer>
@@ -185,6 +224,7 @@ const LegalPerson = (): React.ReactElement => {
                           htmlType={'button'}
                           icon={<ArrowLeftOutlined />}
                           onClick={handlePrevButtonOnClick}
+                          disabled={stepPositionState === 1 ? true : false}
                         >
                           Anterior
                         </CustomButton>
@@ -195,17 +235,17 @@ const LegalPerson = (): React.ReactElement => {
                         htmlType={'submit'}
                         icon={
                           stepPositionState < steps.length - 1 ? (
-                            <ArrowRightOutlined />
+                            <DeliveredProcedureOutlined />
                           ) : (
-                            <SaveOutlined />
+                            <CheckOutlined />
                           )
                         }
                         onClick={handleNextButtonOnClick}
                         type={'primary'}
                       >
                         {stepPositionState < steps.length - 1
-                          ? 'Siguiente'
-                          : 'Crear'}
+                          ? 'Guardar y continuar'
+                          : 'Finalizar'}
                       </CustomButton>
                     </CustomFormItem>
                   </CustomSpace>

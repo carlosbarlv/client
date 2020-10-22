@@ -245,7 +245,7 @@ export const transistSessionsApiHelper = {
   getTransistSessions,
 }
 
-const createAddress = (Address: AddressType[]) =>
+const createAddress = (Address: AddressType) =>
   postRequest(`${WEB_SERVICE_API_CRETAE_ADDRESS}`, Address)
 
 export const addressApiHelper = {

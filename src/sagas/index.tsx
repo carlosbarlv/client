@@ -19,8 +19,8 @@ import {
   watchPostPaginatedEconomicActivities,
 } from './economicActivities'
 import { watchGetTransistSessions } from './transistSections'
-import { watchCreateLegalPerson, watchCreatePhysicalPerson } from './Person'
 import { watchCreateAddress } from './address'
+import { watchCreateLegalPerson, watchCreatePhysicalPerson } from './Person'
 
 export default function* rootSaga(): Generator {
   yield all([

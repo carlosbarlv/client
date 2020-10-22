@@ -7,11 +7,11 @@ import { AddressType } from '../reducers/addresses'
 
 export type CreateAddressAction = {
   type: typeof ADDRESSES_CREATE_ADDRESSES
-  Address: AddressType[]
+  Address: AddressType
 }
 
 export const createAddresses = (
-  Address: AddressType[]
+  Address: AddressType
 ): CreateAddressAction => {
   return {
     Address,
@@ -21,11 +21,11 @@ export const createAddresses = (
 
 export type CreateAddressSuccessAction = {
   type: typeof ADDRESSES_CREATE_ADDRESSES_SUCCESS
-  newAddress: AddressType[]
+  newAddress: AddressType
 }
 
 export const createAddressesSuccess = (
-  newAddress: AddressType[]
+  newAddress: AddressType
 ): CreateAddressSuccessAction => {
   return {
     type: ADDRESSES_CREATE_ADDRESSES_SUCCESS,

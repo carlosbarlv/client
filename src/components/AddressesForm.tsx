@@ -73,8 +73,10 @@ const AddressesForm = (props: { saveData: Function }): React.ReactElement => {
   useResetFormOnCloseModal(form, modalVisivilityState)
 
   const handleOnClick = async () => {
+    const dataFields = form.getFieldsValue()
     try {
       await form.validateFields()
+      saveData(dataFields, 'DIRECCIONES')
       setModalVisivilityState(false)
     } catch (error) {
       showNotification({
@@ -120,10 +122,6 @@ const AddressesForm = (props: { saveData: Function }): React.ReactElement => {
                   }
                 }
               )
-
-              if (direcciones.length !== 0) {
-                saveData(direcciones, 'direcciones')
-              }
 
               return (
                 <CustomTable

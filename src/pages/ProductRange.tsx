@@ -194,7 +194,7 @@ const ProductRangePage = (): React.ReactElement => {
             if (isUpdatingRecord) {
               dispatch(updateProductRange(productRange))
             } else {
-              delete productRange.ID_RANGO
+              // delete productRange.ID_RANGO
               dispatch(createProductRange(productRange))
             }
           }}

@@ -103,7 +103,7 @@ const RelatedRecordGeneralData: React.FunctionComponent = () => {
       <CustomCol {...defaultBreakpoints}>
         <CustomFormItem
           label={'Apellidos'}
-          name={'APELLILDOS'}
+          name={'APELLIDOS'}
           rules={[{ required: true }]}
         >
           <CustomInput placeholder={'Apellidos'} />
@@ -188,7 +188,7 @@ const RelatedRecordGeneralData: React.FunctionComponent = () => {
         <CustomFormItem
           label={'Nacionalidadd'}
           name={'NACIONALIDAD'}
-          // rules={[{ required: true }]}
+          rules={[{ required: true }]}
         >
           <CustomSelect placeholder={'Nacionalidad'} allowClear showSearch>
             {nationalities.map((nationality: string, index: number) => (
@@ -203,7 +203,7 @@ const RelatedRecordGeneralData: React.FunctionComponent = () => {
       <CustomCol {...defaultBreakpoints}>
         <CustomFormItem
           label={'Posición'}
-          name={'POSICION'}
+          name={'POSICION_EMPRESA'}
           rules={[{ required: true }]}
         >
           <CustomInput placeholder={'Posición'} />
@@ -226,7 +226,7 @@ const RelatedRecordGeneralData: React.FunctionComponent = () => {
             </CustomFormItem>
             <CustomFormItem
               label={'Meses'}
-              name={'MESES_TIEMPO_EMPRES'}
+              name={'MESES_TIEMPO_EMPRESA'}
               noStyle
               rules={[{ required: true }]}
             >

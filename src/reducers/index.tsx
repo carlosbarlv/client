@@ -8,6 +8,7 @@ import economicActivities, {
   EconomicActivitiesState,
 } from './economicActivities'
 import sessions, { TransistSessionsState } from './transistSections'
+import Person, { PersonState } from './Person'
 
 export type StoreState = {
   business: BusinessState
@@ -17,6 +18,7 @@ export type StoreState = {
   user: UserState
   economicActivities: EconomicActivitiesState
   sessions: TransistSessionsState
+  Person: PersonState
 }
 
 export default combineReducers({
@@ -27,4 +29,5 @@ export default combineReducers({
   user,
   economicActivities,
   sessions,
+  Person,
 })

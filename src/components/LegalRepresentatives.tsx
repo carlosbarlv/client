@@ -3,7 +3,6 @@ import { PlusOutlined } from '@ant-design/icons'
 import { ColumnType } from 'antd/lib/table'
 import { Form } from 'antd'
 import { PersonType } from '../reducers/Person'
-import { AddressType } from '../reducers/addresses'
 import {
   CustomButton,
   CustomDivider,
@@ -33,43 +32,19 @@ const columns: ColumnType<PersonType>[] = [
   },
 ]
 
-export type PepsType = {
-  desCargo?: string
-  descEntidad?: string
-  entidadPep?: string
-  ENTIDAD_PEP?: string
-  fechaFinal?: string
-  fechaInicio?: string
-  ID_CARGO?: string
-  PEP?: string
-}
-
-export type RelatedPersonType = {
-  ANIO_TIEMPO_EMPRESA?: string
-  APELLIDOS?: string
-  APODO?: string
-  DIRECCIONES?: AddressType[]
-  DOCUMENTO_IDENTIDAD?: string
-  ESTADO_CIVIL?: string
-  FECHA_NAC?: string
-  MESES_TIEMPO_EMPRESA?: string
-  NACIONALIDAD?: string
-  NOMBRES?: string
-  NO_PASAPORTE?: string
-  PEP: PepsType
-  POSICION?: string
-  SEXO?: string
-  TIPO_DOCUMENTO?: string
-}
-
 const LegalRepresentatives = (props: {
+  saveData: Function
   onModalFormChange: Function
 }): React.ReactElement => {
-  const { onModalFormChange } = props
+  const { onModalFormChange, saveData } = props
   const [form] = Form.useForm()
   const [modalVisibilityState, setModalVisibilityState] = React.useState(false)
 
   const handleOnFinish = () => {
+    const dataFields = form.getFieldsValue()
+
+    onModalFormChange(dataFields, 'RELACIONADOS')
+    saveData()
     setModalVisibilityState(false)
   }
 
@@ -97,7 +72,7 @@ const LegalRepresentatives = (props: {
         {({ getFieldValue }) => {
           const relacionados = getFieldValue('relacionados') || []
           const originData = relacionados.map(
-            (values: RelatedPersonType, index: number) => {
+            (values: PersonType, index: number) => {
               return {
                 key: index,
                 codigo: index,
@@ -109,10 +84,6 @@ const LegalRepresentatives = (props: {
               }
             }
           )
-
-          if (relacionados.length !== 0) {
-            onModalFormChange(relacionados, 'relacionados')
-          }
 
           return (
             <CustomTable

@@ -25,11 +25,11 @@ export type AddressType = {
 }
 
 export type AddressState = {
-  Address: AddressType[]
+  Address: AddressType
 }
 
 const initialState = {
-  Address: [],
+  Address: {},
 }
 
 const Address = (
