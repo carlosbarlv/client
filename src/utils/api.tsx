@@ -12,6 +12,7 @@ import {
   WEB_SERVICE_API_GET_ECONOMIC_ACTIVITY,
   WEB_SERVICE_API_GET_PERSONAS,
   WEB_SERVICE_API_GET_PRODUCT_RANGES,
+  WEB_SERVICE_API_GET_PROVINCES,
   WEB_SERVICE_API_GET_TRANSIST_SESSIONS,
   WEB_SERVICE_API_LOGIN,
   WEB_SERVICE_API_PERSONAL_MENU,
@@ -251,13 +252,20 @@ const createAddress = (Address: AddressType) =>
 export const addressApiHelper = {
   createAddress,
 }
-const getDenominations = (): Promise<AxiosResponse> => {
 
+export const getProvinces = (countryId: string): Promise<AxiosResponse> =>
+  postRequest(`${WEB_SERVICE_API_GET_PROVINCES}`, { countryId })
+
+export const provincesApiHelper = {
+  getProvinces,
+}
+
+const getDenominations = (): Promise<AxiosResponse> => {
   return postRequest(WEB_SERVICE_API_GET_DENOMINATIONS, {
     order: {
-      CANTIDAD: "ASC",
-      TIPO: "DESC"
-    }
+      CANTIDAD: 'ASC',
+      TIPO: 'DESC',
+    },
   })
 }
 

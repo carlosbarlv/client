@@ -14,12 +14,16 @@ import {
   GENERAL_GET_PARTNERS_CATEGORIES,
   GENERAL_GET_PARTNERS_CATEGORIES_FAILURE,
   GENERAL_GET_PARTNERS_CATEGORIES_SUCCESS,
+  GENERAL_GET_PROVINCES,
+  GENERAL_GET_PROVINCES_FAILURE,
+  GENERAL_GET_PROVINCES_SUCCESS,
 } from '../constants/actions'
 import {
   ActivityParameters,
   Coins,
   Denominations,
   PartnersCategories,
+  ProvinceType,
 } from '../reducers/general'
 
 type GeneralGetNationalitiesAction = {
@@ -199,6 +203,42 @@ export const getActivityParametersFailure = (): GeneralGetActivityParametersFail
   }
 }
 
+export type GeneralGetProvincesAction = {
+  type: typeof GENERAL_GET_PROVINCES
+  countryId: string
+}
+
+export const getProvinces = (countryId: string): GeneralGetProvincesAction => {
+  return {
+    type: GENERAL_GET_PROVINCES,
+    countryId,
+  }
+}
+
+export type GeneralGetProvincesSuccessAction = {
+  type: typeof GENERAL_GET_PROVINCES_SUCCESS
+  provinces: ProvinceType[]
+}
+
+export const getProvincesSuccess = (
+  provinces: ProvinceType[]
+): GeneralGetProvincesSuccessAction => {
+  return {
+    type: GENERAL_GET_PROVINCES_SUCCESS,
+    provinces,
+  }
+}
+
+export type GeneralGetProvincesFailureAction = {
+  type: typeof GENERAL_GET_PROVINCES_FAILURE
+}
+
+export const getProvincesFailure = (): GeneralGetProvincesFailureAction => {
+  return {
+    type: GENERAL_GET_PROVINCES_FAILURE,
+  }
+}
+
 export type GeneralNationalitiesAction =
   | GeneralGetNationalitiesAction
   | GeneralGetNationalitiesSuccessAction
@@ -219,7 +259,13 @@ export type GeneralActivityParametersAction =
   | GeneralGetActivityParametersFailureAction
   | GeneralGetActivityParametersSuccessAction
 
+export type GeneralProvincesAction =
+  | GeneralGetProvincesAction
+  | GeneralGetProvincesFailureAction
+  | GeneralGetProvincesSuccessAction
+
 export type GeneralDenominationsAction = 
   | GeneralGetDenominationsAction
   | GeneralGetDenominationsFailureAction
   | GeneralGetDenominationsSuccessAction
+

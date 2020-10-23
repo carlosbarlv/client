@@ -5,6 +5,7 @@ import {
   denominationsApiHelper,
   nationalitiesApiHelpers,
   partnersCategoriesApiHelpers,
+  provincesApiHelper,
 } from '../utils/api'
 import {
   GENERAL_GET_ACTIVITY_PARAMETERS,
@@ -12,10 +13,12 @@ import {
   GENERAL_GET_DENOMINATIONS,
   GENERAL_GET_NATIONALITIES,
   GENERAL_GET_PARTNERS_CATEGORIES,
+  GENERAL_GET_PROVINCES,
 } from '../constants/actions'
 import {
   GeneralGetActivityParametersAction,
   GeneralGetPartnersCategoriesAction,
+  GeneralGetProvincesAction,
   getActivityParametersFailure,
   getActivityParametersSuccess,
   getCoinsFailure,
@@ -26,6 +29,8 @@ import {
   getNationalitiesSuccess,
   getPartnersCategoriesFailure,
   getPartnersCategoriesSuccess,
+  getProvincesFailure,
+  getProvincesSuccess,
 } from '../actions/general'
 
 function* getNationalitiesSaga() {
@@ -100,6 +105,24 @@ function* watchGetActivityParameters() {
   yield takeLatest(GENERAL_GET_ACTIVITY_PARAMETERS, getActivityParameters)
 }
 
+function* getProvincesSaga(payload: GeneralGetProvincesAction) {
+  try {
+    const response = yield call(() => {
+      return provincesApiHelper.getProvinces(payload.countryId)
+    })
+
+    const { data: provinces } = response.data
+
+    yield put(getProvincesSuccess(provinces))
+  } catch (error) {
+    yield put(getProvincesFailure())
+  }
+}
+
+function* watchGetProvince() {
+  yield takeLatest(GENERAL_GET_PROVINCES, getProvincesSaga)
+}
+
 function* getDenominationsSaga() {
   try {
     const { data: response } = yield call(() => {
@@ -112,10 +135,7 @@ function* getDenominationsSaga() {
 }
 
 function* watchGetDenominations() {
-  yield takeLatest(
-    GENERAL_GET_DENOMINATIONS,
-    getDenominationsSaga
-  )
+  yield takeLatest(GENERAL_GET_DENOMINATIONS, getDenominationsSaga)
 }
 
 export {
@@ -123,5 +143,6 @@ export {
   watchGetPartnersCategories,
   watchGetCoins,
   watchGetActivityParameters,
-  watchGetDenominations
+  watchGetProvince,
+  watchGetDenominations,
 }

@@ -14,6 +14,9 @@ import {
   GENERAL_GET_PARTNERS_CATEGORIES,
   GENERAL_GET_PARTNERS_CATEGORIES_FAILURE,
   GENERAL_GET_PARTNERS_CATEGORIES_SUCCESS,
+  GENERAL_GET_PROVINCES,
+  GENERAL_GET_PROVINCES_FAILURE,
+  GENERAL_GET_PROVINCES_SUCCESS,
 } from '../constants/actions'
 import {
   GeneralActivityParametersAction,
@@ -21,6 +24,7 @@ import {
   GeneralDenominationsAction,
   GeneralNationalitiesAction,
   GeneralPartnersCategoriesAction,
+  GeneralProvincesAction,
 } from '../actions/general'
 
 export type PartnersCategories = {
@@ -30,6 +34,15 @@ export type PartnersCategories = {
 
 export type ActivityParameters = {
   [key: string]: string
+}
+
+export type CountrType = {
+  countriId: string
+}
+
+export type ProvinceType = {
+  desc: string
+  value: string
 }
 
 export type Coins = {
@@ -68,6 +81,7 @@ export type GeneralState = {
   partnersCategories: PartnersCategories[]
   coins: Coins[]
   activityParameters: ActivityParameters
+  provinces: ProvinceType[]
   denominations: Denominations[]
 }
 
@@ -76,6 +90,7 @@ const initialState = {
   partnersCategories: [],
   coins: [],
   activityParameters: { '': '' },
+  provinces: [],
   denominations: [],
 }
 
@@ -86,6 +101,7 @@ const general = (
     | GeneralPartnersCategoriesAction
     | GeneralCoinsAction
     | GeneralActivityParametersAction
+    | GeneralProvincesAction
     | GeneralDenominationsAction
 ): GeneralState => {
   switch (action.type) {
@@ -121,6 +137,14 @@ const general = (
         activityParameters: action.activityParameters,
       }
     }
+    case GENERAL_GET_PROVINCES_SUCCESS: {
+      return {
+        ...state,
+        provinces: action.provinces,
+      }
+    }
+    case GENERAL_GET_PROVINCES:
+    case GENERAL_GET_PROVINCES_FAILURE:
     case GENERAL_GET_ACTIVITY_PARAMETERS:
     case GENERAL_GET_NATIONALITIES:
     case GENERAL_GET_PARTNERS_CATEGORIES:

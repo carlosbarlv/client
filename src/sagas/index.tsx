@@ -13,6 +13,7 @@ import {
   watchGetDenominations,
   watchGetNationalities,
   watchGetPartnersCategories,
+  watchGetProvince,
 } from './general'
 import {
   watchGetPaginatedEconomicActivities,
@@ -41,6 +42,7 @@ export default function* rootSaga(): Generator {
     watchCreatePhysicalPerson(),
     watchCreateLegalPerson(),
     watchCreateAddress(),
+    watchGetProvince(),
     watchGetDenominations(),
   ])
 }

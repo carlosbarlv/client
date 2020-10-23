@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Select } from 'antd'
 import { CheckboxChangeEvent } from 'antd/lib/checkbox'
 import {
@@ -13,10 +13,20 @@ import {
   CustomTitle,
 } from '.'
 import { defaultBreakpoints, labelColFullWidth } from '../themes'
+import { getProvinces } from '../actions/general'
+import { StoreState } from '../reducers'
+import { ProvinceType } from '../reducers/general'
+import { useDispatch, useSelector } from 'react-redux'
 
 const Addresses: React.FunctionComponent = () => {
   const { Option } = Select
+  const { provinces } = useSelector((state: StoreState) => state.general)
   const [checkboxState, setCheckboxState] = React.useState(false)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(getProvinces('RD'))
+  }, [dispatch])
 
   const handleOnChangeCheckbox = (e: CheckboxChangeEvent) =>
     setCheckboxState(e.target.checked)
@@ -33,7 +43,7 @@ const Addresses: React.FunctionComponent = () => {
           rules={[{ required: false }]}
         >
           <CustomSelect placeholder={'Tipo dirección'}>
-            <Option value={1}>Tipo direccion</Option>
+            {/* <Option onChange={handleOnChange}>Tipo direccion</Option> */}
           </CustomSelect>
         </CustomFormItem>
       </CustomCol>
@@ -96,11 +106,13 @@ const Addresses: React.FunctionComponent = () => {
             </CustomCol>
             <CustomCol xs={16}>
               <CustomFormItem noStyle>
-                <CustomSelect
-                  showSearch
-                  allowClear
-                  placeholder={'Provincia'}
-                ></CustomSelect>
+                <CustomSelect showSearch allowClear placeholder={'Provincia'}>
+                  {provinces.map((province: ProvinceType, index: number) => (
+                    <Option key={`${index}`} value={`${province.value}`}>
+                      {province.desc}
+                    </Option>
+                  ))}
+                </CustomSelect>
               </CustomFormItem>
             </CustomCol>
           </CustomRow>
