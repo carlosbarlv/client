@@ -17,8 +17,7 @@ export const WEB_SERVICE_API_CRETAE_ADDRESS = `${WEB_SERVICE_API}/persona/addres
 export const WEB_SERVICE_API_GET_PROVINCES = `${WEB_SERVICE_API}/provincias/list_provincias`
 export const WEB_SERVICE_API_GET_DENOMINATIONS = `${WEB_SERVICE_API}/denominacion/denominaciones`
 export const WEB_SERVICE_API_CREATE_RELATED_PERSON = `${WEB_SERVICE_API}/persona/related`
-export const WEB_SERVICE_API_GET_DENOMINATIONS = `${WEB_SERVICE_API}/denominacion/denominaciones`
-        
+
 // Internal routes
 export const PATH_LOGIN = '/login'
 export const PATH_MAIN = '/'
