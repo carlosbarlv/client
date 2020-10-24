@@ -124,16 +124,16 @@ const IncomeDistributionModal = ({visible, width, dataInfo, totalAmount, hideMod
       onOk={() => hideModal()}
     >
       <CustomRow gutter={[16, 32]} align={'top'}>
-        <CustomCol span={20}>
+        <CustomCol xs={24} md={20}>
           <CustomTable columns={columnsInfo} dataSource={dataInfo} pagination={false} bordered />
         </CustomCol>
-        <CustomCol span={4}>
+        <CustomCol xs={24} md={4}>
           {currentDate}
         </CustomCol>
-        <CustomCol span={14}>
+        <CustomCol xs={24} lg={16}>
           <EditableReceivedTable getTotalReceived={getTotalReceived} />
         </CustomCol>
-        <CustomCol span={10}>
+        <CustomCol xs={24} lg={8}>
           <EditableDeliveredTable getTotalDelivered={getTotalDelivered} />
         </CustomCol>
 
@@ -145,7 +145,7 @@ const IncomeDistributionModal = ({visible, width, dataInfo, totalAmount, hideMod
             bordered
           />
         </CustomCol>
-        <CustomCol span={12}>
+        <CustomCol xs={24} md={12}>
           <CustomForm labelCol={{sm: 8}}>
             <CustomFormItem label={'Total Operaciones'} >
               <CustomSpace>

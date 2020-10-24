@@ -83,6 +83,7 @@ const EditableReceivedTable = ({getTotalReceived}: PropsType): React.ReactElemen
     {
       title: 'Monto',
       dataIndex: 'monto',
+      align: 'right',
       render: (text, record) => {
         if(parseInt(record.moneda) > 0){
           return text

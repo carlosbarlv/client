@@ -119,7 +119,7 @@ const TransitIncome = (): React.ReactElement => {
           pagination={false}
           footer={() => 
             <CustomRow>
-                  <CustomCol xs={24} sm={12} md={8} lg={5}>
+                  <CustomCol sm={24} md={10} lg={5}>
                     <CustomSpace>
                       <CustomInput value={numberFormat(totalAmount)}  readOnly />
                       <CustomButton 

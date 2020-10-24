@@ -63,9 +63,10 @@ const EditableDeliveredTable = ({getTotalDelivered}: PropsType): React.ReactElem
       render: (text) => {
         return parseInt(text) > 0 ? `RD$${text}` : text
       },
+      // width: '5%'
     },
     {
-      title: 'Cant',
+      title: 'Cantidad',
       dataIndex: 'cant',
       render: (text, record ) =>  {
         return (
@@ -74,11 +75,13 @@ const EditableDeliveredTable = ({getTotalDelivered}: PropsType): React.ReactElem
             onChange={e => handleChange('cant' ,e, parseInt(record.key))}
           />
         )
-      }
+      },
+      // width: '10%'
     },
     {
       title: 'Monto',
       dataIndex: 'monto',
+      align: 'right',
       render: (text, record) => {
         if(parseInt(record.moneda) > 0){
           return text
@@ -89,7 +92,8 @@ const EditableDeliveredTable = ({getTotalDelivered}: PropsType): React.ReactElem
           onChange={e => handleChange('monto' ,e , parseInt(record.key))}
         />
         )
-      }
+      },
+      // width: '40%'
     },
   ]
   const deliveredTitle = () => <CustomTitle level={3}>Entregado</CustomTitle>

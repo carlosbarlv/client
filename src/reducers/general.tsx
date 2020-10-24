@@ -130,14 +130,12 @@ const general = (
         coins: action.coins,
       }
     }
-    //////////////////////////////////////
     case GENERAL_GET_DENOMINATIONS_SUCCESS: {
       return {
         ...state,
         denominations: action.denominations,
       }
     }
-    //////////////////////////////////////////
     case GENERAL_GET_ACTIVITY_PARAMETERS_SUCCESS: {
       return {
         ...state,

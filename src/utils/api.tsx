@@ -264,9 +264,9 @@ export const provincesApiHelper = {
 const getDenominations = (): Promise<AxiosResponse> => {
   return postRequest(WEB_SERVICE_API_GET_DENOMINATIONS, {
     order: {
-      CANTIDAD: 'ASC',
-      TIPO: 'DESC',
-    },
+      TIPO: "DESC",
+      CANTIDAD: "DESC",
+    }
   })
 }
 
