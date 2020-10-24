@@ -116,6 +116,7 @@ const TransitIncome = (): React.ReactElement => {
             type: 'checkbox',
             onChange: (selectedRowKeys, selectedRows) => handleChange(selectedRowKeys, selectedRows)
           }}
+          scroll={{ y: 240 }}
           pagination={false}
           footer={() => 
             <CustomRow>

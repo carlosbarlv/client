@@ -287,6 +287,7 @@ const CashTransactions = (): React.ReactElement => {
             expandable={{
               expandedRowRender: record => record.actions
             }}
+            scroll={{ y: 240 }}
             pagination={false}
             bordered
           />
@@ -299,6 +300,7 @@ const CashTransactions = (): React.ReactElement => {
             expandable={{
               expandedRowRender: record => record.actions
             }}
+            scroll={{ y: 240 }}
             pagination={false}
             bordered
           />

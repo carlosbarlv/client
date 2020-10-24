@@ -92,9 +92,10 @@ const TransitEgress = (): React.ReactElement => {
           <CustomTable
             columns={columsEgress}
             dataSource={dataEgress}
+            scroll={{ y: 240 }}
             pagination={false}
             bordered
-            />
+          />
       </CustomCol>
     </>
   )
