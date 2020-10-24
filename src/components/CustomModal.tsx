@@ -4,7 +4,7 @@ import { ModalProps } from 'antd/lib/modal'
 
 const CustomModal: React.FunctionComponent<ModalProps> = ({
   bodyStyle = {},
-  cancelText = 'Cancel',
+  cancelText = 'Cancelar',
   centered = false,
   closable = false,
   confirmLoading = false,
@@ -13,7 +13,7 @@ const CustomModal: React.FunctionComponent<ModalProps> = ({
   mask = true,
   maskClosable = true,
   maskStyle = {},
-  okText = 'OK',
+  okText = 'Aceptar',
   okType = 'primary',
   visible = false,
   width = 520,
