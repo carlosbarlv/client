@@ -15,6 +15,7 @@ import {
   watchGetNationalities,
   watchGetPartnersCategories,
   watchGetProvince,
+  watchGetSectors,
 } from './general'
 import {
   watchGetPaginatedEconomicActivities,
@@ -46,5 +47,6 @@ export default function* rootSaga(): Generator {
     watchGetProvince(),
     watchGetDenominations(),
     watchGetCountries(),
+    watchGetSectors(),
   ])
 }

@@ -13,7 +13,7 @@ import {
   CustomTitle,
 } from '.'
 import { defaultBreakpoints, labelColFullWidth } from '../themes'
-import { getCountries, getProvinces } from '../actions/general'
+import { getCountries, getProvinces, getSectors } from '../actions/general'
 import { StoreState } from '../reducers'
 import { GeneralType } from '../reducers/general'
 import { useDispatch, useSelector } from 'react-redux'
@@ -21,7 +21,7 @@ import { useDispatch, useSelector } from 'react-redux'
 const Addresses: React.FunctionComponent = () => {
   const { Option } = Select
   const dispatch = useDispatch()
-  const { countries, provinces } = useSelector(
+  const { countries, provinces, sectors } = useSelector(
     (state: StoreState) => state.general
   )
   const [checkboxState, setCheckboxState] = useState(false)
@@ -30,6 +30,14 @@ const Addresses: React.FunctionComponent = () => {
   useEffect(() => {
     dispatch(getCountries())
     dispatch(getProvinces(countryData))
+    dispatch(
+      getSectors({
+        condition: {
+          ID_PROVINCIA: '1100',
+          ID_MUNICIPIO: '1101',
+        },
+      })
+    )
   }, [dispatch, countryData])
 
   const handleOnChangeCheckbox = (e: CheckboxChangeEvent) =>
@@ -171,11 +179,13 @@ const Addresses: React.FunctionComponent = () => {
             </CustomCol>
             <CustomCol xs={16}>
               <CustomFormItem noStyle>
-                <CustomSelect
-                  showSearch
-                  allowClear
-                  placeholder={'Sector'}
-                ></CustomSelect>
+                <CustomSelect showSearch allowClear placeholder={'Sector'}>
+                  {sectors.map((sector: GeneralType, index: number) => (
+                    <Option key={`${index}`} value={`${sector.value}`}>
+                      {sector.desc}
+                    </Option>
+                  ))}
+                </CustomSelect>
               </CustomFormItem>
             </CustomCol>
           </CustomRow>

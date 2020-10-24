@@ -20,6 +20,9 @@ import {
   GENERAL_GET_PROVINCES,
   GENERAL_GET_PROVINCES_FAILURE,
   GENERAL_GET_PROVINCES_SUCCESS,
+  GENERAL_GET_SECTORS,
+  GENERAL_GET_SECTORS_FAILURE,
+  GENERAL_GET_SECTORS_SECCESS,
 } from '../constants/actions'
 import {
   ActivityParameters,
@@ -53,6 +56,11 @@ export type GeneralGetDenominationsAction = {
 
 export type GeneralGetCountriesAction = {
   type: typeof GENERAL_GET_COUNTRIES
+}
+
+export type GeneralGetSectorsAction = {
+  type: typeof GENERAL_GET_SECTORS
+  condition: GeneralType
 }
 
 export const getDenominations = (): GeneralGetDenominationsAction => {
@@ -96,6 +104,13 @@ export const getCountries = (): GeneralGetCountriesAction => {
   }
 }
 
+export const getSectors = (condition: GeneralType): GeneralGetSectorsAction => {
+  return {
+    type: GENERAL_GET_SECTORS,
+    condition,
+  }
+}
+
 type GeneralGetNationalitiesSuccessAction = {
   type: typeof GENERAL_GET_NATIONALITIES_SUCCESS
   nationalities: string[]
@@ -124,6 +139,11 @@ export type GeneralGetDenominationsSuccessAction = {
 export type GeneralGetCountriesSuccessAction = {
   type: typeof GENERAL_GET_COUNTRIES_SUCCESS
   countries: GeneralType[]
+}
+
+export type GeneralGetSectorsSuccessAction = {
+  type: typeof GENERAL_GET_SECTORS_SECCESS
+  sectors: GeneralType[]
 }
 
 export const getDenominationsSuccess = (
@@ -180,6 +200,15 @@ export const getCountriesSuccess = (
   }
 }
 
+export const getSectorsSuccess = (
+  sectors: GeneralType[]
+): GeneralGetSectorsSuccessAction => {
+  return {
+    type: GENERAL_GET_SECTORS_SECCESS,
+    sectors,
+  }
+}
+
 type GeneralGetNationalitiesFailureAction = {
   type: typeof GENERAL_GET_NATIONALITIES_FAILURE
 }
@@ -202,6 +231,10 @@ export type GeneralGetDenominationsFailureAction = {
 
 export type GeneralGetCountriesFailureAction = {
   type: typeof GENERAL_GET_COUNTRIES_FAILURE
+}
+
+export type GeneralGetSectorsFailureAction = {
+  type: typeof GENERAL_GET_SECTORS_FAILURE
 }
 
 export const getDenominationsFailure = (): GeneralGetDenominationsFailureAction => {
@@ -276,6 +309,12 @@ export const getCountriesFailure = (): GeneralGetCountriesFailureAction => {
   }
 }
 
+export const getSectorsFailure = (): GeneralGetSectorsFailureAction => {
+  return {
+    type: GENERAL_GET_SECTORS_FAILURE,
+  }
+}
+
 export type GeneralNationalitiesAction =
   | GeneralGetNationalitiesAction
   | GeneralGetNationalitiesSuccessAction
@@ -310,3 +349,8 @@ export type GeneralCountriesAction =
   | GeneralGetCountriesAction
   | GeneralGetCountriesFailureAction
   | GeneralGetCountriesSuccessAction
+
+export type GeneralSectorsAction =
+  | GeneralGetSectorsAction
+  | GeneralGetSectorsFailureAction
+  | GeneralGetSectorsSuccessAction

@@ -14,6 +14,7 @@ import {
   WEB_SERVICE_API_GET_PERSONAS,
   WEB_SERVICE_API_GET_PRODUCT_RANGES,
   WEB_SERVICE_API_GET_PROVINCES,
+  WEB_SERVICE_API_GET_SECTORS,
   WEB_SERVICE_API_GET_TRANSIST_SESSIONS,
   WEB_SERVICE_API_LOGIN,
   WEB_SERVICE_API_PERSONAL_MENU,
@@ -21,6 +22,7 @@ import {
 import { ProductRange } from '../reducers/catchements'
 import { PersonType } from '../reducers/Person'
 import { AddressType } from '../reducers/addresses'
+import { GeneralType } from '../reducers/general'
 
 type RequestHeaders = {
   headers: {
@@ -279,4 +281,13 @@ export const getCountries = (): Promise<AxiosResponse> =>
 
 export const countriesApiHelper = {
   getCountries,
+}
+
+const getSectors = (data: GeneralType): Promise<AxiosResponse> => {
+  const { condition } = data
+  return postRequest(`${WEB_SERVICE_API_GET_SECTORS}`, { condition })
+}
+
+export const sectorsApiHelper = {
+  getSectors,
 }

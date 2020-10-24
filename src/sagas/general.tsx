@@ -7,6 +7,7 @@ import {
   nationalitiesApiHelpers,
   partnersCategoriesApiHelpers,
   provincesApiHelper,
+  sectorsApiHelper,
 } from '../utils/api'
 import {
   GENERAL_GET_ACTIVITY_PARAMETERS,
@@ -16,11 +17,13 @@ import {
   GENERAL_GET_NATIONALITIES,
   GENERAL_GET_PARTNERS_CATEGORIES,
   GENERAL_GET_PROVINCES,
+  GENERAL_GET_SECTORS,
 } from '../constants/actions'
 import {
   GeneralGetActivityParametersAction,
   GeneralGetPartnersCategoriesAction,
   GeneralGetProvincesAction,
+  GeneralGetSectorsAction,
   getActivityParametersFailure,
   getActivityParametersSuccess,
   getCoinsFailure,
@@ -35,6 +38,8 @@ import {
   getPartnersCategoriesSuccess,
   getProvincesFailure,
   getProvincesSuccess,
+  getSectorsFailure,
+  getSectorsSuccess,
 } from '../actions/general'
 
 function* getNationalitiesSaga() {
@@ -160,6 +165,26 @@ function* watchGetCountries() {
   yield takeLatest(GENERAL_GET_COUNTRIES, getCountriesSaga)
 }
 
+function* getSectorsSaga(payload: GeneralGetSectorsAction) {
+  // eslint-disable-next-line no-console
+  console.log(payload.condition)
+  try {
+    const response = yield call(() => {
+      return sectorsApiHelper.getSectors(payload.condition)
+    })
+
+    const { data } = response.data
+
+    yield put(getSectorsSuccess(data))
+  } catch (error) {
+    yield put(getSectorsFailure())
+  }
+}
+
+function* watchGetSectors() {
+  yield takeLatest(GENERAL_GET_SECTORS, getSectorsSaga)
+}
+
 export {
   watchGetNationalities,
   watchGetPartnersCategories,
@@ -168,4 +193,5 @@ export {
   watchGetProvince,
   watchGetDenominations,
   watchGetCountries,
+  watchGetSectors,
 }
