@@ -12,6 +12,7 @@ import {
   watchGetCoins,
   watchGetCountries,
   watchGetDenominations,
+  watchGetMunicipalities,
   watchGetNationalities,
   watchGetPartnersCategories,
   watchGetProvince,
@@ -48,5 +49,6 @@ export default function* rootSaga(): Generator {
     watchGetDenominations(),
     watchGetCountries(),
     watchGetSectors(),
+    watchGetMunicipalities(),
   ])
 }

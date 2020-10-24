@@ -11,6 +11,9 @@ import {
   GENERAL_GET_DENOMINATIONS,
   GENERAL_GET_DENOMINATIONS_FAILURE,
   GENERAL_GET_DENOMINATIONS_SUCCESS,
+  GENERAL_GET_MUNICIPALITIES,
+  GENERAL_GET_MUNICIPALITIES_FAILURE,
+  GENERAL_GET_MUNICIPALITIES_SUCCESS,
   GENERAL_GET_NATIONALITIES,
   GENERAL_GET_NATIONALITIES_FAILURE,
   GENERAL_GET_NATIONALITIES_SUCCESS,
@@ -63,6 +66,10 @@ export type GeneralGetSectorsAction = {
   condition: GeneralType
 }
 
+export type GeneralGetMunicipalitiesAction = {
+  type: typeof GENERAL_GET_MUNICIPALITIES
+}
+
 export const getDenominations = (): GeneralGetDenominationsAction => {
   return {
     type: GENERAL_GET_DENOMINATIONS,
@@ -111,6 +118,12 @@ export const getSectors = (condition: GeneralType): GeneralGetSectorsAction => {
   }
 }
 
+export const getMunicipalities = (): GeneralGetMunicipalitiesAction => {
+  return {
+    type: GENERAL_GET_MUNICIPALITIES,
+  }
+}
+
 type GeneralGetNationalitiesSuccessAction = {
   type: typeof GENERAL_GET_NATIONALITIES_SUCCESS
   nationalities: string[]
@@ -144,6 +157,11 @@ export type GeneralGetCountriesSuccessAction = {
 export type GeneralGetSectorsSuccessAction = {
   type: typeof GENERAL_GET_SECTORS_SECCESS
   sectors: GeneralType[]
+}
+
+export type GeneralGetMunicipalitiesSuccessAction = {
+  type: typeof GENERAL_GET_MUNICIPALITIES_SUCCESS
+  municipalities: GeneralType[]
 }
 
 export const getDenominationsSuccess = (
@@ -209,6 +227,15 @@ export const getSectorsSuccess = (
   }
 }
 
+export const getMunicipalitiesSuccess = (
+  municipalities: GeneralType[]
+): GeneralGetMunicipalitiesSuccessAction => {
+  return {
+    type: GENERAL_GET_MUNICIPALITIES_SUCCESS,
+    municipalities,
+  }
+}
+
 type GeneralGetNationalitiesFailureAction = {
   type: typeof GENERAL_GET_NATIONALITIES_FAILURE
 }
@@ -235,6 +262,10 @@ export type GeneralGetCountriesFailureAction = {
 
 export type GeneralGetSectorsFailureAction = {
   type: typeof GENERAL_GET_SECTORS_FAILURE
+}
+
+export type GeneralGetMunicipalitiesFailureAction = {
+  type: typeof GENERAL_GET_MUNICIPALITIES_FAILURE
 }
 
 export const getDenominationsFailure = (): GeneralGetDenominationsFailureAction => {
@@ -315,6 +346,12 @@ export const getSectorsFailure = (): GeneralGetSectorsFailureAction => {
   }
 }
 
+export const getMunicipalitiesFailure = (): GeneralGetMunicipalitiesFailureAction => {
+  return {
+    type: GENERAL_GET_MUNICIPALITIES_FAILURE,
+  }
+}
+
 export type GeneralNationalitiesAction =
   | GeneralGetNationalitiesAction
   | GeneralGetNationalitiesSuccessAction
@@ -354,3 +391,8 @@ export type GeneralSectorsAction =
   | GeneralGetSectorsAction
   | GeneralGetSectorsFailureAction
   | GeneralGetSectorsSuccessAction
+
+export type GeneralMunicipalitiesAction =
+  | GeneralGetMunicipalitiesAction
+  | GeneralGetMunicipalitiesFailureAction
+  | GeneralGetMunicipalitiesSuccessAction

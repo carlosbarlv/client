@@ -11,6 +11,7 @@ import {
   WEB_SERVICE_API_GET_COUNTRIES,
   WEB_SERVICE_API_GET_DENOMINATIONS,
   WEB_SERVICE_API_GET_ECONOMIC_ACTIVITY,
+  WEB_SERVICE_API_GET_MUNICIPALITIES,
   WEB_SERVICE_API_GET_PERSONAS,
   WEB_SERVICE_API_GET_PRODUCT_RANGES,
   WEB_SERVICE_API_GET_PROVINCES,
@@ -290,4 +291,11 @@ const getSectors = (data: GeneralType): Promise<AxiosResponse> => {
 
 export const sectorsApiHelper = {
   getSectors,
+}
+
+export const getMunicipalities = (): Promise<AxiosResponse> =>
+  postRequest(WEB_SERVICE_API_GET_MUNICIPALITIES, {})
+
+export const municipalitiesApiHelper = {
+  getMunicipalities,
 }

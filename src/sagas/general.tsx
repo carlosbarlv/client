@@ -4,6 +4,7 @@ import {
   coinsApiHelpers,
   countriesApiHelper,
   denominationsApiHelper,
+  municipalitiesApiHelper,
   nationalitiesApiHelpers,
   partnersCategoriesApiHelpers,
   provincesApiHelper,
@@ -14,6 +15,7 @@ import {
   GENERAL_GET_COINS,
   GENERAL_GET_COUNTRIES,
   GENERAL_GET_DENOMINATIONS,
+  GENERAL_GET_MUNICIPALITIES,
   GENERAL_GET_NATIONALITIES,
   GENERAL_GET_PARTNERS_CATEGORIES,
   GENERAL_GET_PROVINCES,
@@ -32,6 +34,8 @@ import {
   getCountriesSuccess,
   getDenominationsFailure,
   getDenominationsSuccess,
+  getMunicipalitiesFailure,
+  getMunicipalitiesSuccess,
   getNationalitiesFailure,
   getNationalitiesSuccess,
   getPartnersCategoriesFailure,
@@ -185,13 +189,31 @@ function* watchGetSectors() {
   yield takeLatest(GENERAL_GET_SECTORS, getSectorsSaga)
 }
 
+function* getMunicipalitiesSaga() {
+  try {
+    const response = yield call(() => {
+      return municipalitiesApiHelper.getMunicipalities()
+    })
+
+    const { data } = response.data
+    yield put(getMunicipalitiesSuccess(data))
+  } catch (error) {
+    yield put(getMunicipalitiesFailure())
+  }
+}
+
+function* watchGetMunicipalities() {
+  yield takeLatest(GENERAL_GET_MUNICIPALITIES, getMunicipalitiesSaga)
+}
+
 export {
   watchGetNationalities,
   watchGetPartnersCategories,
   watchGetCoins,
   watchGetActivityParameters,
   watchGetProvince,
-  watchGetDenominations,
   watchGetCountries,
   watchGetSectors,
+  watchGetDenominations,
+  watchGetMunicipalities,
 }

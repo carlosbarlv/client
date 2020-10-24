@@ -13,7 +13,7 @@ import {
   CustomTitle,
 } from '.'
 import { defaultBreakpoints, labelColFullWidth } from '../themes'
-import { getCountries, getProvinces, getSectors } from '../actions/general'
+import { getCountries, getMunicipalities, getProvinces, getSectors } from '../actions/general'
 import { StoreState } from '../reducers'
 import { GeneralType } from '../reducers/general'
 import { useDispatch, useSelector } from 'react-redux'
@@ -21,7 +21,7 @@ import { useDispatch, useSelector } from 'react-redux'
 const Addresses: React.FunctionComponent = () => {
   const { Option } = Select
   const dispatch = useDispatch()
-  const { countries, provinces, sectors } = useSelector(
+  const { countries, municipalities, provinces, sectors } = useSelector(
     (state: StoreState) => state.general
   )
   const [checkboxState, setCheckboxState] = useState(false)
@@ -30,6 +30,7 @@ const Addresses: React.FunctionComponent = () => {
   useEffect(() => {
     dispatch(getCountries())
     dispatch(getProvinces(countryData))
+    dispatch(getMunicipalities())
     dispatch(
       getSectors({
         condition: {
@@ -154,11 +155,15 @@ const Addresses: React.FunctionComponent = () => {
             </CustomCol>
             <CustomCol xs={16}>
               <CustomFormItem noStyle>
-                <CustomSelect
-                  showSearch
-                  allowClear
-                  placeholder={'Municipio'}
-                ></CustomSelect>
+                <CustomSelect showSearch allowClear placeholder={'Municipio'}>
+                  {municipalities.map(
+                    (municipality: GeneralType, index: number) => (
+                      <Option key={`${index}`} value={`${municipality.value}`}>
+                        {municipality.desc}
+                      </Option>
+                    )
+                  )}
+                </CustomSelect>
               </CustomFormItem>
             </CustomCol>
           </CustomRow>
