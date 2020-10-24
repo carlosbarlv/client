@@ -10,6 +10,7 @@ import { all } from 'redux-saga/effects'
 import {
   watchGetActivityParameters,
   watchGetCoins,
+  watchGetCountries,
   watchGetDenominations,
   watchGetNationalities,
   watchGetPartnersCategories,
@@ -44,5 +45,6 @@ export default function* rootSaga(): Generator {
     watchCreateAddress(),
     watchGetProvince(),
     watchGetDenominations(),
+    watchGetCountries(),
   ])
 }

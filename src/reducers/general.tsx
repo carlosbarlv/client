@@ -5,6 +5,9 @@ import {
   GENERAL_GET_COINS,
   GENERAL_GET_COINS_FAILURE,
   GENERAL_GET_COINS_SUCCESS,
+  GENERAL_GET_COUNTRIES,
+  GENERAL_GET_COUNTRIES_FAILURE,
+  GENERAL_GET_COUNTRIES_SUCCESS,
   GENERAL_GET_DENOMINATIONS,
   GENERAL_GET_DENOMINATIONS_FAILURE,
   GENERAL_GET_DENOMINATIONS_SUCCESS,
@@ -21,6 +24,7 @@ import {
 import {
   GeneralActivityParametersAction,
   GeneralCoinsAction,
+  GeneralCountriesAction,
   GeneralDenominationsAction,
   GeneralNationalitiesAction,
   GeneralPartnersCategoriesAction,
@@ -38,11 +42,6 @@ export type ActivityParameters = {
 
 export type CountrType = {
   countriId: string
-}
-
-export type ProvinceType = {
-  desc: string
-  value: string
 }
 
 export type Coins = {
@@ -76,13 +75,19 @@ export type Denominations = {
   TR_ORIGEN: null
 }
 
+export type GeneralType = {
+  desc: string
+  value: string
+}
+
 export type GeneralState = {
   nationalities: string[]
   partnersCategories: PartnersCategories[]
   coins: Coins[]
   activityParameters: ActivityParameters
-  provinces: ProvinceType[]
+  provinces: GeneralType[]
   denominations: Denominations[]
+  countries: GeneralType[]
 }
 
 const initialState = {
@@ -92,6 +97,7 @@ const initialState = {
   activityParameters: { '': '' },
   provinces: [],
   denominations: [],
+  countries: [],
 }
 
 const general = (
@@ -103,6 +109,7 @@ const general = (
     | GeneralActivityParametersAction
     | GeneralProvincesAction
     | GeneralDenominationsAction
+    | GeneralCountriesAction
 ): GeneralState => {
   switch (action.type) {
     case GENERAL_GET_NATIONALITIES_SUCCESS: {
@@ -143,6 +150,12 @@ const general = (
         provinces: action.provinces,
       }
     }
+    case GENERAL_GET_COUNTRIES_SUCCESS: {
+      return {
+        ...state,
+        countries: action.countries,
+      }
+    }
     case GENERAL_GET_PROVINCES:
     case GENERAL_GET_PROVINCES_FAILURE:
     case GENERAL_GET_ACTIVITY_PARAMETERS:
@@ -155,6 +168,8 @@ const general = (
     case GENERAL_GET_ACTIVITY_PARAMETERS_FAILURE:
     case GENERAL_GET_DENOMINATIONS_FAILURE:
     case GENERAL_GET_DENOMINATIONS:
+    case GENERAL_GET_COUNTRIES:
+    case GENERAL_GET_COUNTRIES_FAILURE:
     default:
       return state
   }

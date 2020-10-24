@@ -5,6 +5,9 @@ import {
   GENERAL_GET_COINS,
   GENERAL_GET_COINS_FAILURE,
   GENERAL_GET_COINS_SUCCESS,
+  GENERAL_GET_COUNTRIES,
+  GENERAL_GET_COUNTRIES_FAILURE,
+  GENERAL_GET_COUNTRIES_SUCCESS,
   GENERAL_GET_DENOMINATIONS,
   GENERAL_GET_DENOMINATIONS_FAILURE,
   GENERAL_GET_DENOMINATIONS_SUCCESS,
@@ -22,8 +25,8 @@ import {
   ActivityParameters,
   Coins,
   Denominations,
+  GeneralType,
   PartnersCategories,
-  ProvinceType,
 } from '../reducers/general'
 
 type GeneralGetNationalitiesAction = {
@@ -48,9 +51,13 @@ export type GeneralGetDenominationsAction = {
   type: typeof GENERAL_GET_DENOMINATIONS
 }
 
+export type GeneralGetCountriesAction = {
+  type: typeof GENERAL_GET_COUNTRIES
+}
+
 export const getDenominations = (): GeneralGetDenominationsAction => {
   return {
-    type: GENERAL_GET_DENOMINATIONS
+    type: GENERAL_GET_DENOMINATIONS,
   }
 }
 export const getNationalities = (): GeneralGetNationalitiesAction => {
@@ -83,6 +90,12 @@ export const getActivityParameters = (
   }
 }
 
+export const getCountries = (): GeneralGetCountriesAction => {
+  return {
+    type: GENERAL_GET_COUNTRIES,
+  }
+}
+
 type GeneralGetNationalitiesSuccessAction = {
   type: typeof GENERAL_GET_NATIONALITIES_SUCCESS
   nationalities: string[]
@@ -106,6 +119,11 @@ type GeneralGetActivityParametersSuccessAction = {
 export type GeneralGetDenominationsSuccessAction = {
   type: typeof GENERAL_GET_DENOMINATIONS_SUCCESS
   denominations: Denominations[]
+}
+
+export type GeneralGetCountriesSuccessAction = {
+  type: typeof GENERAL_GET_COUNTRIES_SUCCESS
+  countries: GeneralType[]
 }
 
 export const getDenominationsSuccess = (
@@ -153,6 +171,15 @@ export const getActivityParametersSuccess = (
   }
 }
 
+export const getCountriesSuccess = (
+  countries: GeneralType[]
+): GeneralGetCountriesSuccessAction => {
+  return {
+    type: GENERAL_GET_COUNTRIES_SUCCESS,
+    countries,
+  }
+}
+
 type GeneralGetNationalitiesFailureAction = {
   type: typeof GENERAL_GET_NATIONALITIES_FAILURE
 }
@@ -173,9 +200,13 @@ export type GeneralGetDenominationsFailureAction = {
   type: typeof GENERAL_GET_DENOMINATIONS_FAILURE
 }
 
+export type GeneralGetCountriesFailureAction = {
+  type: typeof GENERAL_GET_COUNTRIES_FAILURE
+}
+
 export const getDenominationsFailure = (): GeneralGetDenominationsFailureAction => {
   return {
-    type: GENERAL_GET_DENOMINATIONS_FAILURE
+    type: GENERAL_GET_DENOMINATIONS_FAILURE,
   }
 }
 
@@ -217,11 +248,11 @@ export const getProvinces = (countryId: string): GeneralGetProvincesAction => {
 
 export type GeneralGetProvincesSuccessAction = {
   type: typeof GENERAL_GET_PROVINCES_SUCCESS
-  provinces: ProvinceType[]
+  provinces: GeneralType[]
 }
 
 export const getProvincesSuccess = (
-  provinces: ProvinceType[]
+  provinces: GeneralType[]
 ): GeneralGetProvincesSuccessAction => {
   return {
     type: GENERAL_GET_PROVINCES_SUCCESS,
@@ -236,6 +267,12 @@ export type GeneralGetProvincesFailureAction = {
 export const getProvincesFailure = (): GeneralGetProvincesFailureAction => {
   return {
     type: GENERAL_GET_PROVINCES_FAILURE,
+  }
+}
+
+export const getCountriesFailure = (): GeneralGetCountriesFailureAction => {
+  return {
+    type: GENERAL_GET_COUNTRIES_FAILURE,
   }
 }
 
@@ -264,8 +301,12 @@ export type GeneralProvincesAction =
   | GeneralGetProvincesFailureAction
   | GeneralGetProvincesSuccessAction
 
-export type GeneralDenominationsAction = 
+export type GeneralDenominationsAction =
   | GeneralGetDenominationsAction
   | GeneralGetDenominationsFailureAction
   | GeneralGetDenominationsSuccessAction
 
+export type GeneralCountriesAction =
+  | GeneralGetCountriesAction
+  | GeneralGetCountriesFailureAction
+  | GeneralGetCountriesSuccessAction

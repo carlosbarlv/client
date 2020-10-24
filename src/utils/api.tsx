@@ -8,6 +8,7 @@ import {
   WEB_SERVICE_API_GENERAL_GET_NACIONALITIES,
   WEB_SERVICE_API_GET_ACTIVITY_PARAMETERS,
   WEB_SERVICE_API_GET_COINS,
+  WEB_SERVICE_API_GET_COUNTRIES,
   WEB_SERVICE_API_GET_DENOMINATIONS,
   WEB_SERVICE_API_GET_ECONOMIC_ACTIVITY,
   WEB_SERVICE_API_GET_PERSONAS,
@@ -271,4 +272,11 @@ const getDenominations = (): Promise<AxiosResponse> => {
 
 export const denominationsApiHelper = {
   getDenominations,
+}
+
+export const getCountries = (): Promise<AxiosResponse> =>
+  postRequest(`${WEB_SERVICE_API_GET_COUNTRIES}`, {})
+
+export const countriesApiHelper = {
+  getCountries,
 }

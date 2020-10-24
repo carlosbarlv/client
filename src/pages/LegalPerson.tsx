@@ -154,7 +154,7 @@ const LegalPerson = (): React.ReactElement => {
       showNotification({
         title: 'Faltan datos',
         description: 'Por favor llenar los campos requeridos.',
-        type: 'error'
+        type: 'error',
       })
     }
   }

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Select } from 'antd'
 import { CheckboxChangeEvent } from 'antd/lib/checkbox'
 import {
@@ -13,20 +13,24 @@ import {
   CustomTitle,
 } from '.'
 import { defaultBreakpoints, labelColFullWidth } from '../themes'
-import { getProvinces } from '../actions/general'
+import { getCountries, getProvinces } from '../actions/general'
 import { StoreState } from '../reducers'
-import { ProvinceType } from '../reducers/general'
+import { GeneralType } from '../reducers/general'
 import { useDispatch, useSelector } from 'react-redux'
 
 const Addresses: React.FunctionComponent = () => {
   const { Option } = Select
-  const { provinces } = useSelector((state: StoreState) => state.general)
-  const [checkboxState, setCheckboxState] = React.useState(false)
   const dispatch = useDispatch()
+  const { countries, provinces } = useSelector(
+    (state: StoreState) => state.general
+  )
+  const [checkboxState, setCheckboxState] = useState(false)
+  const [countryData, setCountryData] = useState('')
 
   useEffect(() => {
-    dispatch(getProvinces('RD'))
-  }, [dispatch])
+    dispatch(getCountries())
+    dispatch(getProvinces(countryData))
+  }, [dispatch, countryData])
 
   const handleOnChangeCheckbox = (e: CheckboxChangeEvent) =>
     setCheckboxState(e.target.checked)
@@ -82,10 +86,19 @@ const Addresses: React.FunctionComponent = () => {
             <CustomCol xs={16}>
               <CustomFormItem noStyle>
                 <CustomSelect
+                  onChange={(value) => {
+                    setCountryData(`${value}`)
+                  }}
                   showSearch
                   allowClear
                   placeholder={'País'}
-                ></CustomSelect>
+                >
+                  {countries.map((country: GeneralType, index: number) => (
+                    <Option key={`${index}`} value={`${country.value}`}>
+                      {country.desc}
+                    </Option>
+                  ))}
+                </CustomSelect>
               </CustomFormItem>
             </CustomCol>
           </CustomRow>
@@ -107,7 +120,7 @@ const Addresses: React.FunctionComponent = () => {
             <CustomCol xs={16}>
               <CustomFormItem noStyle>
                 <CustomSelect showSearch allowClear placeholder={'Provincia'}>
-                  {provinces.map((province: ProvinceType, index: number) => (
+                  {provinces.map((province: GeneralType, index: number) => (
                     <Option key={`${index}`} value={`${province.value}`}>
                       {province.desc}
                     </Option>
