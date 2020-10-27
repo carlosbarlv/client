@@ -1,110 +1,110 @@
-import React, { ReactText, useEffect, useState } from 'react'
-import {
-  CustomInputNumber,
-  CustomTable,
-  CustomTitle,
-} from '.'
+import React, { useEffect } from 'react'
+import { CustomInputNumber, CustomTable, CustomTitle } from '.'
 import { ColumnType } from 'antd/lib/table'
 import { useDispatch, useSelector } from 'react-redux'
 import { StoreState } from '../reducers'
 import { getDenominations } from '../actions/general'
+import { Denominations } from '../reducers/general'
 
-type DeliveredTable = {
-    key: string
-    moneda:  string
-    cant: string 
-    monto: string 
-}
-type PropsType = {
+type DeliveredPropsType = {
   getTotalDelivered: (monto: number) => void
+  doRefresh: boolean
 }
 
-const EditableDeliveredTable = ({getTotalDelivered}: PropsType): React.ReactElement => {
+const EditableDeliveredTable = ({
+  getTotalDelivered,
+  doRefresh
+}: DeliveredPropsType): React.ReactElement => {
   const dispatch = useDispatch()
-  const { denominations }  = useSelector((state: StoreState) => state.general)
+  const denominations = useSelector((state: StoreState) => state.general.denominations).map(obj => ({...obj}) )
+  const [denominationsState, setDenominationsState] = React.useState(
+    denominations
+  )
+
+  useEffect(() => {
+    denominations.map(elem => elem.CANTIDAD_DIGITADA = 0)
+    setDenominationsState(denominations)
+  }, [doRefresh])
+  
   useEffect(() => {
     dispatch(getDenominations())
   }, [dispatch])
 
-  const dataDelivered = denominations.map((obj, i) => {
-    return({
-      key: `${i}`,
-      moneda: obj.DENOMINACION,
-      cant: '0',
-      monto: '0',
-    })
-  })
-  const [data, setData] = useState(dataDelivered)
+  const deliveredTitle = () => <CustomTitle level={3}>Entregado</CustomTitle>
 
-  const calculateTotalAmount = (newData: DeliveredTable[]) => {
-    let newAmount = 0
-    newData.forEach((obj) => {
-      if(obj.monto){newAmount += parseInt(obj.monto)}
-    })
-    getTotalDelivered(newAmount)
-  }
+  const handleOnChange = (
+    value: string | number | undefined,
+    record: Denominations,
+    type: 'amount' | 'quantity'
+  ) => {
+    const newData = [...denominationsState]
+    const recordIndex = newData.map((value) => value.DENOMINACION).indexOf(record.DENOMINACION)
 
-  const handleChange = (name: string ,value: string | ReactText | undefined, index: number) => {
-    const newData = [...data]
-    newData[index] = {...newData[index], [name]: value }
-    setData(newData)
-    if(parseInt(newData[index].moneda) > 0){
-      const monto = parseInt(newData[index].moneda.toString()) * parseInt(newData[index].cant)
-      newData[index] = {...newData[index], [name]: value, monto: `${monto}` }
-      setData(newData)
+    if(type === 'quantity'){
+      newData[recordIndex].CANTIDAD_DIGITADA = value as number
     }
-    calculateTotalAmount(newData)
+    if (type === 'quantity' && record.TIPO === 'MON') {
+      newData[recordIndex].MONTO = (value as number) * (record.DENOMINACION as number)
+    } 
+    if (type === 'amount') {
+      newData[recordIndex].MONTO = value as number
+    }
+    setDenominationsState(newData)
+    getTotalDelivered(
+      denominationsState.reduce((a, b) => {
+        return a + (b['MONTO'] || 0)
+      }, 0)
+    )
   }
 
-  const columsDelivered: ColumnType<DeliveredTable>[] = [
+  const columnas: ColumnType<Denominations>[] = [
     {
       title: 'Moneda',
-      dataIndex: 'moneda',
-      render: (text) => {
-        return parseInt(text) > 0 ? `RD$${text}` : text
-      },
-      // width: '5%'
+      render: (value: Denominations) => (
+        <span>
+          {value.TIPO === 'MON'
+            ? `${value.ID_MONEDA}$${value.DENOMINACION}`
+            : value.DESCRIPCION}
+        </span>
+      ),
     },
     {
       title: 'Cantidad',
-      dataIndex: 'cant',
-      render: (text, record ) =>  {
-        return (
-          <CustomInputNumber 
-            value={text}
-            onChange={e => handleChange('cant' ,e, parseInt(record.key))}
-          />
-        )
-      },
-      // width: '10%'
+      dataIndex: 'CANTIDAD',
+      render: (value: number, record: Denominations) => (
+        <CustomInputNumber
+          max={record.TIPO !== 'MON' ? 1 : Infinity}
+          defaultValue={0}
+          value={record.CANTIDAD_DIGITADA}
+          onChange={(inputValue: number | string | undefined) =>
+            handleOnChange(inputValue, record, 'quantity')
+          }
+        />
+      ),
     },
     {
       title: 'Monto',
-      dataIndex: 'monto',
-      align: 'right',
-      render: (text, record) => {
-        if(parseInt(record.moneda) > 0){
-          return text
-        }
-        return (
-          <CustomInputNumber
-          value={text}
-          onChange={e => handleChange('monto' ,e , parseInt(record.key))}
+      dataIndex: 'MONTO',
+      render: (value: number, record: Denominations) => (
+        <CustomInputNumber
+          onChange={(inputValue: string | number | undefined) =>
+            handleOnChange(inputValue, record, 'amount')
+          }
+          readOnly={record.TIPO === 'MON'}
+          value={value}
         />
-        )
-      },
-      // width: '40%'
+      ),
     },
   ]
-  const deliveredTitle = () => <CustomTitle level={3}>Entregado</CustomTitle>
 
   return (
     <>
-      <CustomTable 
+      <CustomTable
         title={deliveredTitle}
-        columns={columsDelivered} 
-        dataSource={data} 
-        bordered 
+        columns={columnas}
+        dataSource={denominationsState}
+        rowKey={(record: Denominations) => record.DENOMINACION}
+        bordered
       />
     </>
   )

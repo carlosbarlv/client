@@ -71,7 +71,7 @@ export type Coins = {
 }
 
 export type Denominations = {
-  DENOMINACION: string
+  DENOMINACION: string | number
   CANTIDAD: number
   DESCRIPCION: string
   FECHA_INSERCION: null | Date
@@ -81,6 +81,12 @@ export type Denominations = {
   ESTADO: string
   TIPO: string
   TR_ORIGEN: null
+  ID_MONEDA: string
+  CANTIDAD_DIGITADA?: number
+  MONTO?: number
+  REFERENCIA?: string
+  NUMERO_REFERENCIA?: string
+  ENTREGADO?: string
 }
 
 export type GeneralType = {

@@ -44,6 +44,7 @@ const IncomeDistributionModal = ({visible, width, dataInfo, totalAmount, hideMod
   const [totalAmountDelivered, setTotalAmountDelivered] = useState(0)
   const [totalAmountReceived, setTotalAmountReceived] = useState(0)
   const [pendingAmount, setPendingAmount] = useState(0)
+  const [doRefresh, setDoRefresh] = useState(true)
 
   const dispatch = useDispatch()
   useEffect(() => {
@@ -60,6 +61,13 @@ const IncomeDistributionModal = ({visible, width, dataInfo, totalAmount, hideMod
   }
   const getTotalReceived = (monto: number) => {
     setTotalAmountReceived(monto)
+  }
+
+  const handleOnCancel = () => {
+    setTotalAmountReceived(0)
+    setTotalAmountDelivered(0)
+    setDoRefresh(!doRefresh)
+    hideModal()
   }
 
   const columnsInfo: ColumnType<MainInfoTable>[] = [
@@ -120,8 +128,9 @@ const IncomeDistributionModal = ({visible, width, dataInfo, totalAmount, hideMod
       title={<CustomTitle level={3}>Distribución Ingresos</CustomTitle>}
       visible={visible}
       width={width}
-      onCancel={() => hideModal()}
-      onOk={() => hideModal()}
+      okButtonProps={{ disabled: pendingAmount !== 0 }}
+      onCancel={handleOnCancel}
+      onOk={hideModal}
     >
       <CustomRow gutter={[16, 32]} align={'top'}>
         <CustomCol xs={24} md={20}>
@@ -130,11 +139,11 @@ const IncomeDistributionModal = ({visible, width, dataInfo, totalAmount, hideMod
         <CustomCol xs={24} md={4}>
           {currentDate}
         </CustomCol>
-        <CustomCol xs={24} lg={16}>
-          <EditableReceivedTable getTotalReceived={getTotalReceived} />
+        <CustomCol span={14}>
+          <EditableReceivedTable getTotalReceived={getTotalReceived} doRefresh={doRefresh} />
         </CustomCol>
-        <CustomCol xs={24} lg={8}>
-          <EditableDeliveredTable getTotalDelivered={getTotalDelivered} />
+        <CustomCol span={10}>
+          <EditableDeliveredTable getTotalDelivered={getTotalDelivered} doRefresh={doRefresh} />
         </CustomCol>
 
         <CustomCol span={8} pull={4}>
@@ -165,10 +174,10 @@ const IncomeDistributionModal = ({visible, width, dataInfo, totalAmount, hideMod
                 <CustomInput value={numberFormat(totalAmountDelivered)} readOnly />
               </CustomSpace>
             </CustomFormItem>
-            <CustomFormItem label={'Pendiente'} >
+            <CustomFormItem label={'Pendiente'} hasFeedback  validateStatus={pendingAmount === 0 ? 'success' : 'error'} >
               <CustomSpace>
                 <CustomInputNumber placeholder={'RD$'} disabled/>
-                <CustomInput value={numberFormat(pendingAmount)} readOnly/>
+                <CustomInput value={numberFormat(pendingAmount)} allowClear readOnly/>
               </CustomSpace>
             </CustomFormItem>
           </CustomForm>

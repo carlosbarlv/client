@@ -1,4 +1,4 @@
-import React, { ReactText, useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import {
   CustomInput,
   CustomTable,
@@ -9,113 +9,126 @@ import CustomInputNumber from './CustomInputNumber'
 import { useDispatch, useSelector } from 'react-redux'
 import { StoreState } from '../reducers'
 import { getDenominations } from '../actions/general'
+import { Denominations } from '../reducers/general'
 
-type ReceivedTable = {
-  key: string
-  moneda:  string
-  cant: string
-  monto: string
-  referencia: string
-  noReferencia: string
-}
 type PropsType = {
   getTotalReceived: (monto: number) => void
+  doRefresh: boolean
 }
 
-const EditableReceivedTable = ({getTotalReceived}: PropsType): React.ReactElement => {
+const EditableReceivedTable = ({getTotalReceived, doRefresh}: PropsType): React.ReactElement => {
   const dispatch = useDispatch()
-  const { denominations }  = useSelector((state: StoreState) => state.general)
+  const denominations = useSelector((state: StoreState) => state.general.denominations).map(obj => ({...obj}) )
+  const [denominationsStateReceived, setDenominationsStateReceived] = React.useState(
+    denominations
+  )
+
+  useEffect(() => {
+    denominations.map(elem => elem.CANTIDAD_DIGITADA = 0)
+    setDenominationsStateReceived(denominations)
+  }, [doRefresh])
+
   useEffect(() => {
     dispatch(getDenominations())
   }, [dispatch])
-  const dataReceived = denominations.map((obj, i) => {
-    return({
-      key: `${i}`,
-      moneda: obj.DENOMINACION,
-      cant: '0',
-      monto: '0',
-      referencia: '',
-      noReferencia: ''
-    })
-  })
-  const [data, setData] = useState(dataReceived)
-
-  const calculateTotalAmount = (newData: ReceivedTable[]) => {
-    let newAmount = 0
-    newData.forEach((obj) => {
-      if(obj.monto){newAmount += parseInt(obj.monto)}
-    })
-    getTotalReceived(newAmount)
-  }
   
-  const handleChange = (name: string ,value: string | ReactText | undefined, index: number) => {
-    const newData = [...data]
-    newData[index] = {...newData[index], [name]: value }
-    setData(newData)
-    if(parseInt(newData[index].moneda) > 0){
-      const monto = parseInt(newData[index].moneda.toString()) * parseInt(newData[index].cant)
-      newData[index] = {...newData[index], [name]: value, monto: `${monto}` }
-      setData(newData)
+  const handleOnChange = (
+    value: string | number | undefined,
+    record: Denominations,
+    type: 'amount' | 'quantity' | 'reference' | 'noReference'
+  ) => {
+    const newData = [...denominationsStateReceived]
+    const recordIndex = newData.map((value) => value.DENOMINACION).indexOf(record.DENOMINACION)
+
+    switch (type) {
+      case 'quantity':
+        newData[recordIndex].CANTIDAD_DIGITADA = value as number
+        break;
+      case 'amount':
+        newData[recordIndex].MONTO = value as number
+        break;
+      case 'reference':
+        newData[recordIndex].REFERENCIA = value as string
+        break;
+      case 'noReference':
+        newData[recordIndex].NUMERO_REFERENCIA = value as string
+        break;
     }
-    calculateTotalAmount(newData)
+    if (type === 'quantity' && record.TIPO === 'MON') {
+      newData[recordIndex].MONTO = (value as number) * (record.DENOMINACION as number)
+    } 
+    setDenominationsStateReceived(newData)
+    getTotalReceived(
+      denominationsStateReceived.reduce((a, b) => {
+        return a + (b['MONTO'] || 0)
+      }, 0)
+    )
   }
 
-  const columsReceived: ColumnType<ReceivedTable>[] = [
+  const columsReceived: ColumnType<Denominations>[] = [
     {
       title: 'Moneda',
-      dataIndex: 'moneda',
-      render: (text) => {
-        return parseInt(text) > 0 ? `RD$${text}` : text
-      },
+      render: (value: Denominations) => (
+        <span>
+          {value.TIPO === 'MON'
+            ? `${value.ID_MONEDA}$${value.DENOMINACION}`
+            : value.DESCRIPCION}
+        </span>
+      ),
     },
     {
-      title: 'Cant',
-      dataIndex: 'cant',
-      render: (text, record ) =>  {
-        return (
-          <CustomInputNumber
-            value={text}
-            onChange={e => handleChange('cant' ,e , parseInt(record.key))}
-          />
-        )
-      }
+      title: 'Cantidad',
+      dataIndex: 'CANTIDAD',
+      render: (value: number, record: Denominations) => (
+        <CustomInputNumber
+          max={record.TIPO !== 'MON' ? 1 : Infinity}
+          defaultValue={0}
+          value={record.CANTIDAD_DIGITADA}
+          onChange={(inputValue: number | string | undefined) =>
+            handleOnChange(inputValue, record, 'quantity')
+          }
+        />
+      ),
     },
     {
       title: 'Monto',
-      dataIndex: 'monto',
+
+      dataIndex: 'MONTO',
       align: 'right',
-      render: (text, record) => {
-        if(parseInt(record.moneda) > 0){
-          return text
-        }
-        return (
-          <CustomInputNumber
-          value={text}
-          onChange={e => handleChange('monto' ,e , parseInt(record.key))}
+      render: (value: number, record: Denominations) => (
+        <CustomInputNumber
+          onChange={(inputValue: string | number | undefined) =>
+            handleOnChange(inputValue, record, 'amount')
+          }
+          readOnly={record.TIPO === 'MON'}
+          value={value}
         />
-        )
-      }
+      ),
     },
     {
       title: 'Referencia',
-      dataIndex: 'referencia',
-      render: (text, record) => {
+      dataIndex: 'REFERENCIA',
+      render: (value: string, record: Denominations) => {
         return (
           <CustomInput 
-            value={text}
-            onChange={e => handleChange('referencia' ,e.target.value, parseInt(record.key))}
+            value={value}
+            onChange={(e) =>
+              handleOnChange(e.target.value, record, 'reference')
+            }
           />
         )
       },
     },
     {
       title: 'No. Referencia',
-      dataIndex: 'noReferencia',
-      render: (text, record) => {
+      dataIndex: 'NUMERO_REFERENCIA',
+      render: (value: string, record: Denominations) => {
         return (
           <CustomInput 
-            value={text}
-            onChange={e => handleChange('noReferencia' ,e.target.value, parseInt(record.key))}
+            value={value}
+            onChange={(e) => 
+              handleOnChange(e.target.value, record, 'noReference')
+            }
           />
         )
       }
@@ -128,7 +141,8 @@ const EditableReceivedTable = ({getTotalReceived}: PropsType): React.ReactElemen
       <CustomTable 
         title={receivedTitle}
         columns={columsReceived} 
-        dataSource={data} 
+        dataSource={denominationsStateReceived} 
+        rowKey={(record: Denominations) => record.DENOMINACION}
         bordered 
       />
     </>

@@ -274,6 +274,11 @@ export const getDenominationsFailure = (): GeneralGetDenominationsFailureAction 
   }
 }
 
+export type GeneralSetDenominationEmpty = {
+  type: typeof GENERAL_GET_DENOMINATIONS_SUCCESS
+  denominations: Denominations[]
+}
+
 export const getNationalitiesFailure = (): GeneralGetNationalitiesFailureAction => {
   return {
     type: GENERAL_GET_NATIONALITIES_FAILURE,
