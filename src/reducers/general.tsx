@@ -26,6 +26,7 @@ import {
   GENERAL_GET_SECTORS,
   GENERAL_GET_SECTORS_FAILURE,
   GENERAL_GET_SECTORS_SECCESS,
+  SET_GENERAL_STORE_DATA,
 } from '../constants/actions'
 import {
   GeneralActivityParametersAction,
@@ -37,6 +38,7 @@ import {
   GeneralPartnersCategoriesAction,
   GeneralProvincesAction,
   GeneralSectorsAction,
+  SetGeneralStoreDataAction,
 } from '../actions/general'
 
 export type PartnersCategories = {
@@ -105,6 +107,12 @@ export type GeneralState = {
   activityParameters: ActivityParameters
   provinces: GeneralType[]
   denominations: Denominations[]
+  generalStore: {
+    denominationsStore: {
+      received: Denominations[] | [],
+      delivered: Denominations[] | []
+    }
+  }
   countries: GeneralType[]
   sectors: GeneralType[]
   municipalities: GeneralType[]
@@ -117,6 +125,12 @@ const initialState = {
   activityParameters: { '': '' },
   provinces: [],
   denominations: [],
+  generalStore: {
+    denominationsStore: {
+      received: [],
+      delivered: [],
+    },
+  },
   countries: [],
   sectors: [],
   municipalities: [],
@@ -134,6 +148,7 @@ const general = (
     | GeneralCountriesAction
     | GeneralSectorsAction
     | GeneralMunicipalitiesAction
+    | SetGeneralStoreDataAction
 ): GeneralState => {
   switch (action.type) {
     case GENERAL_GET_NATIONALITIES_SUCCESS: {
@@ -190,6 +205,11 @@ const general = (
         municipalities: action.municipalities,
       }
     }
+    case SET_GENERAL_STORE_DATA:
+      return {
+        ...state,
+        generalStore: action.generalStore,
+      }
     case GENERAL_GET_PROVINCES:
     case GENERAL_GET_PROVINCES_FAILURE:
     case GENERAL_GET_ACTIVITY_PARAMETERS:

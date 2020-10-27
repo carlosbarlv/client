@@ -1,68 +1,64 @@
 import React, { useEffect } from 'react'
-import {
-  CustomInput,
-  CustomTable,
-  CustomTitle,
-} from '../components'
+import { CustomInput, CustomTable, CustomTitle } from '../components'
 import { ColumnType } from 'antd/lib/table'
 import CustomInputNumber from './CustomInputNumber'
 import { useDispatch, useSelector } from 'react-redux'
 import { StoreState } from '../reducers'
-import { getDenominations } from '../actions/general'
+import { getDenominations, setGeneralStoreData } from '../actions/general'
 import { Denominations } from '../reducers/general'
 
-type PropsType = {
-  getTotalReceived: (monto: number) => void
-  doRefresh: boolean
-}
-
-const EditableReceivedTable = ({getTotalReceived, doRefresh}: PropsType): React.ReactElement => {
+const EditableReceivedTable = (): React.ReactElement => {
   const dispatch = useDispatch()
-  const denominations = useSelector((state: StoreState) => state.general.denominations).map(obj => ({...obj}) )
-  const [denominationsStateReceived, setDenominationsStateReceived] = React.useState(
-    denominations
+  const { denominations, generalStore } = useSelector(
+    (state: StoreState) => state.general
   )
-
-  useEffect(() => {
-    denominations.map(elem => elem.CANTIDAD_DIGITADA = 0)
-    setDenominationsStateReceived(denominations)
-  }, [doRefresh])
-
   useEffect(() => {
     dispatch(getDenominations())
   }, [dispatch])
-  
+
+  useEffect(() => {
+    generalStore.denominationsStore.received = denominations.map(
+      (value: Denominations) => ({ ...value })
+    )
+  }, [dispatch, denominations, generalStore])
+
   const handleOnChange = (
     value: string | number | undefined,
     record: Denominations,
     type: 'amount' | 'quantity' | 'reference' | 'noReference'
   ) => {
-    const newData = [...denominationsStateReceived]
-    const recordIndex = newData.map((value) => value.DENOMINACION).indexOf(record.DENOMINACION)
-
+    const recordIndex = (generalStore.denominationsStore.received as Array<
+      Denominations
+    >)
+      .map((value) => value.DENOMINACION)
+      .indexOf(record.DENOMINACION)
     switch (type) {
       case 'quantity':
-        newData[recordIndex].CANTIDAD_DIGITADA = value as number
-        break;
+        generalStore.denominationsStore.received[
+          recordIndex
+        ].CANTIDAD_DIGITADA = value as number
+        break
       case 'amount':
-        newData[recordIndex].MONTO = value as number
-        break;
+        generalStore.denominationsStore.received[
+          recordIndex
+        ].MONTO = value as number
+        break
       case 'reference':
-        newData[recordIndex].REFERENCIA = value as string
-        break;
+        generalStore.denominationsStore.received[
+          recordIndex
+        ].REFERENCIA = value as string
+        break
       case 'noReference':
-        newData[recordIndex].NUMERO_REFERENCIA = value as string
-        break;
+        generalStore.denominationsStore.received[
+          recordIndex
+        ].NUMERO_REFERENCIA = value as string
+        break
     }
     if (type === 'quantity' && record.TIPO === 'MON') {
-      newData[recordIndex].MONTO = (value as number) * (record.DENOMINACION as number)
-    } 
-    setDenominationsStateReceived(newData)
-    getTotalReceived(
-      denominationsStateReceived.reduce((a, b) => {
-        return a + (b['MONTO'] || 0)
-      }, 0)
-    )
+      generalStore.denominationsStore.received[recordIndex].MONTO =
+        (value as number) * (record.DENOMINACION as number)
+    }
+    dispatch(setGeneralStoreData(generalStore))
   }
 
   const columsReceived: ColumnType<Denominations>[] = [
@@ -78,12 +74,11 @@ const EditableReceivedTable = ({getTotalReceived, doRefresh}: PropsType): React.
     },
     {
       title: 'Cantidad',
-      dataIndex: 'CANTIDAD',
+      dataIndex: 'CANTIDAD_DIGITADA',
       render: (value: number, record: Denominations) => (
         <CustomInputNumber
           max={record.TIPO !== 'MON' ? 1 : Infinity}
-          defaultValue={0}
-          value={record.CANTIDAD_DIGITADA}
+          value={record.CANTIDAD_DIGITADA || 0}
           onChange={(inputValue: number | string | undefined) =>
             handleOnChange(inputValue, record, 'quantity')
           }
@@ -92,16 +87,20 @@ const EditableReceivedTable = ({getTotalReceived, doRefresh}: PropsType): React.
     },
     {
       title: 'Monto',
-
       dataIndex: 'MONTO',
       align: 'right',
       render: (value: number, record: Denominations) => (
         <CustomInputNumber
+          disabled={
+            record.CANTIDAD_DIGITADA === 0 ||
+            record.CANTIDAD_DIGITADA === undefined
+          }
           onChange={(inputValue: string | number | undefined) =>
             handleOnChange(inputValue, record, 'amount')
           }
+          min={0}
           readOnly={record.TIPO === 'MON'}
-          value={value}
+          value={value || 0}
         />
       ),
     },
@@ -110,7 +109,7 @@ const EditableReceivedTable = ({getTotalReceived, doRefresh}: PropsType): React.
       dataIndex: 'REFERENCIA',
       render: (value: string, record: Denominations) => {
         return (
-          <CustomInput 
+          <CustomInput
             value={value}
             onChange={(e) =>
               handleOnChange(e.target.value, record, 'reference')
@@ -124,26 +123,27 @@ const EditableReceivedTable = ({getTotalReceived, doRefresh}: PropsType): React.
       dataIndex: 'NUMERO_REFERENCIA',
       render: (value: string, record: Denominations) => {
         return (
-          <CustomInput 
+          <CustomInput
             value={value}
-            onChange={(e) => 
+            onChange={(e) =>
               handleOnChange(e.target.value, record, 'noReference')
             }
           />
         )
-      }
+      },
     },
   ]
   const receivedTitle = () => <CustomTitle level={3}>Recibido</CustomTitle>
 
   return (
     <>
-      <CustomTable 
-        title={receivedTitle}
-        columns={columsReceived} 
-        dataSource={denominationsStateReceived} 
+      <CustomTable
+        bordered
+        columns={columsReceived}
+        dataSource={generalStore.denominationsStore.received}
+        pagination={false}
         rowKey={(record: Denominations) => record.DENOMINACION}
-        bordered 
+        title={receivedTitle}
       />
     </>
   )

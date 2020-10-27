@@ -26,6 +26,7 @@ import {
   GENERAL_GET_SECTORS,
   GENERAL_GET_SECTORS_FAILURE,
   GENERAL_GET_SECTORS_SECCESS,
+  SET_GENERAL_STORE_DATA,
 } from '../constants/actions'
 import {
   ActivityParameters,
@@ -333,6 +334,16 @@ export type GeneralGetProvincesFailureAction = {
   type: typeof GENERAL_GET_PROVINCES_FAILURE
 }
 
+export type SetGeneralStoreData = {
+  type: typeof SET_GENERAL_STORE_DATA
+  generalStore: {
+    denominationsStore: {
+      delivered: Denominations[]
+      received: Denominations[]
+    },
+  }
+}
+
 export const getProvincesFailure = (): GeneralGetProvincesFailureAction => {
   return {
     type: GENERAL_GET_PROVINCES_FAILURE,
@@ -354,6 +365,18 @@ export const getSectorsFailure = (): GeneralGetSectorsFailureAction => {
 export const getMunicipalitiesFailure = (): GeneralGetMunicipalitiesFailureAction => {
   return {
     type: GENERAL_GET_MUNICIPALITIES_FAILURE,
+  }
+}
+
+export const setGeneralStoreData = (generalStore: {
+  denominationsStore: {
+    delivered: Denominations[]
+    received: Denominations[]
+  }
+}): SetGeneralStoreData => {
+  return {
+    type: SET_GENERAL_STORE_DATA,
+    generalStore,
   }
 }
 
@@ -401,3 +424,5 @@ export type GeneralMunicipalitiesAction =
   | GeneralGetMunicipalitiesAction
   | GeneralGetMunicipalitiesFailureAction
   | GeneralGetMunicipalitiesSuccessAction
+
+export type SetGeneralStoreDataAction = SetGeneralStoreData

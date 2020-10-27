@@ -1,11 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import {
-  CustomCol,
-  CustomModal,
-  CustomRow,
-  CustomTable,
-  CustomTitle,
-} from '.'
+import React, { useEffect } from 'react'
+import { CustomCol, CustomModal, CustomRow, CustomTable, CustomTitle } from '.'
 import { ColumnType } from 'antd/lib/table'
 import { currentDate, numberFormat } from '../utils/general'
 import CustomFormItem from './CustomFormItem'
@@ -17,8 +11,10 @@ import CustomCheckBox from './CustomCheckBox'
 import EditableReceivedTable from './EditableReceivedTable'
 import EditableDeliveredTable from './EditableDeliveredTable'
 import { TransitIncomeTable } from './TransitIncome'
-import { useDispatch } from 'react-redux'
-import { getDenominations } from '../actions/general'
+import { useDispatch, useSelector } from 'react-redux'
+import { getDenominations, setGeneralStoreData } from '../actions/general'
+import { StoreState } from '../reducers'
+import { Denominations } from '../reducers/general'
 
 type PropsType = {
   visible: boolean
@@ -40,35 +36,19 @@ type DetailsDocTable = {
   detalleDoc: React.ReactElement
 }
 
-const IncomeDistributionModal = ({visible, width, dataInfo, totalAmount, hideModal}: PropsType): React.ReactElement => {
-  const [totalAmountDelivered, setTotalAmountDelivered] = useState(0)
-  const [totalAmountReceived, setTotalAmountReceived] = useState(0)
-  const [pendingAmount, setPendingAmount] = useState(0)
-  const [doRefresh, setDoRefresh] = useState(true)
+const IncomeDistributionModal = ({
+  visible,
+  width,
+  dataInfo,
+  totalAmount,
+  hideModal,
+}: PropsType): React.ReactElement => {
+  const { generalStore } = useSelector((state: StoreState) => state.general)
 
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getDenominations())
   }, [dispatch])
-  
-  useEffect(() => {
-    const referenceAmount = totalAmountReceived - totalAmountDelivered
-    setPendingAmount(referenceAmount - totalAmount)
-  }, [totalAmountReceived, totalAmountDelivered, totalAmount])
- 
-  const getTotalDelivered = (monto: number) => {
-    setTotalAmountDelivered(monto)
-  }
-  const getTotalReceived = (monto: number) => {
-    setTotalAmountReceived(monto)
-  }
-
-  const handleOnCancel = () => {
-    setTotalAmountReceived(0)
-    setTotalAmountDelivered(0)
-    setDoRefresh(!doRefresh)
-    hideModal()
-  }
 
   const columnsInfo: ColumnType<MainInfoTable>[] = [
     {
@@ -104,9 +84,9 @@ const IncomeDistributionModal = ({visible, width, dataInfo, totalAmount, hideMod
   ]
   const dataDetail: DetailsDocTable[] = [
     {
-      key: '0', 
+      key: '0',
       detalleDoc: (
-        <CustomForm labelCol={{sm: 7}}>
+        <CustomForm labelCol={{ sm: 7 }}>
           <CustomFormItem label={'Fecha'}>
             <CustomInput placeholder={'10/08/2020'} />
           </CustomFormItem>
@@ -114,12 +94,73 @@ const IncomeDistributionModal = ({visible, width, dataInfo, totalAmount, hideMod
             <CustomInput size={'large'} placeholder={'Yusepiz Rosario'} />
           </CustomFormItem>
           <CustomFormItem label={'Beneficiario'}>
-            <CustomInput size={"large"} placeholder={'Alejandro Genao'} />
+            <CustomInput size={'large'} placeholder={'Alejandro Genao'} />
           </CustomFormItem>
         </CustomForm>
-      )
-    }
+      ),
+    },
   ]
+
+  const received = () =>
+    numberFormat(
+      (generalStore.denominationsStore.received as Array<Denominations>).reduce(
+        (previous: number, current: Denominations) =>
+          previous + (current.MONTO || 0),
+        0
+      )
+    )
+
+  const delivered = () =>
+    numberFormat(
+      (generalStore.denominationsStore.delivered as Array<
+        Denominations
+      >).reduce(
+        (preview: number, current: Denominations) =>
+          preview + (current.MONTO || 0),
+        0
+      )
+    )
+
+  const pending = () =>
+    numberFormat(
+      (generalStore.denominationsStore.received as Array<Denominations>).reduce(
+        (previous: number, current: Denominations) =>
+          previous + (current.MONTO || 0),
+        0
+      ) -
+        (generalStore.denominationsStore.delivered as Array<
+          Denominations
+        >).reduce(
+          (previous: number, current: Denominations) =>
+            previous + (current.MONTO || 0),
+          0
+        ) -
+        totalAmount
+    )
+
+  const handleOnCancel = () => {
+    dispatch(
+      setGeneralStoreData({
+        denominationsStore: {
+          received: (generalStore.denominationsStore.received as Array<
+            Denominations
+          >).map((value: Denominations) => {
+            value.CANTIDAD_DIGITADA = 0
+            value.MONTO = 0
+            return value
+          }),
+          delivered: (generalStore.denominationsStore.delivered as Array<
+            Denominations
+          >).map((value: Denominations) => {
+            value.CANTIDAD_DIGITADA = 0
+            value.MONTO = 0
+            return value
+          }),
+        },
+      })
+    )
+    hideModal()
+  }
 
   return (
     <CustomModal
@@ -128,56 +169,60 @@ const IncomeDistributionModal = ({visible, width, dataInfo, totalAmount, hideMod
       title={<CustomTitle level={3}>Distribución Ingresos</CustomTitle>}
       visible={visible}
       width={width}
-      okButtonProps={{ disabled: pendingAmount !== 0 }}
       onCancel={handleOnCancel}
       onOk={hideModal}
     >
       <CustomRow gutter={[16, 32]} align={'top'}>
         <CustomCol xs={24} md={20}>
-          <CustomTable columns={columnsInfo} dataSource={dataInfo} pagination={false} bordered />
+          <CustomTable
+            bordered
+            columns={columnsInfo}
+            dataSource={dataInfo}
+            pagination={false}
+          />
         </CustomCol>
         <CustomCol xs={24} md={4}>
           {currentDate}
         </CustomCol>
-        <CustomCol span={14}>
-          <EditableReceivedTable getTotalReceived={getTotalReceived} doRefresh={doRefresh} />
+        <CustomCol xs={24} lg={16}>
+          <EditableReceivedTable />
         </CustomCol>
-        <CustomCol span={10}>
-          <EditableDeliveredTable getTotalDelivered={getTotalDelivered} doRefresh={doRefresh} />
+        <CustomCol xs={24} lg={8}>
+          <EditableDeliveredTable />
         </CustomCol>
 
         <CustomCol span={8} pull={4}>
-          <CustomTable 
-            columns={columsDetail} 
-            dataSource={dataDetail} 
-            pagination={false} 
+          <CustomTable
             bordered
+            columns={columsDetail}
+            dataSource={dataDetail}
+            pagination={false}
           />
         </CustomCol>
         <CustomCol xs={24} md={12}>
-          <CustomForm labelCol={{sm: 8}}>
-            <CustomFormItem label={'Total Operaciones'} >
+          <CustomForm labelCol={{ sm: 8 }}>
+            <CustomFormItem label={'Total Operaciones'}>
               <CustomSpace>
-                <CustomInputNumber placeholder={'RD$'} disabled/>
-                <CustomInput value={numberFormat(totalAmount)} readOnly/>
+                <CustomInputNumber disabled placeholder={'RD$'} />
+                <CustomInput value={numberFormat(totalAmount)} readOnly />
               </CustomSpace>
             </CustomFormItem>
-            <CustomFormItem label={'Recibido'} >
+            <CustomFormItem label={'Recibido'}>
               <CustomSpace>
-                <CustomInputNumber placeholder={'RD$'} disabled/>
-                <CustomInput value={numberFormat(totalAmountReceived)} readOnly/>
+                <CustomInputNumber placeholder={'RD$'} disabled />
+                <CustomInput value={received()} readOnly />
               </CustomSpace>
             </CustomFormItem>
-            <CustomFormItem label={'Entregado'} >
+            <CustomFormItem label={'Entregado'}>
               <CustomSpace>
-                <CustomInputNumber placeholder={'RD$'} disabled/>
-                <CustomInput value={numberFormat(totalAmountDelivered)} readOnly />
+                <CustomInputNumber placeholder={'RD$'} disabled />
+                <CustomInput value={delivered()} readOnly />
               </CustomSpace>
             </CustomFormItem>
-            <CustomFormItem label={'Pendiente'} hasFeedback  validateStatus={pendingAmount === 0 ? 'success' : 'error'} >
+            <CustomFormItem label={'Pendiente'}>
               <CustomSpace>
-                <CustomInputNumber placeholder={'RD$'} disabled/>
-                <CustomInput value={numberFormat(pendingAmount)} allowClear readOnly/>
+                <CustomInputNumber placeholder={'RD$'} disabled />
+                <CustomInput value={pending()} readOnly />
               </CustomSpace>
             </CustomFormItem>
           </CustomForm>
@@ -189,4 +234,5 @@ const IncomeDistributionModal = ({visible, width, dataInfo, totalAmount, hideMod
     </CustomModal>
   )
 }
+
 export default IncomeDistributionModal
