@@ -138,6 +138,11 @@ const IncomeDistributionModal = ({
         totalAmount
     )
 
+  const documentDetailsIsVisible = (): boolean => {
+    return (generalStore.denominationsStore.received as Array<Denominations>)
+    .some(elem => elem.TIPO !== 'MON' && elem.CANTIDAD_DIGITADA )
+  }
+
   const handleOnCancel = () => {
     dispatch(
       setGeneralStoreData({
@@ -193,12 +198,15 @@ const IncomeDistributionModal = ({
         </CustomCol>
 
         <CustomCol span={8} pull={4}>
-          <CustomTable
-            bordered
-            columns={columsDetail}
-            dataSource={dataDetail}
-            pagination={false}
-          />
+          {
+            documentDetailsIsVisible() &&
+            <CustomTable
+              bordered
+              columns={columsDetail}
+              dataSource={dataDetail}
+              pagination={false}
+            />
+          }
         </CustomCol>
         <CustomCol xs={24} md={12}>
           <CustomForm labelCol={{ sm: 8 }}>
