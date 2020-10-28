@@ -82,6 +82,10 @@ const EditableDeliveredTable = (): React.ReactElement => {
       dataIndex: 'MONTO',
       render: (value: number, record: Denominations) => (
         <CustomInputNumber
+          disabled={
+            record.CANTIDAD_DIGITADA === 0 ||
+            record.CANTIDAD_DIGITADA === undefined
+          }
           onChange={(inputValue: string | number | undefined) =>
             handleOnChange(inputValue, record, 'amount')
           }

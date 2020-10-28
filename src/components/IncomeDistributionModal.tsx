@@ -122,7 +122,7 @@ const IncomeDistributionModal = ({
     )
 
   const pending = () =>
-    numberFormat(
+    (
       (generalStore.denominationsStore.received as Array<Denominations>).reduce(
         (previous: number, current: Denominations) =>
           previous + (current.MONTO || 0),
@@ -171,6 +171,7 @@ const IncomeDistributionModal = ({
       width={width}
       onCancel={handleOnCancel}
       onOk={hideModal}
+      okButtonProps={{disabled: pending() !== 0}}
     >
       <CustomRow gutter={[16, 32]} align={'top'}>
         <CustomCol xs={24} md={20}>
@@ -219,10 +220,10 @@ const IncomeDistributionModal = ({
                 <CustomInput value={delivered()} readOnly />
               </CustomSpace>
             </CustomFormItem>
-            <CustomFormItem label={'Pendiente'}>
+            <CustomFormItem label={'Pendiente'} hasFeedback validateStatus={pending() === 0 ? 'success': 'error'} >
               <CustomSpace>
-                <CustomInputNumber placeholder={'RD$'} disabled />
-                <CustomInput value={pending()} readOnly />
+                <CustomInputNumber  placeholder={'RD$'} disabled />
+                <CustomInput value={numberFormat(pending())} readOnly />
               </CustomSpace>
             </CustomFormItem>
           </CustomForm>
