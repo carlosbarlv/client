@@ -13,6 +13,7 @@ import {
   CustomTitle,
   RelatedRecord,
 } from '.'
+import { useResetFormOnCloseModal } from './AddressesForm'
 
 const columns: ColumnType<PersonType>[] = [
   {
@@ -40,11 +41,14 @@ const LegalRepresentatives = (props: {
   const [form] = Form.useForm()
   const [modalVisibilityState, setModalVisibilityState] = React.useState(false)
 
+  useResetFormOnCloseModal(form, modalVisibilityState)
+
   const handleOnFinish = () => {
     const dataFields = form.getFieldsValue()
 
     onModalFormChange(dataFields, 'RELACIONADOS')
     saveData()
+    form.submit()
     setModalVisibilityState(false)
   }
 

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { Select } from 'antd'
-import { CheckboxChangeEvent } from 'antd/lib/checkbox'
 import {
   CustomCheckBox,
   CustomCol,
@@ -12,37 +11,35 @@ import {
   CustomTextArea,
   CustomTitle,
 } from '.'
-import { defaultBreakpoints, labelColFullWidth } from '../themes'
-import { getCountries, getMunicipalities, getProvinces, getSectors } from '../actions/general'
+import {
+  getCountries,
+  getMunicipalities,
+  getProvinces,
+  getSectors,
+} from '../actions/general'
 import { StoreState } from '../reducers'
 import { GeneralType } from '../reducers/general'
 import { useDispatch, useSelector } from 'react-redux'
+import { defaultBreakpoints, labelColFullWidth } from '../themes'
 
 const Addresses: React.FunctionComponent = () => {
   const { Option } = Select
   const dispatch = useDispatch()
+  const [checkboxState, setCheckboxState] = useState(false)
+  const [countryData, setCountryData] = useState('')
+  const [provinceData, setProvinceData] = useState('')
+  const [municipalityData, setMunicipalityData] = useState('')
+  const [sectorData, setSectorData] = useState('')
+  const [homeTypeState, setHomeTypeState] = useState('')
   const { countries, municipalities, provinces, sectors } = useSelector(
     (state: StoreState) => state.general
   )
-  const [checkboxState, setCheckboxState] = useState(false)
-  const [countryData, setCountryData] = useState('')
 
   useEffect(() => {
-    dispatch(getCountries())
-    dispatch(getProvinces(countryData))
-    dispatch(getMunicipalities())
-    dispatch(
-      getSectors({
-        condition: {
-          ID_PROVINCIA: '1100',
-          ID_MUNICIPIO: '1101',
-        },
-      })
-    )
+    if (countryData === '') {
+      dispatch(getCountries())
+    }
   }, [dispatch, countryData])
-
-  const handleOnChangeCheckbox = (e: CheckboxChangeEvent) =>
-    setCheckboxState(e.target.checked)
 
   return (
     <CustomRow justify={'center'}>
@@ -55,16 +52,14 @@ const Addresses: React.FunctionComponent = () => {
           name={'TIPO_DIRECCION'}
           rules={[{ required: false }]}
         >
-          <CustomSelect placeholder={'Tipo dirección'}>
-            {/* <Option onChange={handleOnChange}>Tipo direccion</Option> */}
-          </CustomSelect>
+          <CustomSelect placeholder={'Tipo dirección'}></CustomSelect>
         </CustomFormItem>
       </CustomCol>
       <CustomCol {...defaultBreakpoints} flex={4}>
         <CustomFormItem name={'PRINCIPAL'}>
           <CustomCheckBox
             checked={checkboxState}
-            onChange={handleOnChangeCheckbox}
+            onChange={(e) => setCheckboxState(e.target.checked)}
           >
             ¿Principal?
           </CustomCheckBox>
@@ -72,32 +67,42 @@ const Addresses: React.FunctionComponent = () => {
       </CustomCol>
       <CustomCol {...defaultBreakpoints} flex={2}>
         <CustomFormItem
+          initialValue={'A'}
           label={'Estado'}
           name={'ESTADO'}
-          rules={[{ required: false }]}
+          rules={[{ required: true }]}
         >
-          <CustomSelect placeholder={'Estado'}></CustomSelect>
+          <CustomSelect>
+            <Option value={'A'}>Activo</Option>
+            <Option value={'I'}>Inactivo</Option>
+          </CustomSelect>
         </CustomFormItem>
       </CustomCol>
       <CustomCol xs={24}>
         <CustomFormItem
           label={'País'}
           name={'PAIS'}
-          rules={[{ required: false }]}
+          rules={[{ required: true }]}
           {...labelColFullWidth}
         >
           <CustomRow>
             <CustomCol xs={8}>
-              <CustomFormItem noStyle>
-                <CustomInput disabled placeholder={'ID País'} />
+              <CustomFormItem
+                name={'ID_PAIS'}
+                noStyle
+              >
+                <CustomInput
+                  value={countryData}
+                  disabled
+                  placeholder={'ID País'}
+                />
               </CustomFormItem>
             </CustomCol>
             <CustomCol xs={16}>
               <CustomFormItem noStyle>
                 <CustomSelect
-                  onChange={(value) => {
-                    setCountryData(`${value}`)
-                  }}
+                  onChange={(value) => setCountryData(`${value}`)}
+                  onSelect={(value) => dispatch(getProvinces(`${value}`))}
                   showSearch
                   allowClear
                   placeholder={'País'}
@@ -117,18 +122,35 @@ const Addresses: React.FunctionComponent = () => {
         <CustomFormItem
           label={'Provincia'}
           name={'PROVINCIA'}
-          rules={[{ required: false }]}
+          rules={[{ required: true }]}
           {...labelColFullWidth}
         >
           <CustomRow>
             <CustomCol xs={8}>
-              <CustomFormItem noStyle>
-                <CustomInput disabled placeholder={'ID Provincia'} />
+              <CustomFormItem name={'ID_PROVINCIA'} noStyle>
+                <CustomInput
+                  value={provinceData}
+                  disabled
+                  placeholder={'ID Provincia'}
+                />
               </CustomFormItem>
             </CustomCol>
             <CustomCol xs={16}>
               <CustomFormItem noStyle>
-                <CustomSelect showSearch allowClear placeholder={'Provincia'}>
+                <CustomSelect
+                  onChange={(value) => setProvinceData(`${value}`)}
+                  onSelect={(value) =>
+                    dispatch(
+                      getMunicipalities({
+                        condition: { ID_PROVINCIA: `${value}` },
+                      })
+                    )
+                  }
+                  showSearch
+                  allowClear
+                  disabled={countryData === ''}
+                  placeholder={'Provincia'}
+                >
                   {provinces.map((province: GeneralType, index: number) => (
                     <Option key={`${index}`} value={`${province.value}`}>
                       {province.desc}
@@ -144,18 +166,38 @@ const Addresses: React.FunctionComponent = () => {
         <CustomFormItem
           label={'Municipio'}
           name={'MUNICIPIO'}
-          rules={[{ required: false }]}
+          rules={[{ required: true }]}
           {...labelColFullWidth}
         >
           <CustomRow>
             <CustomCol xs={8}>
-              <CustomFormItem noStyle>
-                <CustomInput disabled placeholder={'ID Municipio'} />
+              <CustomFormItem name={'ID_MUNICIPIO'} noStyle>
+                <CustomInput
+                  value={municipalityData}
+                  disabled
+                  placeholder={'ID Municipio'}
+                />
               </CustomFormItem>
             </CustomCol>
             <CustomCol xs={16}>
               <CustomFormItem noStyle>
-                <CustomSelect showSearch allowClear placeholder={'Municipio'}>
+                <CustomSelect
+                  onSelect={(value) => {
+                    dispatch(
+                      getSectors({
+                        condition: {
+                          ID_PROVINCIA: provinceData,
+                          ID_MUNICIPIO: `${value}`,
+                        },
+                      })
+                    )
+                  }}
+                  onChange={(value) => setMunicipalityData(`${value}`)}
+                  disabled={provinceData === ''}
+                  showSearch
+                  allowClear
+                  placeholder={'Municipio'}
+                >
                   {municipalities.map(
                     (municipality: GeneralType, index: number) => (
                       <Option key={`${index}`} value={`${municipality.value}`}>
@@ -173,18 +215,28 @@ const Addresses: React.FunctionComponent = () => {
         <CustomFormItem
           label={'Sector'}
           name={'SECTOR'}
-          rules={[{ required: false }]}
+          rules={[{ required: true }]}
           {...labelColFullWidth}
         >
           <CustomRow>
             <CustomCol xs={8}>
-              <CustomFormItem noStyle>
-                <CustomInput disabled placeholder={'ID SECTOR'} />
+              <CustomFormItem name={'ID_SECTOR'} noStyle>
+                <CustomInput
+                  value={sectorData}
+                  disabled
+                  placeholder={'ID Sector'}
+                />
               </CustomFormItem>
             </CustomCol>
             <CustomCol xs={16}>
               <CustomFormItem noStyle>
-                <CustomSelect showSearch allowClear placeholder={'Sector'}>
+                <CustomSelect
+                  onChange={(value) => setSectorData(`${value}`)}
+                  disabled={municipalityData === ''}
+                  showSearch
+                  allowClear
+                  placeholder={'Sector'}
+                >
                   {sectors.map((sector: GeneralType, index: number) => (
                     <Option key={`${index}`} value={`${sector.value}`}>
                       {sector.desc}
@@ -200,31 +252,73 @@ const Addresses: React.FunctionComponent = () => {
         <CustomFormItem
           label={'Calle'}
           name={'CALLE'}
-          rules={[{ required: false }]}
+          rules={[{ required: true }]}
         >
           <CustomInput placeholder={'Calle'} />
         </CustomFormItem>
       </CustomCol>
       <CustomCol {...defaultBreakpoints}>
-        <CustomFormItem label={'Casa'} name={'CASA'}>
-          <CustomInput placeholder={'Casa'} />
+        <CustomFormItem
+          label={'Casa'}
+          name={'CASA'}
+          rules={[
+            {
+              required: homeTypeState !== 'A',
+            },
+          ]}
+        >
+          <CustomInput
+            onChange={(e) => {
+              setHomeTypeState(e.target.value.length ? 'C' : '')
+            }}
+            disabled={homeTypeState === 'A'}
+            placeholder={'Casa'}
+          />
         </CustomFormItem>
       </CustomCol>
       <CustomCol {...defaultBreakpoints}>
-        <CustomFormItem label={'Edificio'} name={'EDIFICIO'}>
-          <CustomInput placeholder={'Edificio'} />
+        <CustomFormItem
+          label={'Edificio'}
+          name={'EDIFICIO'}
+          rules={[
+            {
+              required: homeTypeState !== 'C',
+            },
+          ]}
+        >
+          <CustomInput
+            onChange={(e) => {
+              setHomeTypeState(e.target.value.length ? 'A' : '')
+            }}
+            disabled={homeTypeState === 'C'}
+            placeholder={'Edificio'}
+          />
         </CustomFormItem>
       </CustomCol>
       <CustomCol {...defaultBreakpoints}>
-        <CustomFormItem label={'Apartamento'} name={'APARTAMENTO'}>
-          <CustomInput placeholder={'Apartamento'} />
+        <CustomFormItem
+          label={'Apartamento'}
+          name={'APARTAMENTO'}
+          rules={[
+            {
+              required: homeTypeState !== 'C',
+            },
+          ]}
+        >
+          <CustomInput
+            onChange={(e) => {
+              setHomeTypeState(e.target.value.length ? 'A' : '')
+            }}
+            disabled={homeTypeState === 'C'}
+            placeholder={'Apartamento'}
+          />
         </CustomFormItem>
       </CustomCol>
       <CustomCol xs={24}>
         <CustomFormItem
           label={'Próximo a'}
           name={'PROXIMO_A'}
-          rules={[{ required: false }]}
+          rules={[{ required: true }]}
           {...labelColFullWidth}
         >
           <CustomTextArea placeholder={'Próximo a...'} />

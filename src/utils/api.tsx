@@ -267,9 +267,9 @@ export const provincesApiHelper = {
 const getDenominations = (): Promise<AxiosResponse> => {
   return postRequest(WEB_SERVICE_API_GET_DENOMINATIONS, {
     order: {
-      TIPO: "DESC",
-      CANTIDAD: "DESC",
-    }
+      TIPO: 'DESC',
+      CANTIDAD: 'DESC',
+    },
   })
 }
 
@@ -293,8 +293,12 @@ export const sectorsApiHelper = {
   getSectors,
 }
 
-export const getMunicipalities = (): Promise<AxiosResponse> =>
-  postRequest(WEB_SERVICE_API_GET_MUNICIPALITIES, {})
+export const getMunicipalities = (
+  data: GeneralType
+): Promise<AxiosResponse> => {
+  const { condition } = data
+  return postRequest(WEB_SERVICE_API_GET_MUNICIPALITIES, { condition })
+}
 
 export const municipalitiesApiHelper = {
   getMunicipalities,

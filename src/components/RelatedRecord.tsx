@@ -28,7 +28,7 @@ const RelatedRecord = (props: {
       showNotification({
         title: 'Faltan datos',
         description: 'Por favor llenar los campos requeridos.',
-        type: 'error'
+        type: 'error',
       })
     }
   }
@@ -37,7 +37,7 @@ const RelatedRecord = (props: {
     <CustomForm
       {...formItemLayout}
       form={form}
-      name={'relatedRecord'}
+      name={'legalPerson'}
       validateMessages={validateMessages}
     >
       <CustomFormContainer>
@@ -49,7 +49,6 @@ const RelatedRecord = (props: {
           <CustomButton
             icon={<SaveOutlined />}
             type={'primary'}
-            htmlType={'submit'}
             onClick={handleOnFinish}
           >
             Guardar

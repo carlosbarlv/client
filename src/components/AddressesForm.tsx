@@ -50,7 +50,7 @@ const useResetFormOnCloseModal = (
   form: FormInstance,
   modalVisivilityState: boolean
 ) => {
-  const prevVisibleRef = useRef<boolean>()
+  const prevVisibleRef = useRef<boolean>(modalVisivilityState)
 
   useEffect(() => {
     prevVisibleRef.current = modalVisivilityState
@@ -65,24 +65,29 @@ const useResetFormOnCloseModal = (
   }, [modalVisivilityState, form, prevVisible])
 }
 
-const AddressesForm = (props: { saveData: Function }): React.ReactElement => {
-  const { saveData } = props
+const AddressesForm = (props: {
+  saveData: Function
+  onModalFormChange: Function
+}): React.ReactElement => {
+  const { onModalFormChange, saveData } = props
   const [form] = Form.useForm()
   const [modalVisivilityState, setModalVisivilityState] = React.useState(false)
 
   useResetFormOnCloseModal(form, modalVisivilityState)
 
-  const handleOnClick = async () => {
+  const handleOnClick = () => {
     const dataFields = form.getFieldsValue()
     try {
-      await form.validateFields()
-      saveData(dataFields, 'DIRECCIONES')
+      form.validateFields()
+      onModalFormChange(dataFields, 'DIRECCIONES')
+      saveData()
+      form.submit()
       setModalVisivilityState(false)
     } catch (error) {
       showNotification({
         title: 'Faltan datos',
         description: 'Por favor llenar los campos requeridos.',
-        type: 'error'
+        type: 'error',
       })
     }
   }
@@ -110,8 +115,8 @@ const AddressesForm = (props: { saveData: Function }): React.ReactElement => {
             }
           >
             {({ getFieldValue }) => {
-              const direcciones = getFieldValue('direcciones') || []
-              const originData = direcciones.map(
+              const address = getFieldValue('address') || []
+              const originData = address.map(
                 (values: AddressType, index: number) => {
                   return {
                     key: index,
@@ -162,7 +167,6 @@ const AddressesForm = (props: { saveData: Function }): React.ReactElement => {
 
             <CustomFormItem>
               <CustomButton
-                htmlType={'submit'}
                 icon={<SaveOutlined />}
                 onClick={handleOnClick}
                 type={'primary'}
@@ -177,4 +181,5 @@ const AddressesForm = (props: { saveData: Function }): React.ReactElement => {
   )
 }
 
+export { useResetFormOnCloseModal }
 export default AddressesForm

@@ -69,6 +69,7 @@ export type GeneralGetSectorsAction = {
 
 export type GeneralGetMunicipalitiesAction = {
   type: typeof GENERAL_GET_MUNICIPALITIES
+  condition: GeneralType
 }
 
 export const getDenominations = (): GeneralGetDenominationsAction => {
@@ -119,9 +120,12 @@ export const getSectors = (condition: GeneralType): GeneralGetSectorsAction => {
   }
 }
 
-export const getMunicipalities = (): GeneralGetMunicipalitiesAction => {
+export const getMunicipalities = (
+  condition: GeneralType
+): GeneralGetMunicipalitiesAction => {
   return {
     type: GENERAL_GET_MUNICIPALITIES,
+    condition,
   }
 }
 

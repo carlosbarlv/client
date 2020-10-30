@@ -23,6 +23,7 @@ import {
 } from '../constants/actions'
 import {
   GeneralGetActivityParametersAction,
+  GeneralGetMunicipalitiesAction,
   GeneralGetPartnersCategoriesAction,
   GeneralGetProvincesAction,
   GeneralGetSectorsAction,
@@ -170,8 +171,6 @@ function* watchGetCountries() {
 }
 
 function* getSectorsSaga(payload: GeneralGetSectorsAction) {
-  // eslint-disable-next-line no-console
-  console.log(payload.condition)
   try {
     const response = yield call(() => {
       return sectorsApiHelper.getSectors(payload.condition)
@@ -189,10 +188,10 @@ function* watchGetSectors() {
   yield takeLatest(GENERAL_GET_SECTORS, getSectorsSaga)
 }
 
-function* getMunicipalitiesSaga() {
+function* getMunicipalitiesSaga(payload: GeneralGetMunicipalitiesAction) {
   try {
     const response = yield call(() => {
-      return municipalitiesApiHelper.getMunicipalities()
+      return municipalitiesApiHelper.getMunicipalities(payload.condition)
     })
 
     const { data } = response.data

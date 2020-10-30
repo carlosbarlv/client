@@ -29,6 +29,8 @@ import { StoreState } from '../reducers'
 import { getSessionInfo } from '../utils/session'
 import { createLegalPerson, createPhysicalPerson } from '../actions/Person'
 import { PersonType } from '../reducers/Person'
+import { createAddresses } from '../actions/addresses'
+import { AddressType } from '../reducers/addresses'
 
 type Steps = {
   description: string
@@ -40,7 +42,7 @@ type Steps = {
 const LegalPerson = (): React.ReactElement => {
   const [form] = Form.useForm()
   const dispatch = useDispatch()
-  const [stepPositionState, setStepPositionState] = useState(1)
+  const [stepPositionState, setStepPositionState] = useState(2)
   const [personData, setPersonData] = useState({})
   const [relatedData, setRelatedData] = useState({})
   const [addressData, setAddressData] = useState({})
@@ -49,7 +51,7 @@ const LegalPerson = (): React.ReactElement => {
     (state: StoreState) => state.general
   )
 
-  const handleOnFinishGeneral = async () => {
+  const handleOnFinishGeneral = () => {
     const person = personData as PersonType
 
     person.ID_EMPRESA = getSessionInfo().businessId
@@ -66,8 +68,6 @@ const LegalPerson = (): React.ReactElement => {
       activityParameters.ID_LIST_TIPO_ENTIDAD
     )
 
-    person.ID_LIST_TIPO_PERSONA = Number(1)
-    person.ID_LIST_TIPO_ENTIDAD = Number(1)
     //eliminar los campos no requeridos antes de mandar al api
     delete person.ID_PERSONA
     delete person.USUARIO_INSERCION
@@ -76,7 +76,16 @@ const LegalPerson = (): React.ReactElement => {
   }
 
   const handleOnFinishRelated = () => {
-    const related = relatedData as PersonType
+    const related = relatedData as PersonType & {
+      PROVINCIA?: string
+      MUNICIPIO?: string
+      PAIS?: string
+      CASA?: string
+      SECTOR?: string
+      ESTADO?: string
+      CALLE?: string
+      PROXIMO_A?: string
+    }
 
     related.ID_PERSONA = Person.ID_PERSONA
     related.ID_EMPRESA = getSessionInfo().businessId
@@ -89,7 +98,42 @@ const LegalPerson = (): React.ReactElement => {
     related.ID_TIPO_IDENT = 1
     related.ID_MONEDA_DEF = '4'
 
+    delete related.PROVINCIA
+    delete related.MUNICIPIO
+    delete related.PAIS
+    delete related.CASA
+    delete related.CALLE
+    delete related.SECTOR
+    delete related.PROXIMO_A
+
     dispatch(createPhysicalPerson(related))
+  }
+
+  const handleOnFinishAddress = () => {
+    const address = addressData as AddressType
+
+    address.ID_EMPRESA = getSessionInfo().businessId
+    address.ID_PERSONA = Person.ID_PERSONA || '3'
+    address.ID_LISTA = 1 //Que va en este parametro?
+    address.LINEA1 = `Calle ${address.CALLE}`
+    address.LINEA2 = address.CASA
+    address.LINEA3 = address.PROXIMO_A
+    address.DEFECTO = address.PRINCIPAL ? 0 : 1
+    address.VALOR = '1'
+    address.ID_ESTADO = '1'
+    address.ID_PAIS = address.PAIS
+    address.ID_SECTOR = address.SECTOR
+    address.ID_CIUDAD = address.PROVINCIA
+
+    delete address.PAIS
+    delete address.PROVINCIA
+    delete address.MUNICIPIO
+    delete address.SECTOR
+    delete address.PRINCIPAL
+    delete address.PROXIMO_A
+    delete address.TIPO_DIRECCION
+
+    dispatch(createAddresses(address))
   }
 
   const handleFormChange = (data: {}, index: string) => {
@@ -121,7 +165,12 @@ const LegalPerson = (): React.ReactElement => {
     {
       title: 'Direciones y Teléfonos',
       description: 'Información de dirección',
-      node: <AddressesForm saveData={handleFormChange} />,
+      node: (
+        <AddressesForm
+          onModalFormChange={handleFormChange}
+          saveData={handleOnFinishAddress}
+        />
+      ),
       index: 'ADDRESS',
     },
   ]
@@ -134,8 +183,6 @@ const LegalPerson = (): React.ReactElement => {
 
       switch (steps[stepPositionState].index) {
         case 'GENERAL': {
-          // eslint-disable-next-line no-console
-          console.log(stepPositionState)
           const data = form.getFieldsValue()
           setPersonData(Object.assign(personData, data))
           handleOnFinishGeneral()
@@ -178,7 +225,7 @@ const LegalPerson = (): React.ReactElement => {
         >
           <CustomFormProvider
             onFormFinish={(name, { values, forms }) => {
-              if (name === 'relatedRecord') {
+              if (name === 'legalPerson') {
                 const { legalPerson } = forms
                 const relacionados =
                   legalPerson.getFieldValue('relacionados') || []
@@ -189,10 +236,9 @@ const LegalPerson = (): React.ReactElement => {
 
               if (name === 'addressesForm') {
                 const { addressesForm } = forms
-                const direcciones =
-                  addressesForm.getFieldValue('direcciones') || []
+                const address = addressesForm.getFieldValue('address') || []
                 addressesForm.setFieldsValue({
-                  direcciones: [...direcciones, values],
+                  address: [...address, values],
                 })
               }
             }}
@@ -200,8 +246,7 @@ const LegalPerson = (): React.ReactElement => {
             <CustomForm
               {...formItemLayout}
               form={form}
-              name={'legalPerson'}
-              // onFinish={handleOnFinish}
+              name={'LEGAL_PERSON'}
               validateMessages={validateMessages}
             >
               <CustomFormContainer>
