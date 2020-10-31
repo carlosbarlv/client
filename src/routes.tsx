@@ -13,6 +13,7 @@ import {
 import ProductRange from './pages/ProductRange'
 import TransistSessions from './pages/TransistSessions'
 import CashTransactions from './pages/CashTransactions'
+import ComponenteNuevo from './components/ComponenteNuevo'
 
 const Routes = (): ReactElement => {
   return (
@@ -20,11 +21,7 @@ const Routes = (): ReactElement => {
       <Switch>
         <Route exact path={PATH_LOGIN} component={Login} />
         <ProtectedRoutesWrapper>
-          <Route
-            exact
-            path={PATH_MAIN}
-            component={() => <h1>MAIN PAGE PLACEHOLDER</h1>}
-          />
+          <Route exact path={PATH_MAIN} component={ComponenteNuevo} />
           <Route exact path={PATH_REGISTER_PERSON} component={RegisterPerson} />
           <Route exact path={PATH_PRODUCT_RANGE} component={ProductRange} />
           <Route
