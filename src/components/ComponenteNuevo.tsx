@@ -6,7 +6,7 @@ const ComponenteNuevo = (): React.ReactElement => {
     <div>
       <CustomForm>
         <CustomRow>
-          <CustomCol xs={24}>
+          <CustomCol xs={24} sm={8}>
             <CustomInput placeholder={'DKDKDLDKALSKSLKDSLDDSLDKSLDDLK'} />
           </CustomCol>
           <CustomCol xs={24} sm={16}>
